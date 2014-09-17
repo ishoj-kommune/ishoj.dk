@@ -1,0 +1,21 @@
+<?php
+/**
+
+ */
+
+function ishoj_ajaxgetview_node_menu() {
+    return array(//$items
+        'MYMODULE/%' => array(
+            'page callback' => 'ishoj_ajaxgetview_display_view',
+            'page arguments' => array(1),
+            'access callback' => TRUE,
+            'type' => MENU_CALLBACK,
+        )
+    );
+}
+function ishoj_ajaxgetview_display_view($view_name) {
+    // display your view depending on $view_name
+   $view = views_get_view($view_name);
+   $view->execute();
+   echo $view->render();
+}

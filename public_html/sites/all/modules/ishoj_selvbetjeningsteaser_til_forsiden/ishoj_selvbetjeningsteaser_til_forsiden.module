@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Selvbetjeningsteaser til forsiden feature.
+ */
+
+include_once 'ishoj_selvbetjeningsteaser_til_forsiden.features.inc';

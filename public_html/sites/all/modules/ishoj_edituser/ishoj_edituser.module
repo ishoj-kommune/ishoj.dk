@@ -1,0 +1,36 @@
+<?php
+/**
+ *  Found this trick on theoleschool.com.
+ *  
+ *  Description: Allows the view developer to specify the query
+ *  group by action in the query comments. Great way to force the
+ *  removal of duplicates.
+ *  
+ *  Just go into your query comments and type in "groupby:" with
+ *  that colon followed by the field you want to group by.
+ * 
+ *  Examples...
+ *  groupby:node.nid
+ *  groupby:file_managed_file_usage.fid
+ * 
+ *  Ref-Comment: http://theoleschool.com/comment/496#comment-496
+ *  Ref-Article: http://theoleschool.com/blog/using-hookviewsalter-add-group-statement
+ */
+
+function edituser_menu() {
+  $items = array();
+  $items['user/edit-my-profile'] = array(
+    'title'            => 'Ret profil',
+    'description'      => '',
+    'page callback'    => 'edituser_edit_my_profile',
+    'access arguments' => array('access content'),
+    'type'             => MENU_NORMAL_ITEM,
+    );
+
+  return $items;
+}
+
+function edituser_edit_my_profile() {
+  global $user;
+  drupal_goto('user/'.$user->uid.'/edit');
+}

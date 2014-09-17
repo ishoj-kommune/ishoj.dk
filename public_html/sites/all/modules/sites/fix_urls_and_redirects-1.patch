@@ -1,0 +1,73 @@
+diff --git a/SiteController.inc b/SiteController.inc
+index 6bfff4d..633b8b9 100644
+--- a/SiteController.inc
++++ b/SiteController.inc
+@@ -244,19 +244,11 @@ class SiteController {
+    */
+   protected static function getOperationLinks($site) {
+     $operation_links = array();
+-    $current_site = self::getCurrentSite();
+ 
+     // We're not currently in any subsite context.
+-    if (empty($current_site)) {
+-      $operation_links['edit']    = l(t('edit'), 'admin/structure/sites/edit/' . $site->sid);
+-      $operation_links['delete']  = l(t('delete'), 'admin/structure/sites/delete/' . $site->sid);
+-      $operation_links['add']     = l(t('Add a new site'), 'admin/structure/sites/add');
+-    }
+-    else {
+-      $operation_links['edit']    = l(t('edit'), $current_site->purl_prefix . '/admin/structure/sites/edit/' . $site->sid);
+-      $operation_links['delete']  = l(t('delete'), $current_site->purl_prefix . '/admin/structure/sites/delete/' . $site->sid);
+-      $operation_links['add']     = l(t('Add a new site'), $current_site->purl_prefix . '/admin/structure/sites/add');
+-    }
++    $operation_links['edit']    = l(t('edit'), 'admin/structure/sites/edit/' . $site->sid);
++    $operation_links['delete']  = l(t('delete'), 'admin/structure/sites/delete/' . $site->sid);
++    $operation_links['add']     = l(t('Add a new site'), 'admin/structure/sites/add');
+ 
+     return $operation_links;
+   }
+diff --git a/sites.module b/sites.module
+index f4023e6..e8a8c4c 100644
+--- a/sites.module
++++ b/sites.module
+@@ -198,10 +198,12 @@ function sites_process_page(&$vars) {
+  */
+ function sites_preprocess_page(&$vars) {
+   $site = sites_get_current_site();
+-  if (! empty($site)) {
+-    if ($site->purl_prefix) {
+-      $vars['front_page'] = url($site->purl_prefix);
+-    }
++  if (!empty($site)) {
++    $vars['front_page'] = url('<front>', array(
++        'absolute' => TRUE,
++        'purl'     => array('provider' => 'sites', 'id' => $site->sid),
++      )
++    );
+   }
+ }
+ 
+@@ -250,16 +252,14 @@ function sites_form_alter(&$form, &$form_state, $form_id) {
+  * Redirect to the subsite when saving a node, to avoid access denied.
+  */
+ function sites_node_form_submit($form, &$form_state) {
+-  foreach ((array) $form_state['values']['sites'] as $site_id => $active) {
+-    // Load the first active site we find.
+-    if ($active && $site = SiteController::getSite($site_id)) {
+-      if (! empty($site->purl_prefix)) {
+-        // Change the redirect to include the purl prefix so that we don't get
+-        // an access denied.
+-        $form_state['redirect'] = $site->purl_prefix . '/' . $form_state['redirect'];
+-        return;
+-      }
+-    }
++  $node_sites = array_filter($form_state['values']['sites']);
++  $current_sid  = SiteController::getCurrentSite()->sid;
++  if (!in_array($current_sid, $node_sites)) {
++    $form_state['redirect'] = urL($form_state['redirect'], array(
++      'absolute' => TRUE,
++      // Use first site from selected to redirect to.
++      'purl' => array('provider' => 'sites', 'id' => reset($node_sites)),
++    ));
+   }
+ }
+ 

@@ -1,0 +1,13 @@
+/*.breaking, .breakingInner { float:left; width:100%; }*/
+.content-top { float:left; width:100%; }
+.teaserWrap { float:left; width:100%; }
+.frontLeft { float:left; width:30%; }
+.frontLeftCol1 { float:left; width:100%; }
+.frontRight { float:right; width:70%; }
+.frontRightCol1 { float:left; width:100%; }
+.frontRightCol2 { float:left; width:100%;   }
+/*.frontRightCol2 > div > .panel-portlet:nth-child(odd),
+.frontRightCol2 > div > .panel-pane:nth-child(odd) { float:left !important; width:47% !important;   }
+
+.frontRightCol2 > div > .panel-portlet:nth-child(even),
+.frontRightCol2 > div > .panel-pane:nth-child(even) { float:right !important; width:47% !important;    }*/

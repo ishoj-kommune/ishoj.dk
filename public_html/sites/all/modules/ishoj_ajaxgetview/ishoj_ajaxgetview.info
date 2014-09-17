@@ -1,0 +1,10 @@
+
+ 
+name = Infotv ajax get view
+
+description = Modul som kan hente views via ajax jquery
+
+package = Ishøj Kommune
+core = 7.x
+ 
+files[] = ishoj_ajaxgetview.module

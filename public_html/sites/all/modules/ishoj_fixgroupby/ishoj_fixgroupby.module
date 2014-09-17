@@ -1,0 +1,32 @@
+<?php
+/**
+ *  Found this trick on theoleschool.com.
+ *  
+ *  Description: Allows the view developer to specify the query
+ *  group by action in the query comments. Great way to force the
+ *  removal of duplicates.
+ *  
+ *  Just go into your query comments and type in "groupby:" with
+ *  that colon followed by the field you want to group by.
+ * 
+ *  Examples...
+ *  groupby:node.nid
+ *  groupby:file_managed_file_usage.fid
+ * 
+ *  Ref-Comment: http://theoleschool.com/comment/496#comment-496
+ *  Ref-Article: http://theoleschool.com/blog/using-hookviewsalter-add-group-statement
+ */
+function ishoj_fixgroupby_query_alter(QueryAlterableInterface $query) {
+  if ($query->hasTag('views')) {
+    static $count;
+    $view =& $query->getMetaData('view');
+
+    if (strstr($groupby = $view->query->options['query_comment'], 'groupby')) {
+      list($action, $field) = explode(':', $groupby);
+
+      if (strlen($field) > 0) {
+        $query->groupBy($field);
+      }
+    }
+  }
+}
