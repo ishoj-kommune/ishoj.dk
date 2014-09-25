@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * os2web_email_notifications
+ *
+ * PHP version 5
+ *
+ * @category OS2Web
+ * @package  OS2Dagsorden_Email_Notifications
+ * @file     Install file
+ * @author   Stanislav Kutasevits <stan@bellcom.dk>
+ * @license  http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2
+ * @link     http://bellcom.dk
+ */
+
+/**
+ * Creates a table in the database that will controll the workflow of the module.
+ *
+ * @return created schema
+ */
+function os2web_email_notifications_schema() {
+    $schema['os2web_email_notifications'] = array(
+        'description' => 'This table is used to control the subscription of the anonymous user to meeting updates',
+        'fields' => array(
+            'email' => array(
+                'description' => 'Email where the notification text is sent to.',
+                'type' => 'varchar',
+		'length' => 255,
+		'serialize' => TRUE,
+                'not null' => TRUE,
+            ),
+            'committee_tid' => array(
+                'description' => 'The tid of of committee.',
+                'type' => 'int',
+		'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+            'status' => array(
+                'description' => 'The status of the subscription',
+                'type' => 'int',
+                'not null' => TRUE,
+                'unsigned' => TRUE,
+            ),
+	    'token' => array(
+		'description' => 'Authentication token used to communicate back with user',
+                'type' => 'varchar',
+		'length' => 255,
+		'serialize' => TRUE,
+	    ),
+        ),
+        'primary key' => array('email', 'committee_tid'),
+    );
+    return $schema;
+}

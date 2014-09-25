@@ -1,0 +1,6 @@
+name = OS2Web Notification emails
+description = Implements the functionality of email notifications when new meeting gets published
+core = 7.x
+package = OS2Web - Frontend
+version = 7.x-1.x-dev
+project = os2web_email_notifications
