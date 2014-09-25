@@ -7,17 +7,18 @@
 include_once 'ishoj_info_side.features.inc';
 
 function ishoj_info_side_form_info_side_node_form_alter(&$form, &$form_state, $form_id) {
-  $form['field_infotv_skabelon']['und']['#ajax'] = array(
+  $lang = $form['field_infotv_skabelon']['#language'];
+  $form['field_infotv_skabelon'][$lang]['#ajax'] = array(
     'callback' => 'ishoj_info_side_ajax',
     'wrapper' => 'foto_preview_div',
   );
   $term = NULL;
   $output = "";
   if (isset($form_state['values']['field_infotv_skabelon'])) {
-    $tid = $form_state['values']['field_infotv_skabelon']['und'][0]['tid'];
+    $tid = $form_state['values']['field_infotv_skabelon'][$lang][0]['tid'];
     $term = taxonomy_term_load($tid);
   }
-  elseif ($tid = $form['field_infotv_skabelon']['und']['#default_value'][0]) {
+  elseif ($tid = $form['field_infotv_skabelon'][$lang]['#default_value'][0]) {
     $term = taxonomy_term_load($tid);
   }
   if ($term && $image = field_get_items('taxonomy_term', $term, 'field_infotv_skabelon_foto')) {
@@ -39,7 +40,7 @@ function ishoj_info_side_form_info_side_node_form_alter(&$form, &$form_state, $f
   );
   $form['foto_preview_wrappe']['foto_preview'] = array(
     '#type' => 'item',
-    '#prefix' => '<div id="foto_preview_div" style="width=50%;height:auto">',
+    '#prefix' => '<div id="foto_preview_div" style="width=50%; height:auto">',
     '#markup' => render($output),
     '#suffix' => '</div>',
   );
@@ -47,8 +48,8 @@ function ishoj_info_side_form_info_side_node_form_alter(&$form, &$form_state, $f
 }
 
 function ishoj_info_side_ajax($form, $form_state) {
-  $language = $form_state['values']['language'];
-  $tid = $form_state['values']['field_infotv_skabelon']['und'][0]['tid'];
+  $lang = $form['field_infotv_skabelon']['#language'];
+  $tid = $form_state['values']['field_infotv_skabelon'][$lang][0]['tid'];
   $term = taxonomy_term_load($tid);
   if ($image = field_get_items('taxonomy_term', $term, 'field_infotv_skabelon_foto')) {
     $output = field_view_value('taxonomy_term',$term,'field_infotv_skabelon_foto',$image[0],
@@ -60,5 +61,5 @@ function ishoj_info_side_ajax($form, $form_state) {
       )
     );
   }
-  return '<div id="foto_preview_div">' .render($output) . '</div>';
+  return '<div id="foto_preview_div">' . render($output) . '</div>';
 }
