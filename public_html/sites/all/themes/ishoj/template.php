@@ -107,7 +107,7 @@ function ishoj_preprocess_page(&$vars) {
       drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
       // Tilføjer javascripts
       drupal_add_js($vars['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 1000));
+      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
       drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
       drupal_add_js($vars['path_to_theme'] . 'js/Chart.min.js', array('weight' => 1000));
       drupal_add_js($vars['path_to_theme'] . 'js/infotv.js', array('weight' => 1000));
