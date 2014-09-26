@@ -33,7 +33,6 @@ function ishoj_info_side_form_info_side_node_form_alter(&$form, &$form_state, $f
   }
   $form['foto_preview_wrappe'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Foto preview'),
     '#prefix' => '<div style="width:50%;">',
     '#suffix' => '</div>',
     '#weight' => 16.5,
