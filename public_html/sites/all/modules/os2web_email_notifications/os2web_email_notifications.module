@@ -466,7 +466,7 @@ function _os2web_email_notifications_send_email($to, $subject, $body) {
   $from = variable_get('system_mail');
   $message = array(
     'to' => $to,
-    'subject' => mime_header_encode($subject),
+    'subject' => $subject,
     'body' => $body,
     'headers' => array(
       'MIME-Version' => '1.0',
