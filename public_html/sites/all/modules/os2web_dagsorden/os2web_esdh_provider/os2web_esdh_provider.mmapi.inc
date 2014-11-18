@@ -168,7 +168,7 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
       $node->title = $meeting['committee'] . ' - ' . date_format($my_date, $format);
 
       $alias = 'dagsorden/' . pathauto_cleanstring($node->title);
-      if ($meeting['additional_agenda'] === 'true'){
+      if ($meeting['additional_agenda'] === 'true') {
         $source = (isset($node->nid)) ? 'node/' . $node->nid : '';
         pathauto_alias_uniquify($alias, $source, $node->language);
       }
@@ -345,10 +345,8 @@ function _os2web_esdh_provider_import_items($items) {
  *   List of imported node ids
  */
 function _os2web_esdh_provider_import_bullets($bullets) {
-
   // Since we need to run this often,
   // we reset the execution timer to avoid timeouts.
-  //set_time_limit(180);
   $nids = array();
 
   foreach ($bullets as $idx => $bullet) {
@@ -384,10 +382,8 @@ function _os2web_esdh_provider_import_bullets($bullets) {
  *   Drupal standard file object
  */
 function _os2web_esdh_provider_import_file($file_meta) {
-
   // Since we need to run this often,
   // we reset the execution timer to avoid timeouts.
-  //set_time_limit(300);
   $uri_in = $file_meta['uri'];
 
   $pinfo = pathinfo($uri_in);
@@ -399,7 +395,16 @@ function _os2web_esdh_provider_import_file($file_meta) {
   }
 
   $uri_out = $pinfo['dirname'] . '/' . _os2web_esdh_provider_sanetize_filename($fname . '.' . strtolower($pinfo['extension']));
-  $uri_pdf = $pinfo['dirname'] . '/' . _os2web_esdh_provider_sanetize_filename($fname . '.pdf');
+
+  if (_os2web_esdh_provider_similar_file_exists(drupal_realpath($uri_out))) {
+    $file_counter = 0;
+    do {
+      $uri_out = $pinfo['dirname'] . '/' . _os2web_esdh_provider_sanetize_filename($fname . '_' . $file_counter++ . '.' . strtolower($pinfo['extension']));
+    } while (_os2web_esdh_provider_similar_file_exists(drupal_realpath($uri_out)));
+  }
+
+  $new_pinfo = pathinfo($uri_out);
+  $uri_pdf = $pinfo['dirname'] . '/' . $new_pinfo['filename'] . '.pdf';
 
   err_debug('Start import file ' . $uri_out . ' ');
 
@@ -734,6 +739,7 @@ function _os2web_esdh_provider_send_statusmail($message, $is_error = FALSE) {
 
 /**
  * Checks if a custom text format is defined for the BPA body field.
+ *
  * I fall backs to filtered html.
  *
  * @return string

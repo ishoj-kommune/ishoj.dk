@@ -55,28 +55,7 @@ function _os2web_esdh_provider_status() {
       $queue_markup = '<h2>Meeting import: running!</h2>';
     }
 
-    $queue_markup .= drupal_render(drupal_get_form('os2web_esdh_provider_queue_form'));
-    $queue_markup .= '<h3>In queue</h3>';
-
-    $queue_header = array(t('Publication id:'), t('uri'), t('Force'));
-    $queue_rows = array();
-
-    $queue = DrupalQueue::get('acadre_mm_import');
-    while($item = $queue->claimItem()) {
-      if (isset($item->data['meeting'])) {
-        $queue_rows[] = array(
-          $item->data['meeting']['id'],
-          $item->data['meeting']['uri'],
-          $item->data['force'],
-        );
-      }
-    }
-
-    $queue_status .= '<br /><hr /><br />' . $queue_markup . theme('table', array(
-        'header' => $queue_header,
-        'rows' => $queue_rows,
-        'empty' => t('Queue is empty'),
-      ));
+    $queue_status .= $queue_markup . drupal_render(drupal_get_form('os2web_esdh_provider_queue_form'));
 
     $queue_status .= '<br /><hr /><br />';
   }
@@ -108,7 +87,7 @@ function os2web_esdh_provider_queue_form($form_state) {
 function os2web_esdh_provider_queue_form_submit(&$form, &$form_state) {
   // Empty queue.
   $queue = DrupalQueue::get('acadre_mm_import');
-  while($item = $queue->claimItem()) {
+  while ($item = $queue->claimItem(0)) {
     $queue->deleteItem($item);
   }
 
@@ -230,6 +209,7 @@ function _os2web_esdh_provider_status_confirm_submit($form, &$form_state) {
 
     foreach ($meetings as $meeting) {
       if (empty($focus) || in_array($meeting['id'], $focus)) {
+        error_log(__FILE__ . ' : ' . __LINE__ . ': ' .  print_r($meeting, 1));
         $queue->createItem(array('meeting' => $meeting, 'force' => $force));
       }
     }
