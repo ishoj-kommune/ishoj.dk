@@ -195,9 +195,11 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     $dt->setTimezone(new DateTimeZone('UTC'));
     $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value'] = $dt->format('Y-m-d H:i:s');
 
-    $dt = new DateTime($meeting['meeting_date_finish'], new DateTimeZone('Europe/Copenhagen'));
-    $dt->setTimezone(new DateTimeZone('UTC'));
-    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value2'] = $dt->format('Y-m-d H:i:s');
+    if (isset($meeting['meeting_date_finish'])) {
+      $dt = new DateTime($meeting['meeting_date_finish'], new DateTimeZone('Europe/Copenhagen'));
+      $dt->setTimezone(new DateTimeZone('UTC'));
+      $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value2'] = $dt->format('Y-m-d H:i:s');
+    }
 
     $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['timezone'] = 'Europe/Copenhagen';
     $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['date_type'] = 'datetime';
