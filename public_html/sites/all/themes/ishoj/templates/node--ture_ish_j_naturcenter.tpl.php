@@ -118,7 +118,77 @@
 		hide($content['links']);
 		print render($content);
 
+		// MIKROARTIKLER		
+		if($node->field_mikroartikler_titel or 
+		$node->field_mikroartikler_titel2 or 
+		$node->field_mikroartikler_titel3 or 
+		$node->field_mikroartikler_titel4 or 
+		$node->field_mikroartikler_titel5 or 
+		$node->field_mikroartikler_titel6 or 
+		$node->field_mikroartikler_titel7 or 
+		$node->field_mikroartikler_titel8 or 
+		$node->field_mikroartikler_titel9 or 
+		$node->field_mikroartikler_titel10) {
+			
+			$mikroartikel = '';
+			
+//			$mikroartikel = $mikroartikel . '<div class="microArticleContainer">';
+			
+			if($node->field_mikroartikler_titel) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle1">' . $node->field_mikroartikler_titel['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle1 mArticle">' . $node->field_mikroartikler_tekst['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel2) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle2">' . $node->field_mikroartikler_titel2['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle2 mArticle">' . $node->field_mikroartikler_tekst2['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel3) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle3">' . $node->field_mikroartikler_titel3['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle3 mArticle">' . $node->field_mikroartikler_tekst3['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel4) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle4">' . $node->field_mikroartikler_titel4['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle4 mArticle">' . $node->field_mikroartikler_tekst4['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel5) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle5">' . $node->field_mikroartikler_titel5['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle5 mArticle">' . $node->field_mikroartikler_tekst5['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel6) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle6">' . $node->field_mikroartikler_titel6['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle6 mArticle">' . $node->field_mikroartikler_tekst6['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel7) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle7">' . $node->field_mikroartikler_titel7['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle7 mArticle">' . $node->field_mikroartikler_tekst7['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel8) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle8">' . $node->field_mikroartikler_titel8['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle8 mArticle">' . $node->field_mikroartikler_tekst8['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel9) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle9">' . $node->field_mikroartikler_titel9['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle9 mArticle">' . $node->field_mikroartikler_tekst9['und'][0]['safe_value'] . '</div></div>';
+			}
+			
+			if($node->field_mikroartikler_titel10) {
+				$mikroartikel = $mikroartikel . '<div class="microArticle"><h2 class="mArticle" id="mArticle10">' . $node->field_mikroartikler_titel10['und'][0]['safe_value'] . '</h2>';
+				$mikroartikel = $mikroartikel . '<div class="mArticle10 mArticle">' . $node->field_mikroartikler_tekst10['und'][0]['safe_value'] . '</div></div>';
+			}
+			
 
+//			$mikroartikel = $mikroartikel . '</div>';
+			print $mikroartikel;	
+			
+		}
     ?>
 
 

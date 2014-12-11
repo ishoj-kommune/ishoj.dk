@@ -60,3 +60,6 @@ Disallow: /?q=user/password/
 Disallow: /?q=user/register/
 Disallow: /?q=user/login/
 Disallow: /?q=user/logout/
+Disallow: /sites/default/files/sbsys_ishoj/
+User-agent: c81e728d9d4c2f636f067f89cc14862c
+Disallow:

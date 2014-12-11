@@ -66,8 +66,8 @@ function ishoj_preprocess_page(&$vars) {
 //  if((strpos($urlPath, 'infotv') !== false) and ((strpos($urlPath, 'udv-infotv') !== true))) {
      $urlPath = 'infotv';
   } 
-  // hvis path'en indeholder strengen 'udvikling'
-  if(strpos($urlPath, 'udvikling') !== false) {
+  // hvis path'en indeholder strengen 'udvikling' og ikke indeholder strengen 'udvikling'
+  if((strpos($urlPath, 'udvikling') !== false)) {
      $urlPath = 'udvikling';
   } 
   // hvis path'en indeholder strengen 'tvigrafik'
