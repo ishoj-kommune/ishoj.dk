@@ -190,9 +190,16 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     // filtered_html format for a body field.
     $node->field_os2web_meetings_abbr[LANGUAGE_NONE][0]['format'] = 'filtered_html';
     // The date.
-    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value'] = $meeting['meeting_date_start'];
-    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value2'] = $meeting['meeting_date_finish'];
-    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['timezone'] = 'Europe/Berlin';
+    // yani@bellcom.dk: convert date to UTC value.
+    $dt = new DateTime($meeting['meeting_date_start'], new DateTimeZone('Europe/Copenhagen'));
+    $dt->setTimezone(new DateTimeZone('UTC'));
+    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value'] = $dt->format('Y-m-d H:i:s');
+
+    $dt = new DateTime($meeting['meeting_date_finish'], new DateTimeZone('Europe/Copenhagen'));
+    $dt->setTimezone(new DateTimeZone('UTC'));
+    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['value2'] = $dt->format('Y-m-d H:i:s');
+
+    $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['timezone'] = 'Europe/Copenhagen';
     $node->field_os2web_meetings_date[LANGUAGE_NONE][0]['date_type'] = 'datetime';
     // Proper id tagging.
     $node->field_os2web_meetings_id[LANGUAGE_NONE][0]['value'] = $meeting['meeting_id'];
