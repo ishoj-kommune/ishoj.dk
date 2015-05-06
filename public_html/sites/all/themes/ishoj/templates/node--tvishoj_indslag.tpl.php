@@ -80,69 +80,216 @@
  * @ingroup themeable
  */
 ?>
-<div id="node-<?php print $node->nid; ?>" class="articleHeaderInner"<?php print $attributes; ?>>
 
-  <?php // print $user_picture; ?>
 
-  <?php print render($title_prefix); ?>
-  <?php if (!$page): ?>
-    <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <?php endif; ?>
-  <?php print render($title_suffix); ?>
 
-  	<?php 
-    if (!$status) {
-    	print '<h2 style="color:red;">INDHOLDET ER "IKKE PUBLICERET" - KAN KUN SES AF ADMINISTRATOR</h2>';
-    }
-	?>
+
+<?php dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); 
+?>
+
+<?php
+function sortByTitle($a, $b){
+  return strcmp($a->title, $b->title);
+}
+$output = "";
+$output = "";
+
+?>
+
+                     
+        <!-- ARTIKEL START -->
+<?php       
+
+          $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel\">";
+
+         
+          $output = $output . "<div class=\"container\">";
+// Get menu from kategori term ref by term KLE                     
+    $query = new EntityFieldQuery;
+$result2 = $query
+  ->entityCondition('entity_type', 'taxonomy_term')
+  ->propertyCondition('vid', 16)
+  ->fieldCondition('field_os2web_base_field_kle_ref', 'tid', $node->field_os2web_base_field_kle_ref['und'][0]['tid'])
+  ->execute();
+$bufcount = 0;
+$buftid = 0; 
+foreach($result2 as $v1) {
+foreach($v1 as $v2) {
+if ($bufcount == 0) {   
+$buftid = $v2->tid;
+++$bufcount;
+}        
+}    
+}                       
+$bterm = taxonomy_term_load($buftid);            
+           // Brødkrummesti
+            $output = $output . "<div class=\"row\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+              //  $output = $output . "<p class=\"breadcrumbs\">" . theme('breadcrumb', array('breadcrumb'=>drupal_get_breadcrumb())) . " / " . $title . "</p>";
+// $output = $output . "<p class=\"breadcrumbs\">" . theme('breadcrumb', array('breadcrumb'=>drupal_get_breadcrumb())) . " / " .  "<a href=\"" . url('taxonomy/term/' . $bterm->tid) . "\" title=\"Kategorien " . $bterm->name . "\">" . $bterm->name . "</a>" . " / " . $title . "</p>";
+ $output = $output . "<p class=\"breadcrumbs\">" . theme('breadcrumb', array('breadcrumb'=>drupal_get_breadcrumb())) . " / " .  "<a href=\"" . url('taxonomy/term/' . $bterm->tid) . "\" title=\"Kategorien " . $bterm->name . "\">" . $bterm->name . "</a>" . $title . "</p>";
+              $output = $output . "</div>";
+            $output = $output . "</div>";
+
+           
+            $output = $output . "<div class=\"row second\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+                
+              
+
+                  $output = $output . "<h1>" . $title . "</h1>";
+
+
+                
+              $output = $output . "</div>";
+              $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
+            $output = $output . "</div>";
   
-    <h1><?php print drupal_get_title(); ?></h1>
-    
+            $output = $output . "<div class=\"row second\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+                $output = $output . "<!-- ARTIKEL TOP START -->";
+                $output = $output . "<div class=\"artikel-top\">";
 
-    
-
-    
-<!--    [field_underoverskrift] => Array
-        (
-            [und] => Array
-                (
-                    [0] => Array
-                        (
-                            [value] => Siden hvor du kan finde information for informationens skyld
-                            [format] => 
-                            [safe_value] -->
-    <?php
-      // We hide the comments and links now so that we can render them later.
-	  
-      hide($content['comments']);
-      hide($content['links']);
-      print render($content);
-    ?>
-
-  <?php print render($content['links']); ?>
-
-  <?php print render($content['comments']); ?>
+                    // VIDEO
+                    $output = $output . "<!-- VIDEO START -->";
+                    if($node->field_youwatch_page_url) {
+                      $output = $output . "<div class=\"video-indlejret\">";
+                        $output = $output . "<div class=\"embed-container vimeo\">";
+                      
+                          $output .= "<iframe src=\"http://www.youtube.com/embed/" . substr(strrchr($node->field_youwatch_page_url['und'][0]['value'], "="), 1) . "?rel=0\" frameborder=\"0\" allowfullscreen></iframe>";                      
+                        
+                        $output = $output . "</div>";
+                      $output = $output . "</div>";
+                      if ($node->field_videotekst) {
+                        $output = $output . "<p class=\"video-tekst\">" . $node->field_videotekst['und'][0]['value'] . "</p>";
+                      }
+                    }
+                    $output = $output . "<!-- VIDEO SLUT -->";
+                 
 
 
-    
+                $output = $output . "</div>";
+                $output = $output . "<!-- ARTIKEL TOP SLUT -->";
+                
+                // UNDEROVERSKRIFT
+                $output = $output . "<!-- UNDEROVERSKRIFT START -->";
+                if($node->body) {
+                  $output = $output . "<h2>" . $node->body['und'][0]['value'] . "</h2>";
+                }
+                $output = $output . "<!-- UNDEROVERSKRIFT SLUT -->";
+               
 
-  <?php if ($display_submitted): ?>
-    <div class="submitted">
-      <?php print $submitted; ?>
-    </div>
-  <?php endif; ?>
-  
-  
-  <?php 
-  if($logged_in) {
-    print '<div><a class="editNode round3" href="/node/' . $node->nid . '/edit?destination=admin/content" title="Rediger">< &nbsp;Rediger&nbsp; ></a></div>';
- 
-  }
-  ?>  
-  
+                
+                
+                // TEKSTINDHOLD
+                $output = $output . "<!-- TEKSTINDHOLD START -->";
+                hide($content['comments']);
+                hide($content['links']);
+//                $output = $output . render($content);
+                $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
+                
+                
 
 
-  <?php //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); ?>
 
 
-</div>
+                
+                
+                // KONTAKT
+                $output = $output . "<!-- KONTAKT START -->";
+                if($node->field_os2web_base_field_kle_ref) {
+                  if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
+                    $output = $output . "<hr>";
+                  }
+                  $output = $output . "<h2>Kontakt</h2>";
+                  $output = $output . views_embed_view('kontakt_kle','default', $node->field_os2web_base_field_kle_ref['und'][0][tid]);
+                  $output = $output . "<!-- GOOGLE MAP START -->";
+                  $output = $output . "<div id=\"map-canvas\"></div>";
+                  $output = $output . "<button class=\"btn map-btn\" onclick=\"loadMapScript();\">Vis kort</button>";
+                  $output = $output . "<!-- GOOGLE MAP SLUT -->";
+                }
+                $output = $output . "<!-- KONTAKT SLUT -->";
+
+
+                // DEL PÅ SOCIALE MEDIER
+                // Hvis noden er en indholdsside, borger.dk-artikel eller en aktivitet 
+                if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
+                  include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
+                }
+
+                
+                // SENEST OPDATERET
+                $output = $output . "<!-- SENEST OPDATERET START -->";
+                $output = $output . "<p class=\"last-updated\">Senest opdateret " . format_date($node->changed, 'senest_redigeret') . "</p>";
+                $output = $output . "<!-- SENEST OPDATERET SLUT -->";
+                
+
+                // REDIGÉR-KNAP
+                if($logged_in) {
+                  $output .= "<div class=\"edit-node\"><a href=\"/node/" . $node->nid . "/edit?destination=admin/content\" title=\"Ret indhold\"><span>Ret indhold</span></a></div>";
+                }
+
+
+                $output = $output . "</div>";
+              
+              
+              // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+              if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
+                
+                $output = $output . "<div class=\"grid-third aside\">";
+                
+                
+
+                
+
+                $output = $output . "</div>";
+              
+              }
+              
+            $output = $output . "</div>";
+          $output = $output . "</div>";
+        $output = $output . "</section>";
+        $output = $output . "<!-- ARTIKEL SLUT -->";
+
+       
+        // DIMMER DEL SIDEN
+        $output = $output . "<!-- DIMMER DEL SIDEN START -->";
+        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER, 
+        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+        if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
+          $options = array('absolute' => TRUE);
+          $nid = $node->nid; // Node ID
+          $abs_url = url('node/' . $nid, $options);
+
+          $output = $output . "<div class=\"dimmer-delsiden hidden\">";
+          
+          $output .= "<a class=\"breaking-close\" href=\"#\" title=\"Luk\"></a>";
+            
+            $output = $output . "<ul>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-facebook\" href=\"https://www.facebook.com/sharer/sharer.php?u=" . $abs_url . "\" title=\"Del siden på Facebook\"><span><span class=\"screen-reader\">Del siden på Facebook</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . " title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";          
+            $output = $output . "</ul>";
+            $output = $output . "<div class=\"link-url\">";
+              $output = $output . "<textarea>" . $abs_url . "</textarea>";
+            $output = $output . "</div>";
+          $output = $output . "</div>";
+        }
+        $output = $output . "<!-- DIMMER DEL SIDEN SLUT -->";
+
+          // BREAKING
+          $output .= views_embed_view('kriseinformation','nodevisning', $node->nid);
+
+
+        print $output;
+        print render($content['links']);
+        print render($content['comments']); 
+
+
+?>
+
+       
+

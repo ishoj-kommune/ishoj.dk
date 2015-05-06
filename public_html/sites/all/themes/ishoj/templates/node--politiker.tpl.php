@@ -80,229 +80,239 @@
  * @ingroup themeable
  */
 ?>
-<!--<div id="node-<?php print $node->nid; ?>" class="articleHeaderInner"<?php print $attributes; ?>>-->
 
-  <?php //print $user_picture; ?>
 
-  <?php print render($title_prefix); ?>
-  <?php if (!$page): ?>
-    <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <?php endif; ?>
-  <?php print render($title_suffix); ?>
 
-  	<?php 
-  //  if (!$status) {
-  //  	print '<h2 style="color:red;">INDHOLDET ER "IKKE PUBLICERET" - KAN KUN SES AF ADMINISTRATOR</h2>';
-  //  }
-	?>
+
+<?php dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); ?>
+
+<?php
+$output = "";
+?>
+
+                     
+        <!-- ARTIKEL START -->
+<?php       
+        $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel\">";
+         
+          $output = $output . "<div class=\"container\">";
+           
+           // Brødkrummesti
+            $output = $output . "<div class=\"row\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+                $output = $output . "<p class=\"breadcrumbs\">" . theme('breadcrumb', array('breadcrumb'=>drupal_get_breadcrumb())) . " / " . $title . "</p>";
+              $output = $output . "</div>";
+            $output = $output . "</div>";
+
+           
+            $output = $output . "<div class=\"row second\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+                $output = $output . "<h1>" . $title . "</h1>";
+              $output = $output . "</div>";
+              $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
+            $output = $output . "</div>";
   
-    
-    
+            $output = $output . "<div class=\"row second\">";
+              $output = $output . "<div class=\"grid-two-thirds\">";
+                $output = $output . "<!-- ARTIKEL TOP START -->";
+                $output = $output . "<div class=\"artikel-top\">";
 
-    
+                  // UNDEROVERSKRIFT / PARTI 
+                  if($node->field_er_byraadsmedlem and $node->field_os2web_base_field_summary) { 
+                    $output .= "<h2>" . $node->field_os2web_base_field_summary['und'][0]['value'] . "</h2>";
+                    
+//                    if(taxonomy_term_load($node->field_er_byraadsmedlem['und'][0]['tid'])->name == 'Ja') { 
+//                      if($node->field_politisk_parti) {
+//                        $output .= "<h2>Byrådsmedlem " . $title . " er medlem af partiet " . taxonomy_term_load($node->field_politisk_parti['und'][0]['tid'])->name . " (" . taxonomy_term_load($node->field_politisk_parti['und'][0]['tid'])->field_bogstav['und'][0]['value'] . ")</h2>";
+//                      }                      
+//                    }
+                  }
 
-    
-<!--    [field_underoverskrift] => Array
-        (
-            [und] => Array
-                (
-                    [0] => Array
-                        (
-                            [value] => Siden hvor du kan finde information for informationens skyld
-                            [format] => 
-                            [safe_value] -->
-    <?php
-      // We hide the comments and links now so that we can render them later.
-	  
-		hide($content['comments']);
-		hide($content['links']);
-		
+                  // FOTO
+                  $output = $output . "<!-- FOTO START -->";
 
+                  // Skift denne ud med foto-feltet
 
-    ?>
+                  $output .= "<img src=\"" . image_style_url('portraet_politiker_320x427', $node->field_foto['und'][0]['uri']) . "\" alt=\"" . $title . "\" />";
 
+//                  if($node->field_os2web_base_field_image) {
+//                    $output = $output . render($content['field_os2web_base_field_image']);
+//                  }
+                  $output = $output . "<!-- FOTO SLUT -->";
 
-  <?php print render($content['links']); ?>
-
-  <?php print render($content['comments']); ?>
-
+                $output = $output . "</div>";
+                $output = $output . "<!-- ARTIKEL TOP SLUT -->";
 
 
-    
-    <?php
-      // KANDIDAT NR.
-//      print "<div style=\"float:left; width:100%; margin:1.0em 0 0 0;\">KANDIDAT NR. " . $node->field_kandidat_nr_['und'][0]['value'] . "</div>";
-      
-      $nodeTitle = drupal_get_title();
-              
-      // FOTO
-//      print "<img src=\"" . file_create_url($node->field_foto['und'][0]['uri']) . "\" alt=\"" . $nodeTitle . "\" />";
-    
-          
-//      $style = "large";
-//      print "<img src=\"" . image_style_url($style, $node->field_foto['und'][0]['uri']) . "\" alt=\"" . $nodeTitle . "\" />";
-      
-      //print "<img src=\"" . file_create_url($node->picture->uri) . "\" alt=\"" . $nodeTitle . "\" />";
-      
-      // NAVN      
-      print "<h1>" . $nodeTitle . "</h1>";
-      
-      // CIVILT ERHVERV
-      if($node->field_civilt_erhverv) {
-        print "<h2>" . $node->field_civilt_erhverv['und'][0]['safe_value'] . "</h2>"; 
-      }
+                $output .= "<h2>Om " . $title . "</h2>";
 
-      // UDDANNELSE
-      if($node->field_uddannelse) {
-        print "<p><strong>Uddannelse:</strong> " . $node->field_uddannelse['und'][0]['safe_value'] . "</p>"; 
-      }
-      
-      // FØDT 
-      if($node->field_foedt){
-        print "<p><strong>Født:</strong> " . $node->field_foedt['und'][0]['safe_value'] . "</p>";
-      }
-      
-      // ADRESSE
-//      if($node->field_adresse){
-//        print "<p><strong>Adresse:</strong><br />" . $node->field_adresse['und'][0]['safe_value'] . "<br />2635 Ishøj</p>";
-//      }
+                // CIVILT ERHVERV / UNDEROVERSKRIFT
+                if($node->field_civilt_erhverv) {
+                  $output .= "<p><strong>Civilt erhverv: </strong>" . $node->field_civilt_erhverv['und'][0]['value'] . "</p>";
+                }
+                              
+                // UDDANNELSE
+                if($node->field_uddannelse) {
+                  $output .= "<p><strong>Uddannelse: </strong>" . $node->field_uddannelse['und'][0]['value'] . "</p>";
+                }
+                              
+                // FØDT
+                if($node->field_foedt) {
+                  $output .= "<p><strong>Født: </strong>" . $node->field_foedt['und'][0]['value'] . "</p>";
+                }
 
-      // TELEFON
-      if($node->field_telefon){
-        print "<p><strong>Telefon:</strong> " . $node->field_telefon['und'][0]['safe_value'] . "</p>";
-      }
+                // TELEFON
+                if($node->field_telefon) {
+                  $output .= "<p><strong>Telefon: </strong>" . $node->field_telefon['und'][0]['value'] . "</p>";
+                }
+                              
+                // E-MAIL
+                if($node->field_email) {
+                  $output .= "<p><strong>E-mail: </strong><a href=\"mailto:" . $node->field_email['und'][0]['value'] . "\" title=\"Send en e-mail til " . $title . "\">" . $node->field_email['und'][0]['value'] . "</a></p>";
+                }
+                              
+                // FACEBOOK
+                if($node->field_facebook) {
+                  $output .= "<p><strong>Facebook: </strong><a href=\"" . $node->field_facebook['und'][0]['value'] . "\" title=\"Besøg " . $title . "s Facebook-profil\">" . $node->field_facebook['und'][0]['value'] . "</a></p>";
+                }
+                              
+                // TWITTER
+                if($node->field_twitter) {
+                  $output .= "<p><strong>Twitter: </strong><a href=\"" . $node->field_twitter['und'][0]['value'] . "\" title=\"Besøg " . $title . "s Twitter-profil\">" . $node->field_twitter['und'][0]['value'] . "</a></p>";
+                }
+                              
+                // FRITIDSINTERESSER
+                if($node->body) {
+                  $output .= "<p><strong>Fritidsinteresser: </strong><br />" . $node->body['und'][0]['value'] . "</p>";
+                }
 
-      // E-MAIL
-      if($node->field_email_tekstfelt){
-        print "<p><strong>E-mail:</strong> <a href=\"mailto:" . $node->field_email_tekstfelt['und'][0]['safe_value'] . "\" title=\"Send en e-mail til " . $nodeTitle . "\">" . $node->field_email_tekstfelt['und'][0]['safe_value'] . "</a></p>";
-      }
+                // POLITISKE MÆRKESAGER
+                if($node->field_politiske_maerkesager) {
+                  $output .= "<p><strong>Politiske mærkesager: </strong><br />" . $node->field_politiske_maerkesager['und'][0]['value'] . "</p>";
+                }
 
-      
-      
+                // I BYRÅDET SIDEN
+                if($node->field_i_byraadet_siden) {
+                  $output .= "<p><strong>I byrådet siden: </strong>" . $node->field_i_byraadet_siden['und'][0]['value'] . "</p>";
+                }
 
-      // VALGPROGRAM (PDF)
-//      if($node->field_valgprogram) {
-//        $valgprogram = "<p><a href=\"" . file_create_url($node->field_valgprogram['und'][0]['uri']) . "\" title=\"Læs mit valgprogram\">";
-//        $valgprogram = $valgprogram . "<img class=\"politikerSocialemedier round2\" src=\"/sites/all/themes/ishoj/images/pdf.png\" alt=\"Læs mit valgprogram (pdf-dokument)\" />";
-//        $valgprogram = $valgprogram . "</a><a href=\"" . file_create_url($node->field_valgprogram['und'][0]['uri']) . "\" title=\"Læs mit valgprogram\">Læs mit valgprogram (pdf)</a></p>"; 
-//        //print "<a href=\"" . file_create_url($node->field_valgprogram['und'][0]['uri']) . "\" title=\"Læs mit valgprogram\">Læs mit valgprogram (pdf-dokument)</a></p>"; 
-//        print $valgprogram;
-//      } 
-      
-      // FACEBOOK / TWITTER 
-      if($node->field_facebook_tekstfelt or $node->field_twitter_tekstfelt){
-        $socialeMedier = "<p>";
+//                // POLITISKE UDVALG
+//                if($node->field_politisk_udvalg) {
+//                  $output .= "<p><strong>Medlem af følgende politiske udvalg:</strong></p>";
+//                  $output .= "<ul>";
+//                    foreach ($node->field_politisk_udvalg['und'] as $term) {
+//                      $output .= "<li><a href=\"" . url('taxonomy/term/' . $term['tid']) . "\" title=\"Se medlemmer af det politiske udvalg " . taxonomy_term_load($term['tid'])->name . "\">" . taxonomy_term_load($term['tid'])->name . "</a></li>";
+//                    }
+//                  $output .= "</ul>";  
+//                }
 
-        if($node->field_facebook_tekstfelt){
-          $socialeMedier = $socialeMedier . "<a href=\"" . $node->field_facebook_tekstfelt['und'][0]['safe_value'] . "\" title=\"Se min facebook-side\">";
-          $socialeMedier = $socialeMedier . "<img class=\"politikerSocialemedier round2\" src=\"/sites/all/themes/ishoj/images/iconFacebook.png\" alt=\"Se min Facebook-side\" />";
-          $socialeMedier = $socialeMedier . "</a><a href=\"" . $node->field_facebook_tekstfelt['und'][0]['safe_value'] . "\" title=\"Se min facebook-side\">";
-          //$socialeMedier = $socialeMedier . $node->field_facebook_tekstfelt['und'][0]['safe_value'] . "</a>";
-          $socialeMedier = $socialeMedier . "Se min Facebook-side</a>";
-        }
-                        
-        if($node->field_facebook_tekstfelt and $node->field_twitter_tekstfelt){
-          $socialeMedier = $socialeMedier . "</p><p>";
-        }
-        if($node->field_twitter_tekstfelt){
-          $socialeMedier = $socialeMedier . "<a href=\"" . $node->field_twitter_tekstfelt['und'][0]['safe_value'] . "\" title=\"Se min Twitter-profil\">"; 
-          $socialeMedier = $socialeMedier . "<img class=\"politikerSocialemedier round2\" src=\"/sites/all/themes/ishoj/images/iconTwitter.png\" alt=\"Se min Twitter-profil\" />";
-          $socialeMedier = $socialeMedier . "</a><a href=\"" . $node->field_twitter_tekstfelt['und'][0]['safe_value'] . "\" title=\"Se min Twitter-profil\">"; 
-          //$socialeMedier = $socialeMedier . $node->field_twitter_tekstfelt['und'][0]['safe_value'] . "</a>";
-          $socialeMedier = $socialeMedier . "Se min Twitter-profil</a>";
-        }
 
-        $socialeMedier = $socialeMedier . "</p>";
-        print $socialeMedier;
-      }
+                // TEKSTINDHOLD
+                $output = $output . "<!-- TEKSTINDHOLD START -->";
+                hide($content['comments']);
+                hide($content['links']);
+                $output = $output . render($content);
+                $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
+                
 
                 
-      
-      // FRITIDSINTERESSER
-      if($node->body) {
-        print "<p>&nbsp;</p><div><strong>Fritidsinteresser: </strong>";
-        print $node->body['und'][0]['safe_value'] . "</div>";
-      }
-
-      // POLITISKE MÆRKESAGER
-      if($node->field_politiske_maerkesager) {
-        print "<div><strong>Politiske mærkesager: </strong>";
-        print "<p>" . $node->field_politiske_maerkesager['und'][0]['safe_value'] . "</p></div>";
-      }
-      
-
-      // I BYRÅDET SIDEN
-      if($node->field_i_byraadet_siden){
-        print "<p><strong>I byrådet siden:</strong> " . $node->field_i_byraadet_siden['und'][0]['safe_value'] . "</p>";    
-      }
-    
-      
-    ?>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+                // KONTAKT
+//                $output = $output . "<!-- KONTAKT START -->";
+//                if($node->field_os2web_base_field_kle_ref) {
+//                  if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
+//                    $output = $output . "<hr>";
+//                  }
+//                  $output = $output . "<h2>Kontakt</h2>";
+//                  $output = $output . views_embed_view('kontakt_kle','default', $node->field_os2web_base_field_kle_ref['und'][0][tid]);
+//                  $output = $output . "<!-- GOOGLE MAP START -->";
+//                  $output = $output . "<div id=\"map-canvas\"></div>";
+//                  $output = $output . "<button class=\"btn map-btn\" onclick=\"loadMapScript();\">Vis kort</button>";
+//                  $output = $output . "<!-- GOOGLE MAP SLUT -->";
+//                }
+//                $output = $output . "<!-- KONTAKT SLUT -->";
 
 
-  <!--  Embedding the view before the comments are displayed-->
-	<div class="embedded-view">
-    <?php print views_embed_view('politikers_udvalg','panel_pane_1', $node->nid); ?>
-  </div>
-    
-    
-  <?php
-    print render($content);    
-  ?>
-    
-  
+                // DEL PÅ SOCIALE MEDIER
+                include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
+
+                
+                // SENEST OPDATERET
+                $output = $output . "<!-- SENEST OPDATERET START -->";
+                $output = $output . "<p class=\"last-updated\">Senest opdateret " . format_date($node->changed, 'senest_redigeret') . "</p>";
+                $output = $output . "<!-- SENEST OPDATERET SLUT -->";
+                
+
+                // REDIGÉR-KNAP
+                if($logged_in) {
+                  $output .= "<div class=\"edit-node\"><a href=\"/node/" . $node->nid . "/edit?destination=admin/content\" title=\"Ret indhold\"><span>Ret indhold</span></a></div>";
+                }
 
 
-  <?php 
-  if($logged_in) {
-    print '<div><a class="editNode round3" href="/node/' . $node->nid . '/edit?destination=admin/content" title="Rediger">< &nbsp;Rediger&nbsp; ></a></div>';
-  
-//  	if($node->field_status_sideindhold['und'][0]['tid'] == 3391) {
-//	  print '<h2>Ikke rettet</h2>';	
-//	}
-//	
-//  	if($node->field_status_sideindhold['und'][0]['tid'] == 3392) {
-//	  print '<h2>Rettet</h2>';	
-//	}
-//
-//  	if($node->field_status_sideindhold['und'][0]['tid'] == 3398) {
-//	  print '<h2>Delvist rettet</h2>';	
-//	}
-	
-	
-/*
-    
-  
-  [field_status_sideindhold] => Array
-        (
-            [und] => Array
-                (
-                    [0] => Array
-                        (
-                            [tid] => 3391
-                        )
-                        
-                        
-                        
-                        
-   [field_status_sideindhold] => Array
-        (
-            [und] => Array
-                (
-                    [0] => Array
-                        (
-                            [tid] => 3392
-                        )*/
-  
-  
-  }
-  ?>  
-  
+                $output = $output . "</div>";
+              
+              
+                $output = $output . "<div class=\"grid-third\">";
+
+                  // POLITISKE UDVALG
+                  if($node->field_politisk_udvalg) {
+
+                    $output .= "<nav class=\"menu-underside\">";
+                      $output .= "<p class=\"menu-header\">Medlem af følgende politiske udvalg</p>";
+                      $output .= "<ul class=\"menu\">";
+                        $output .= "<li class=\"first expanded active-trail\">";
+                          $output .= "<ul class=\"menu\">";
+                            foreach ($node->field_politisk_udvalg['und'] as $term) {
+                              $output .= "<li><a href=\"" . url('taxonomy/term/' . $term['tid']) . "\" title=\"Se medlemmer af det politiske udvalg " . taxonomy_term_load($term['tid'])->name . "\">" . taxonomy_term_load($term['tid'])->name . "</a></li>";
+                            }
+                          $output .= "</ul>";
+                        $output .= "</li>";
+                      $output .= "</ul>";
+                    $output .= "</nav>";
+                  }
+                  $output = $output . "</div>";              
+              
+            $output = $output . "</div>";
+          $output = $output . "</div>";
+        $output = $output . "</section>";
+        $output = $output . "<!-- ARTIKEL SLUT -->";
+
+       
+    // DIMMER DEL SIDEN
+    $options = array('absolute' => TRUE);
+    // NODEVISNING
+     $nid = $node->nid; 
+     $abs_url = url('node/' . $nid, $options);
+    // -----------
+    // TAXONOMIVISNING
+//    $abs_url = url(substr($term_url, 1), $options);
+    include_once drupal_get_path('theme', 'ishoj') . '/includes/dimmer-del-siden.php';
+
+        
+
+          // BREAKING
+          $output .= views_embed_view('kriseinformation','nodevisning', $node->nid);
+
+//        $output = $output . "<!-- BREAKING START -->";
+//        $output = $output . "<div class=\"breaking\">";
+//          $output = $output . "<div class=\"container\">";
+//            $output = $output . "<div class=\"row\">";
+//              $output = $output . "<div class=\"grid-full\">";
+//                $output = $output . "<div class=\"breaking-inner\">";
+//                  $output = $output . "<a class=\"breaking-close\" href=\"#\" title=\"Luk\"></a>";
+//                  $output = $output . "<h2><a href=\"#\" title=\"BREAKING: Ishøj Bycenter under vand....stik af!\">BREAKING: Ishøj Bycenter under vand....stik af!</a></h2>";                
+//                $output = $output . "</div>";
+//              $output = $output . "</div>";
+//            $output = $output . "</div>";
+//          $output = $output . "</div>";
+//        $output = $output . "</div>";
+//        $output = $output . "<!-- BREAKING SLUT -->"; 
+
+        print $output;
+        print render($content['links']);
+        print render($content['comments']); 
 
 
-  <?php //dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); ?>
+?>
 
+       
 
-<!--</div>-->

@@ -1,6 +1,7 @@
 name = Ishoj info side
 core = 7.x
 package = Ishøj Kommune
+php = 5.2.4
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = field_group
