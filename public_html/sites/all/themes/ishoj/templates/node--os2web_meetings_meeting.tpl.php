@@ -155,7 +155,7 @@ $output = "";
                       $aabenlukket = "";
                     }
                     
-                    $output .= "<div class=\"microArticle\"><h2 class=\"mArticle\" id=\"mArticle" . $key . "\"><span class=\"sprites-sprite sprite-plus mikroartikel\"></span>" . $item['entity']->title . $aabenlukket . "</h2>";
+                    $output .= "<div class=\"microArticle\"><h3 class=\"mArticle\" id=\"mArticle" . $key . "\"><span class=\"sprites-sprite sprite-plus mikroartikel\"></span>" . $item['entity']->title . $aabenlukket . "</h3>";
                     $output .= "<div class=\"mArticle" . $key . " mArticle\">";
                     
                     if($aabenlukket !== "") {
