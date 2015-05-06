@@ -8,7 +8,8 @@ $plugin = array(
   'theme' => 'ishoj_infotv',
   'css' => 'ishoj_infotv.css',
   'regions' => array(
-	'content' => t('Indhold'),
-	'overlay' => t('Øverst')
+	'content' => t('INDHOLD'),
+	'overlay_top' => t('OVERLAY (uden tjek af indhold)'),
+	'overlay_bottom' => t('OVERLAY (med tjek af indhold)')
   ),
 );

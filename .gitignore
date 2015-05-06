@@ -5,5 +5,16 @@ tmp
 sites/default/files
 .htaccess
 settings.php_bellcom
+.DS_Store
 
+private
+backup*
+public_html/sites/all/_thumbs
+public_html/sites/private
+public_html/maillogo
+public_html/search
+public_html/test
+public_html/taxon
+public_html/json-output.json
 public_html_old
+public_html/google*.html
