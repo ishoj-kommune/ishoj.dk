@@ -83,9 +83,6 @@
 
 
 
-
-<?php dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); ?>
-
 <?php
 $output = "";
 ?>

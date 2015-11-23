@@ -155,6 +155,13 @@
         </div>
       </section>
       <!-- SØGEBAR SLUT -->      
+
+      <!-- SØGERESULTATER START -->
+      <section id="soegebar-resultater" class="soegebar-resultater"> 
+        <div class="container">
+        </div>
+      </section>
+      <!-- SØGERESULTATER SLUT -->
       
     </header>
     <!-- HEADER SLUT --> 

@@ -80,7 +80,7 @@
  * @ingroup themeable
  */
 
-//dsm($node);
+
 
 ?>
 
@@ -158,7 +158,7 @@ $bterm = taxonomy_term_load($buftid);
                     
                     if($node->field_os2web_base_field_image) {
                       hide($content['field_image_flexslider']);
-                        dsm($content['field_os2web_base_field_image']);
+                      
                       $output = $output . render($content['field_os2web_base_field_image']);
                       if($node->field_billedtekst) {
                         $output = $output . "<p class=\"foto-tekst\">" . $node->field_billedtekst['und'][0]['value'] . "</p>";

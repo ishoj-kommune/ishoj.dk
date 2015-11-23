@@ -20,19 +20,70 @@
         var reloadPageMinutes = 0.05; // default = 5
         var slidesHTML = "";
         var slidesHTML_overlay = "";
+        var slidesHTML_uglen = "";
+        var visNyhederFraUglen = false;
+        var s_uglenTemp = "";
+        var denneURL = "";
 
         
         function reloadPage(i) {
           if(reloadMe || i) {
+            
+            // HVIS DER I URL'EN ER ANGIVET uglen=1, INDLÆSES NYHEDER (ISHØJ INDEFRA) FRA UGLEN
+//            if(visNyhederFraUglen) {
+//               
+//              console.log("Version 21" + "\n\n");
+//              
+//              // HENT JSON
+//              $.getJSON( "/sites/all/themes/ishoj/templates/hent_uglennyheder_json.php", function( data ) {
+//              })
+//              
+//              // HVIS DER INGEN FEJL ER
+//              .done(function( data ) {
+//                s_uglenTemp = "";
+//                
+//                $.each( data, function( key, val ) {
+//                  s_uglenTemp += '<li class="infotv-skabelon">';
+//                    s_uglenTemp += '<img src="' + val.billede.src + '">';
+//                    s_uglenTemp += '<div class="bgBox animationForward animationBack animationStart"></div>';
+//                    s_uglenTemp += '<div class="bgBoxInvisible animationForward animationBack animationEnd">';
+//                      s_uglenTemp += '<h1>' + val.titel + '</h1>';
+//                      s_uglenTemp += '<p>' + val.resume + '</p>';
+//                      s_uglenTemp += '<h2>Læs mere på Uglen</h2>';
+//                    s_uglenTemp += '</div>';
+//                  s_uglenTemp += '</li>';
+//                });
+//                
+////                slidesHTML_uglen = s_uglenTemp;
+////                console.log(s_uglen);
+//
+//              })              
+//               // HVIS DER ER FEJL
+//              .fail(function() {
+//                console.log("Fejl ved indlæsning af nyheder fra Uglen ");
+//              });
+//              
+//            }
+            
+            
+            
             // http://api.jquery.com/jquery.get/
-            var jqxhr = $.get((window.location + '?hash=' + Math.random()), {timeout:5000, dataType:"json"},  function() {
+            if(visNyhederFraUglen) {
+              denneURL = window.location + '&hash=' + Math.random();
+            }
+            else {
+              denneURL = window.location + '?hash=' + Math.random();
+            }
+            
+            var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
+//            var jqxhr = $.get((window.location + '?hash=' + Math.random()), {timeout:5000, dataType:"json"},  function() {
 
 //              if(jqxhr.responseText.indexOf('<div class="flexslider">') != -1) { // Hvis det returnerede indholder strengen, så reload indhold
 //                location.reload(true);
 //              }
 
             })
-              // HVIS DET INGEN FEJL ER
+              // HVIS DER INGEN FEJL ER
               .done(function() {
                 
                 // Henter det nye indhold og stripper unødvendigt output 
@@ -50,6 +101,9 @@
                 if(i) { 
                   slidesHTML = s;  
                   slidesHTML_overlay = s_overlay;  
+//                  if(visNyhederFraUglen) {
+//                    slidesHTML_uglen = s_uglenTemp;
+//                  }
 //                  console.log("\n\nslidesHTML = " + slidesHTML);
 //                  console.log("\n\nslidesHTML_overlay = " + slidesHTML_overlay);
                 }
@@ -58,6 +112,7 @@
                 // ELLER HVIS slidesHTML_overlay OG s_overlay IKKE ER ENS, 
                 // ER DER NYT INDHOLD (OGSÅ VED FØRSTE GENNEMLØB)
                 if( (slidesHTML.localeCompare(s) != 0)  || (slidesHTML_overlay.localeCompare(s_overlay) != 0) || i ) {
+//                if( (slidesHTML.localeCompare(s) != 0) || (slidesHTML_overlay.localeCompare(s_overlay) != 0) || (slidesHTML_uglen.localeCompare(s_uglenTemp) != 0)  || i ) {
 //                if((slidesHTML.localeCompare(s) != 0) || i) {
                   /* stringA.localeCompare(stringB)
                   Returns:
@@ -89,7 +144,12 @@
                     // INITIALISERING AF VARIABLER
                     initVars();
                     // TILFØJ INDHOLDET TIL KLASSEN .slides
-                    $(".slides ").html(s);
+//                    if(visNyhederFraUglen) {
+//                      $(".slides ").html(s_uglenTemp + s);
+//                    }
+//                    else {
+                      $(".slides ").html(s);
+//                    }
 
                     setTimeout(function (){ 
                       // INITIALISERING AF SLIDES
@@ -176,6 +236,11 @@
           reloadPageMinutes = getURLParameter('t');
           //reloadPageTimer();
           //alert("t er angivet");
+        }
+        // tjekker URL'en for om der er angivet en uglen=1
+        // topnyheder fra Uglen læses ind
+        if(getURLParameter('uglen') == 1) {
+          visNyhederFraUglen = true;
         }
 //        else {
 //          reloadPageTimer();

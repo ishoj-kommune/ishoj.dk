@@ -84,7 +84,7 @@
 
 
 
-<?php dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); ?>
+
 <?php //drupal_set_message(print_r(taxonomy_get_vocabularies())); ?>
 
 <?php
@@ -110,7 +110,8 @@ $output = "";
 
           $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel activities aktivitet-node node-visning\">";
             $output = $output . "<div class=\"container\">";
-           
+
+  
 // Række 2
             $output = $output . "<div class=\"row second activity-line\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
@@ -118,7 +119,13 @@ $output = "";
                   $output .= "<div class=\"swiper-slide fix-width\">";
                     // Dato
                     if($node->field_aktivitetsdato) {
-                      $output = $output . "<div class=\"date\">" . format_date($node->field_aktivitetsdato['und'][0]['value'], 'dato_uden_aar') . "</div>";
+                      if($_GET['d'] == "" or !isset($node->field_aktivitetsdato['und'][$_GET['d']])) {
+                        $datoindex = 0;  
+                      }
+                      else {
+                        $datoindex = $_GET['d'];
+                      }
+                      $output = $output . "<div class=\"date\">" . format_date($node->field_aktivitetsdato['und'][$datoindex]['value'], 'dato_uden_aar') . "</div>";
                     }
                     $output = $output . "<div class=\"circle node-circle\">";
                       $output = $output . "<div></div>";
@@ -185,20 +192,68 @@ $output = "";
                         }                      
                         // Dato
                         if($node->field_aktivitetsdato) {
-                          $output = $output . "<p><span><strong>Dato:</strong></span> " . format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret');
-                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret'))) {
-                            $output = $output . " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret');
+                          $output .= "<p><span><strong>Dato:</strong></span> ";
+
+                          // Antallet af datoer
+                          $datoer = count($node->field_aktivitetsdato['und']);
+                          
+                          foreach ($node->field_aktivitetsdato['und'] as $dato) {
+                            
+                            // Hvis slutdatoen er større/eller lig end aktuelle dato
+                            if($dato['value2'] >= strtotime("now")) {
+                              
+                              // Hvis der er angivet flere datoer, så lav et linieskift
+                              if($datoer > 1) {
+                                $output .= "<br />";
+                              }
+                              $output .= format_date($dato['value'], 'senest_redigeret');
+                              // Hvis der er en slutdato og den samtidig er forskellig fra startdatoen
+                              if(($dato['value2']) and (format_date($dato['value'], 'senest_redigeret') != format_date($dato['value2'], 'senest_redigeret'))) {
+                                $output .= " - " . format_date($dato['value2'], 'senest_redigeret');
+                              }
+                              // Klokkeslæt
+                              $output .= " kl. " . format_date($dato['value'], 'klokkeslaet');
+                              // Hvis der er et slutklokkeslæt og det samtidig er forskellig fra startklokkeslættet
+                              if(($dato['value2']) and (format_date($dato['value'], 'klokkeslaet') != format_date($dato['value2'], 'klokkeslaet'))) {
+                                $output .= " - " . format_date($dato['value2'], 'klokkeslaet');
+                              }
+                            
+                            }
+                            
                           }
-                          $output = $output . "</p>";
+
+                          
+                          
+//                          $output .= "<br />" . format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret');
+//                          // Hvis der er en slutdato og den samtidig er forskellig fra startdatoen
+//                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret'))) {
+//                            $output .= " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret');
+//                          }
+//                          // Klokkeslæt
+//                          $output .= " kl. " . format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet');
+//                          // Hvis der er et slutklokkeslæt og det samtidig er forskellig fra startklokkeslættet
+//                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet'))) {
+//                            $output .= " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet');
+//                          }
+                          
+                          $output .= "</p>";
                         }
-                        // Tid
-                        if($node->field_aktivitetsdato) {
-                          $output = $output . "<p><span><strong>Tid:</strong></span> " . format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet');
-                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet'))) {
-                            $output = $output . " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet');
-                          }
-                          $output = $output . "</p>";
-                        }
+//                        // Dato
+//                        if($node->field_aktivitetsdato) {
+//                          $output = $output . "<p><span><strong>Dato:</strong></span> " . format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret');
+//                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret'))) {
+//                            $output = $output . " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret');
+//                          }
+//                          $output = $output . "</p>";
+//                        }
+//                        // Tid
+//                        if($node->field_aktivitetsdato) {
+//                          $output = $output . "<p><span><strong>Tid:</strong></span> " . format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet');
+//                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet'))) {
+//                            $output = $output . " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet');
+//                          }
+//                          $output = $output . "</p>";
+//                        }
                         // Aktivitetssted
                         if($node->field_aktivitetssted) {
                           if(taxonomy_term_load($node->field_aktivitetssted['und'][0]['tid'])->name != "Ikke angivet") {
@@ -217,9 +272,18 @@ $output = "";
                           }
                         }
 
+                        // Status på billetsalg (Billetlugen.dk)
+                        if($node->field_status_billetsalg) {
+                          $billetstatus = taxonomy_term_load($node->field_status_billetsalg['und'][0]['tid'])->name;
+                          if($billetstatus != "Normal") {
+                            $output .= "<p><span><strong>Status på billetsalg:</strong></span> " . $billetstatus . "</p>";                          
+                          }
+                        }
+
                         // Hjemmeside
                         if($node->field_hjemmeside) {
-                          $output .= "<p><span><strong>Mere info: </strong></span><a href=\"//" . $node->field_hjemmeside['und'][0]['value'] . "\" title=\"Mere info på " . $node->field_hjemmeside['und'][0]['value'] . "\">" . $node->field_hjemmeside['und'][0]['value'] . "</a></p>";
+//                          $output .= "<p><span><strong>Mere info: </strong></span><a href=\"//" . $node->field_hjemmeside['und'][0]['value'] . "\" title=\"Mere info på " . $node->field_hjemmeside['und'][0]['value'] . "\">" . $node->field_hjemmeside['und'][0]['value'] . "</a></p>";
+                          $output .= "<p><span><strong>Mere info: </strong></span><a href=\"//" . str_replace('http://','',$node->field_hjemmeside['und'][0]['value']) . "\" title=\"Mere info på " . str_replace('http://','',$node->field_hjemmeside['und'][0]['value']) . "\">" . str_replace('http://','',$node->field_hjemmeside['und'][0]['value']) . "</a></p>";
                         }
 
                         // Arrangør
@@ -234,7 +298,7 @@ $output = "";
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
-                               
+
                 
                 // TEKSTINDHOLD
                 $output = $output . "<!-- TEKSTINDHOLD START -->";

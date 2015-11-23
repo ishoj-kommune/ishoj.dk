@@ -355,14 +355,19 @@ $bterm = taxonomy_term_load($buftid);
                   $output = $output . "<h2>" . render($content_field['field_os2web_borger_dk_header']) . "</h2>";
                 }
                 $output = $output . "<!-- UNDEROVERSKRIFT SLUT -->";
-               
+              
+// ISHOJ.DK TEXT
+if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
+   $output = $output . $node->field_ishojdk_tekst['und'][0]['value'];
+    }
+ 
                 // SELVBETJENINGSLØSNING
                 $output = $output . "\n\n\n<!-- SELBETJENINGSLØSNING START -->";
 //                $output = $output . views_embed_view('selvbetjeningslosning','default', $node->nid);
                 if(!empty($content_field['field_os2web_borger_dk_selfservi'])) {
                   $selvbetjening = render($content_field['field_os2web_borger_dk_selfservi']);
                   // Laver borger.dk selvbetjenings-ouput om til vores eget selvbetjenings-output
-                  $selvbetjening = str_replace('<h3>Selvbetjening</h3>', '', $selvbetjening);
+                  $selvbetjening = str_replace('<h4>Selvbetjening</h4>', '', $selvbetjening);
                   $selvbetjening = str_replace('<ul>', '', $selvbetjening);
                   $selvbetjening = str_replace('</ul>', '', $selvbetjening);
                   $selvbetjening = preg_replace('/\<li id=[^\>]+\>/', '', $selvbetjening);

@@ -81,17 +81,11 @@
  */
 ?>
 
-
-
-
-<?php dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); 
-?>
-
 <?php
 function sortByTitle($a, $b){
   return strcmp($a->title, $b->title);
 }
-$output = "";
+
 $output = "";
 
 ?>

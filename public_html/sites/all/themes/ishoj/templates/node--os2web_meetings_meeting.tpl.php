@@ -79,15 +79,9 @@
  *
  * @ingroup themeable
  */
+
 ?>
 
-
-
-
-<?php 
-  //dsm($node); //drupal_set_message('<pre>' . print_r($node, TRUE) . '</pre>'); 
-//  dsm($content); 
-?>
 
 <?php
 $output = "";
@@ -114,9 +108,11 @@ $output = "";
                 if($node->field_os2web_meetings_committee and !empty($content['field_os2web_meetings_date']) and $node->field_os2web_meetings_type) {
                   $meetingDate = render($content['field_os2web_meetings_date']);
                   $output .= "<h1>" . $node->field_os2web_meetings_type['und'][0]['value'] . " for " . taxonomy_term_load($node->field_os2web_meetings_committee['und'][0]['tid'])->name . "s møde " . strtolower($meetingDate) . "</h1>"; 
-                }
+                    
+                    
+                    
+                    }
 
- 
               $output = $output . "</div>";
               $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
             $output = $output . "</div>";
@@ -126,11 +122,10 @@ $output = "";
                 $output = $output . "<!-- ARTIKEL TOP START -->";
                 $output = $output . "<div class=\"artikel-top\">";
 
-
+$output .= $node->field_forsidetekst['und'][0]['safe_value']; 
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
-
 
 
                 // MIKROARTIKLER - DAGSORDENPUNKTER 
@@ -230,7 +225,7 @@ $output = "";
                 $output .= "<!-- KONTAKT START -->";
                 $output .= "<h2>Kontakt</h2>";
                 $args = array($node->field_os2web_base_field_kle_ref['und'][0][tid], $node->field_os2web_base_field_kle_ref['und'][0][tid]);
-                $view = views_get_view('kontakt_kle');
+                $view = views_get_view('kontakt_kleudvalg');
                 $view->set_display('default');
                 $view->set_arguments($args);
                 $view->execute();
@@ -238,7 +233,7 @@ $output = "";
                  $output .= $view->render();
                 } 
                 else {
-                  $output .= views_embed_view('kontakt_kle','default', 1968);
+                  $output .= views_embed_view('kontakt_kleudvalg','default', 1968);
                 }
                 $output .= "<!-- KONTAKT SLUT -->";
 

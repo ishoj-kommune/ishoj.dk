@@ -1,0 +1,147 @@
+<?php
+// https://api.drupal.org/api/drupal/modules!node!node.api.php/function/hook_node_insert/7
+// http://fooninja.net/2011/04/13/guide-to-programmatic-node-creation-in-drupal-7/
+// https://www.drupal.org/node/1388922
+// http://www.lightrains.com/blog/programmatically-create-taxonomy-term-drupal#gsc.tab=0
+// http://dropbucket.org/node/669
+
+//$title = "";
+
+//function ishoj_billetlugen_aktivitet_node_insert($node) {
+function ishoj_billetlugen_aktivitet_node_presave($node) {
+//  if ($node->type == 'aktivitet' && $node->is_new) {
+  if ($node->type == 'aktivitet') {
+    // Kalder kun funktionen, hvis det er en aktivitet, der bliver oprettet fra en billetlugen-import
+    if (isset($node->field_billetlugen_reference_id['und'][0]['value'])) {
+
+      // Dato    
+//      $node->field_aktivitetsdato['und'][0]['value']
+ 
+//      $new_time = strtotime('-2 hours', $node->field_aktivitetsdato['und'][0]['value']); // $now + 3 hours
+//      $new_time = strtotime('-1 hours', $node->field_aktivitetsdato['und'][0]['value']); // $now + 3 hours
+      
+      if (date('I', $node->field_aktivitetsdato['und'][0]['value'])) {
+        // Sommertid
+        $new_time = strtotime('-2 hours', $node->field_aktivitetsdato['und'][0]['value']);
+      }
+      else {
+        // Vintertid
+        $new_time = strtotime('-1 hours', $node->field_aktivitetsdato['und'][0]['value']);
+      }
+      
+      $node->field_aktivitetsdato['und'][0]['value'] = $new_time;
+      $node->field_aktivitetsdato['und'][0]['value2'] = $new_time;
+      
+      // Event sub id
+      if(isset($node->field_billetlugen_sub_id['und'][0]['value'])) {
+        $subid = $node->field_billetlugen_sub_id['und'][0]['value'];
+      }
+
+      // Hent XML-feed
+      $xml = simplexml_load_file("http://www.billetlugen.dk/api/event/event/?apikey=686d6473df3448328467a70760c75de2&id=" . $node->field_billetlugen_reference_id['und'][0]['value']);
+//      $xml = simplexml_load_file("http://www.billetlugen.dk/api/event/event/?apikey=21bb8c778514409da62d404902c217ce&id=" . $node->field_billetlugen_reference_id['und'][0]['value']);
+      $result = $xml->xpath("event");
+ 
+      // Output data midlertidigt
+//      dsm($result);
+      
+      // Beskrivelse      
+      if(isset($result[0]->page->html)) {
+        $node->body['und'][0]['format'] = "filtered_html";
+        
+        $bodytext = "<p>" . htmlspecialchars_decode($result[0]->page->html) . "</p>";
+        $bodytext = str_replace('<p><p>', '<p>', $bodytext);
+        $bodytext = str_replace('</p></p>', '</p>', $bodytext);
+        $node->body['und'][0]['value'] = $bodytext;
+//        $node->body['und'][0]['value'] = htmlspecialchars_decode($result[0]->page->html);
+      }
+      
+      // Loop gennem sub-events, hvis der er nogen
+      foreach ($result[0]->eventdates->eventdate as $eventdate) {
+        if ($eventdate['id'] == $subid) {
+
+          // Titel
+          if(isset($eventdate->name)) {
+            $node->title = $eventdate->name;
+          }
+
+          // Hjemmeside
+          if(isset($eventdate['url'])) {
+            $node->field_hjemmeside['und'][0]['value'] = $eventdate['url'];
+          }
+
+          // Betaling for aktivitet
+          $betaling = ishoj_billetlugen_aktivitet_get_term_from_name('Deltagerbetaling', 'aktivitetsgebyr');
+          if($betaling) {
+            $node->field_betaling_for_aktivitet['und'][0]['tid'] = $betaling;
+          }
+
+          // Pris
+          if(isset($eventdate->price)) {
+            $pris = $eventdate->price;
+            $pris = str_replace('DKK', 'kr.', $pris);
+            $pris = str_replace('.00', '', $pris);
+            $node->field_pris['und'][0]['value'] = $pris;
+          }
+
+          // Salgsstatus
+          if(isset($eventdate->salestatus)) {
+            switch ($eventdate->salestatus) {
+              case 0:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3237; // Normal
+                break;
+              case 1:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3238; // Få billetter tilbage 
+                break;
+              case 2:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3242; // Udsolgt
+                break;
+              case 3:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3239; // Aflyst 
+                break;
+              case 4:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3240; // Billetsalg lukket 
+                break;
+              case 5:
+                $node->field_status_billetsalg['und'][0]['tid'] = 3241; // Venteliste 
+                break;
+            }        
+          }
+
+          break;
+        }
+        
+      }
+
+    }
+  }
+}
+
+
+/**
+* Implementation of hook_node_presave().
+*
+*/
+//function ishoj_billetlugen_aktivitet_node_presave($node) {
+//    $node->title = $title;
+//}
+
+/**
+ * Helper function to dynamically get the tid from the term_name
+ *
+ * @param $term_name Term name
+ * @param $vocabulary_name Name of the vocabulary to search the term in
+ *
+ * @return Term id of the found term or else FALSE
+ */
+function ishoj_billetlugen_aktivitet_get_term_from_name($term_name, $vocabulary_name) {
+  if ($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) {
+    $tree = taxonomy_get_tree($vocabulary->vid);
+    foreach ($tree as $term) {
+      if ($term->name == $term_name) {
+        return $term->tid;
+      }
+    }
+  }
+  return FALSE;
+}

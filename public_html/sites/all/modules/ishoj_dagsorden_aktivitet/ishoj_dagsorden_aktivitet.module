@@ -51,9 +51,25 @@ function ishoj_dagsorden_aktivitet_opret_ny_node($n) {
 //  $node->field_aktivitetstype['und'][0]['tid'] = ishoj_dagsorden_aktivitet_get_term_from_name('Møde', 'aktivitetstype');     // Møde
 //  $node->field_aktivitetstype['und'][1]['tid'] = ishoj_dagsorden_aktivitet_get_term_from_name('Politik', 'aktivitetstype');  // Politik
 
+  
+  
+  
+  
+  
 //  Dato (Date (Unix timestamp)) *
-    $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200; //(7200 seconds = 2 hours)
-    $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200;
+//    $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200; //(7200 seconds = 2 hours)
+//    $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200;
+      if (date('I', $n->field_os2web_meetings_date['und'][0]['value'])) {
+        // Sommertid
+        $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200; //(7200 seconds = 2 hours)
+        $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200;
+      }
+      else {
+        // Vintertid
+        $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 3600; //(7200 seconds = 2 hours)
+        $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 3600;
+      }
+  
 
 //  Sted (Termreference) *
 //  Sted er flyttet ind i aktivitetsbeskrivelsen, da det er et fritekstfelt i SBSYS, og der derfor kommer en masse gejl ind, og det duer ikke, at det kommer ind i taksonomien Aktivitetssted

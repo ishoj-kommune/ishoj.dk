@@ -8,7 +8,7 @@
 ?>
 <?php if (!empty($title)): ?>
 <div class="microArticle">
-  <h2 class="mArticle" id="mArticle0"><span class="sprites-sprite sprite-plus mikroartikel"></span><?php print $title; ?></h2> 
+  <h3 class="mArticle" id="mArticle0"><span class="sprites-sprite sprite-plus mikroartikel"></span><?php print $title; ?></h3> 
     <div class="mArticle0 mArticle">
       <h3>Møder i <?php print $title; ?>:</h3>
       <ul>

@@ -294,6 +294,10 @@
     function removeSearchResults(i) {
       if(i == 2) {
         $(".soegeresultat, .search-more").removeClass("show");
+        
+        if($("#soegebar-resultater").hasClass("animate")) {
+          $("#soegebar-resultater").removeClass("animate");
+        }
         setTimeout(function() {
           $(".soegeresultat, .search-more").remove();
         }, 200);
@@ -307,6 +311,9 @@
       if(i == 1) {
         $(".search-more").removeClass("show");
       }
+      if($("#soegebar-resultater").hasClass("animate")) {
+        $("#soegebar-resultater").removeClass("animate");
+      }
     }
       
     // VISER SØGERESULTATER
@@ -319,26 +326,20 @@
       var sEnd   = '</ul></div><div class=\"row search-more\"><div class=\"grid-full\"></div></div>';
       var s      = '';
 
-      // http://api.jquery.com/jQuery.getJSON/
-      // Assign handlers immediately after making the request, and remember the jqxhr object for this request
-      // JSON-parser: http://jsonviewer.stack.hu/
-      // http://77.247.77.43:8983/solr
-      // http://77.247.77.43:8983/solr/ishoj_dk/select?q=borgmester*&rows=12&wt=json&indent=true
-//      var jqxhr = $.getJSON( "/json-output.json?val=" + val, function() {
-      //var jqxhr = $.getJSON( "http://udv.ishoj.bellcom.dk/test/search.php?q=" + val, function() {
-      var jqxhr = $.getJSON( "/search/search.php?query=" + val, function() {
-//            var jqxhr = $.getJSON( "http://77.247.77.43:8983/solr/ishoj_dk/select?q=borgmester*&rows=12&wt=json&indent=true", function() {
-        console.log( "success" );
+      
+      var jqxhr = $.getJSON( "/search/search.php?query=" + encodeURIComponent(val), function() {
+//          
       })
         .done(function(data) {
-          console.log( "second success\n\n" );
+        //  console.log( "second success\n\n" );
 
 	  var resultLimit = 12;
           
           //$.each( data.response.docs, function( i, item ) {
           //  s += '<li class="grid-fourth"><a href="' + item.url + '" title="' + item.label + '"><h3><span>' + item.label + '</span></h3></a><li>';
           //});
-
+   _paq.push(['trackSiteSearch',val,"content",data.hits.total]);
+            console.log(val + ' ' + data.hits.total);
 	  $.each(data.hits.hits, function( i, item ) {
 	    if (i < resultLimit) {
 	      s += '<li><a href="' + item._source.url + '" title="' + item._source.title + '"><span class="cat-icon"></span><span class="cat-text">' + item._source.title + '</span></a></li>';
@@ -347,10 +348,11 @@
 
           if($(".soegeresultat")[0]) { // Der er allerede vist et søgeresultat
             removeSearchResults();
-            $(".soegeresultat ul").append(s);
+            $(".soegeresultat ul").append(s); 
           }
           else {
-            $(".soegebar .container").append(sStart + s + sEnd); 
+//            $(".soegebar .container").append(sStart + s + sEnd); 
+            $(".soegebar-resultater .container").append(sStart + s + sEnd); 
           }
           // Hvis der er flere end 12 søgeresultater
           if(showMoreResults && data.hits.hits.length > 12) {       
@@ -367,6 +369,11 @@
 
           setTimeout(function(){
             $(".soegeresultat").addClass("show");
+            
+            if(!$("#soegebar-resultater").hasClass("animate")) {
+              $("#soegebar-resultater").addClass("animate");
+            }
+            
             if(showMoreResults) {
               $(".search-more").addClass("show");
             }
@@ -397,9 +404,11 @@
     /*************************************/
     if($(".microArticleContainer")[0]) { 
       $(".microArticle div.mArticle").hide();
+      $(".microArticle > h2").prepend("<span class=\"sprites-sprite sprite-plus mikroartikel\"></span>").addClass("mArticle");
       $(".microArticle > h3").prepend("<span class=\"sprites-sprite sprite-plus mikroartikel\"></span>");
       
-      $(".microArticle h3.mArticle").click(function(){
+//      $(".microArticle h3.mArticle").click(function(){
+      $(".microArticle h2.mArticle, .microArticle h3.mArticle").click(function(){
           $(this).parent().find("div.mArticle").slideToggle('fast');
           if($(this).parent().hasClass("active")){
               $(this).parent().removeClass("active");
@@ -646,7 +655,7 @@
             else {
               bgMonths[i] = 1;
               console.log("Indsæt frise\n");
-              $( '<div class="swiper-slide fix-width"><div id="frise' + i + '" class="maanedsfrise ' + bgMonthsNames[i] + '" data-stellar-background-ratio="0.85"><div><div><div><h2>' + bgMonthsNamesFull[i] + '</h2></div></div></div></div></div>' ).insertBefore( $(this) );
+//              $( '<div class="swiper-slide fix-width"><div id="frise' + i + '" class="maanedsfrise ' + bgMonthsNames[i] + '" data-stellar-background-ratio="0.85"><div><div><div><h2>' + bgMonthsNamesFull[i] + '</h2></div></div></div></div></div>' ).insertBefore( $(this) );
               break; 
             }
           }

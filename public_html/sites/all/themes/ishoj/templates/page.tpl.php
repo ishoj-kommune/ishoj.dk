@@ -146,6 +146,13 @@
         </div>
       </section>
      <!--   SØGEBAR SLUT -->      
+     
+    <!-- SØGERESULTATER START -->
+    <section id="soegebar-resultater" class="soegebar-resultater"> 
+      <div class="container">
+      </div>
+    </section>
+    <!-- SØGERESULTATER SLUT -->
       
     </header>
     <!-- HEADER SLUT --> 
@@ -205,7 +212,7 @@
             <form>
                 <label for="hjemmesider">Andre hjemmesider</label>
                   <select name="hjemmesider" id="hjemmesider" class="sprite-menu">
-                  <optgroup label="Andre hjemmeside">
+                  <optgroup label="Andre hjemmesider">
                    <option value="0" selected="">Vælg en hjemmeside</option>                  
                   <?php print views_embed_view('andre_kommunale_hjemmesider','default', $node->nid); ?>
                   </optgroup>

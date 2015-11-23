@@ -40,7 +40,7 @@
  *
  * @see template_preprocess_search_api_page_result()
  */
-//dsm($info);
+
 ?>
 <li class="search-result">
  
@@ -48,7 +48,7 @@
   <h3 class="title">
     <?php print $url ? l($title, $url['path'], $url['options']) : check_plain($title); ?>
   </h3>
-    <?php
+ <?php
   $node_path = explode('/', drupal_get_normal_path($url['path']));
   $nid = $node_path[1];
   $n = node_load($nid);

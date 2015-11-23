@@ -42,6 +42,7 @@
 ?>
 
 <?php 
+
 function sortByTitle($a, $b){
   return strcmp($a->title, $b->title);
 }
@@ -109,8 +110,12 @@ function sortByTitle($a, $b){
 
   usort($nodes, 'sortByTitle');
    foreach($nodes as $nid1) {
-    $output = $output . "<li class=\"grid-fourth\"><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\"><h3><span>" . $nid1->title . "</span></h3></a><li>";    
-   }
+     
+       if ($nid1->field_indholdstype['und'][0]['tid'] != '2928') {
+           
+       $output = $output . "<li class=\"grid-fourth\"><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\"><h3><span>" . $nid1->title . "</span></h3></a><li>";   
+       }
+     }
 
 
           $output = $output . "</div>";
@@ -221,8 +226,21 @@ function sortByTitle($a, $b){
                 $output .= "</div>";
               }
 
-              $output .= render($content);
+              
 
+      if($term->vocabulary_machine_name == "kontakt") {
+      
+      // KONTAKT
+      $output .= "<!-- KONTAKT START -->";
+      $output .= "<h2>Kontakt</h2>";
+      $output .= views_embed_view('kontakttermside','default');
+      $output .= "<!-- KONTAKT SLUT -->";
+      }
+      else
+      {
+      $output .= render($content);
+      }
+      
               // DEL PÅ SOCIALE MEDIER
               include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
 
@@ -251,12 +269,84 @@ function sortByTitle($a, $b){
                 $output .= "</nav>";
               }
               else {
-                // MENU TIL UNDERSIDER START
+                  
+                  if ($term->vocabulary_machine_name == "kontakt") {
+                  
+                   // MENU TIL UNDERSIDER START
+                    $output = $output . "<nav class=\"menu-underside\">";
+                 
+ // http://stackoverflow.com/questions/4731420/how-to-insert-a-block-into-a-node-or-template-in-drupal-7
+//                    $block = module_invoke('module_name', 'block_view', 'block_delta');
+               //     $block = module_invoke('menu_block', 'block_view', '4');
+                //    $output.= render($block['content']);
+                    $output = $output . "<ul class=\"menu\">";
+                      $output = $output . "<li class=\"first expanded active-trail\">";
+                        $output = $output . "<a href=\"#\">" . $node->title . "</a>";
+                        $output = $output . "<ul class=\"menu\">";
+                     
+                        $a = taxonomy_select_nodes($term->field_os2web_base_field_kle_ref['und'], $pager = FALSE); 
+                        $nodes = array();
+                        foreach($a as $nid) {
+                          $checkifitis = 0;
+                          foreach($nodes as $n) {
+                            if ($n->nid == $nid) {
+                              $checkifitis = 1;
+                            }
+                          }
+                          if ($checkifitis == 0) {
+                            $nodes[] = node_load($nid);
+                          }
+                        }
+                        usort($nodes, 'sortByTitle');
+                        foreach($nodes as $nid1) {
+                          if ($node->nid != $nid1->nid) {
+                            $output = $output . "<li><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a></li>"; 
+                          }
+                        }
+
+                      //  $output = $output . "<li class=\"active active-trail\"><a href=\"#\">Lorem ipsum dolor</a></li>";
+                      $output = $output . "</ul>";
+                      $output = $output . "</li>";
+                      // GET ALL NOTES FROM KLE REF BY TERM KLE
+                      $a = taxonomy_select_nodes($bterm->field_os2web_base_field_kle_ref['und'], $pager = FALSE); 
+                      $nodes = array();
+                      foreach($a as $nid2) {
+                        $checkifitis = 0;
+                        // check if node are allready there
+                        foreach($nodes as $n) {
+                          if ($n->nid == $nid2) {
+                            $checkifitis = 1;
+                          }
+                        }
+                        if ($checkifitis == 0) {
+                          $nodes[] = node_load($nid2);
+                        }
+                      }
+                      usort($nodes, 'sortByTitle');
+                      foreach($nodes as $nid1) {
+                        if ($node->nid != $nid1->nid) {
+                          $output = $output . "<li class=\"collapsed\"><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a><li>";
+                        }
+                      }
+                      $output = $output . "</ul>";                  
+                      // til BLOCK MENU SITES
+                      // $block = module_invoke('menu_block', 'block_view', '4');
+                      // $output.= render($block['content']);
+
+                    $output = $output . "</nav>";
+                    // MENU TIL UNDERSIDER SLUT
+                  
+                  }     
+                  else {
+                   // MENU TIL UNDERSIDER START
                 $output .= "<nav class=\"menu-underside\">";                    
                 $block = module_invoke('menu_block', 'block_view', '4');
                 $output .= render($block['content']);
                 $output .= "</nav>";
                 // MENU TIL UNDERSIDER SLUT
+                  }
+                  
+               
               }
 
             $output .= "</div>";              
@@ -280,7 +370,6 @@ function sortByTitle($a, $b){
 
 
 ?>
-
 
 <!--<div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">-->
 

@@ -524,7 +524,7 @@ function os2web_borger_dk_fix_disabled(&$elements) {
   if (!isset($elements['#attributes'])) {
     $elements['#attributes'] = array();
   }
-  $elements['#attributes']['disabled'] = 'disabled';
+ // $elements['#attributes']['disabled'] = 'disabled';
 }
 
 /**

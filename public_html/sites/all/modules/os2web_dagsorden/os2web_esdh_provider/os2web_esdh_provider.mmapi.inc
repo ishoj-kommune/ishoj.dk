@@ -204,6 +204,11 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     // Type import.
     $node->field_os2web_meetings_type[LANGUAGE_NONE][0]['value'] = $meeting['type'];
     //Adding default meeting category
+      
+    // add by Jesper jvm@ishoj.dk to get sbsys dagsordentekst
+ $node->field_forsidetekst[LANGUAGE_NONE][0]['value'] = $meeting['forsidetekst'];
+      $node->field_forsidetekst[LANGUAGE_NONE][0]['format'] ='filtered_html';
+      
     $node->field_os2web_meetings_category[LANGUAGE_NONE][0]['value']=variable_get('os2dagsorden_default_meeting_cateroty','pol');
     //Adding participants
     if (isset($meeting['participants'])){
