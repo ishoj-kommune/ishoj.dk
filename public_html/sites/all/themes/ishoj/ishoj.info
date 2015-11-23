@@ -1,57 +1,35 @@
-name = Ishoj
-description = Ishøj Kommunes responsive theme
+name = Ishøj
+description = Ishøj Kommunes mobilvenlige og responsive theme.
 package = Core
-version = VERSION
+version = "0.5"
 core = 7.x
 
 
 ; STYLESHEET
-;stylesheets[all][] = css/reset.css
-;stylesheets[all][] = css/default.css
-;stylesheets[all][] = css/flexslider.css
-;stylesheets[all][] = css/responsive.css
+stylesheets[all][] = css/ishoj.css
 
 	
 ; SCRIPTS
-;scripts[] = js/modernizr.custom.60073.js
-;scripts[] = js/jquery.easing.1.3.js
-;scripts[] = js/jquery.hoverIntent.minified.js
+scripts[] = js/modernizr-2.6.2.min.js
 ;scripts[] = js/jquery.timer.js
-;scripts[] = js/jquery.flexslider-min.js
-;scripts[] = js/jquery.cookie.js
-;scripts[] = js/pages.js
-;scripts[] = js/front.js
-
-
+scripts[] = js/jquery.flexslider-min.js
+scripts[] = js/swiper.jquery.min.js
+scripts[] = js/ishoj.min.js
 
 
 ; REGIONS
-regions[tester] 	   				= Tester
+regions[menu_mobile]        = Mobilmenu 
+regions[menu]               = Hovedmenu 
+regions[logo]               = Logo 
+regions[editor]             = Hjemmesideredaktør 
+regions[content] 	   		= Indhold
+regions[footer_kontakt]     = Kontakt
+regions[footer_sociale]     = Sociale medier
+regions[footer_hjemmesider] = Andre kommunale hjemmesider
+regions[krisekommunikation]	= Krisekommunikation
 
-regions[editor] 	   				= Hjemmesideredaktør 
-
-regions[menu_borger] 	   			= Menu Borger
-regions[search] 	   				= Søgefelt
-regions[menu_borger_selvbtj] 	= Menu Borger Selvbetjening
-regions[menu_erhverv] 	   		= Menu Erhverv
-regions[menu_erhverv_selvbtj] 	= Menu Erhverv Selvbetjening
-regions[menu_politik] 	   		= Menu Politik
-regions[menu_politik_selvbtj] 	= Menu Politik Selvbetjening
-regions[menu_alternativ]  		= Menu Alternativ
-regions[menu_mobil]  		    	= Menu Mobil
-
-regions[sitepicker]    			= Hjemmesidevælger
-regions[oftebenyttedegenveje]   	= Ofte benyttede genveje
-regions[websitesifokus]    		= Websites i fokus
-regions[header]    	   			= Header
-regions[krisekommunikation]		= Krisekommunikation
-regions[content] 	   				= Content
-
-regions[footer]					= Footer
-regions[footer_kontakt]			= Footer Kontaktoplysninger
-regions[footer_menu_borger]		= Footer Menu Borger
-regions[footer_menu_erhverv]		= Footer Menu Erhverv
-regions[footer_menu_politik]		= Footer Menu Politik
+;regions[footer]			= Footer
+;regions[header]    	   	= Header
 
 
 ; PLUGINS

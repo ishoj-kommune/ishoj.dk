@@ -114,6 +114,7 @@ function os2web_sbsys_ishoj_esdh_mm_import_meeting($meeting) {
       $meeting_date_when_date = $manifest->xpath("Møde/@Mødedato");
       $meeting_date_when_time = $manifest->xpath("Møde/@Mødetid");
       $meeting_where = $manifest->xpath("Møde/@Mødested");
+      $meeting_forside = $manifest->xpath("Forside/Forsidetekst");
       $additional_agenda = $manifest->xpath("@Tillægsdagsorden");
 
       $committee = (string) $committee[0]['UdvalgID'];
@@ -151,7 +152,7 @@ function os2web_sbsys_ishoj_esdh_mm_import_meeting($meeting) {
       $meeting_date_when = str_ireplace(array(". januar ", ". februar ", ". marts ", ". april ", ". maj ", ". juni ", ". juli ", ". august ",". september ", ". oktober ", ". november ", ". december "),
                                         array("-1-", "-2-", "-3-", "-4-", "-5-", "-6-", "-7-", "-8-", "-9-", "-10-", "-11-", "-12-"), $meeting_date_when);
       $date_obj = date_create($meeting_date_when);
-      //date_timezone_set($date_obj, timezone_open('UTC'));
+      date_timezone_set($date_obj, timezone_open('UTC'));
       $meeting_date_when = date_format($date_obj, 'Y-m-d H:i');
 
       ////Members
@@ -188,6 +189,7 @@ function os2web_sbsys_ishoj_esdh_mm_import_meeting($meeting) {
         'meeting_date_start' => $meeting_date_when,
         'full_doc' => $full_doc,
         'location' => $meeting_where,
+        'forsidetekst' => $meeting_forside,
         'additional_agenda' => $additional_agenda,
       );
 

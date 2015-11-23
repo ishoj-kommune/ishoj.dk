@@ -39,57 +39,54 @@
  * @see template_preprocess()
  * @see template_preprocess_html()
  * @see template_process()
+ *
+ * @ingroup themeable
  */
-?>
-<!DOCTYPE HTML>
-<html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>">
-<head>
-  <meta charset="utf-8">
-  <?php print $head; ?>
-  <title><?php print $head_title; ?></title>  
+
+?><!doctype html>
+<html lang="da" class="no-js _no-svg"> 
+  <head>
+    <meta charset="utf-8">
+    <?php print $head; ?>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><?php print $head_title; ?></title>
+<!--    <meta name="description" content="">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+    <?php print $styles; ?>
+
+    <!-- HTML5 Shim for IE 6-8 -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->    
+    
+    <!-- Favicon -->
+<!--    <link rel="shortcut icon" type="image/ico" href="">-->
+    
+    <!-- Apple Touch Icons -->
+<!--
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144.png">
+-->
+    
+    <!-- MS Homescreen Icons -->
+<!--
+    <meta name="msapplication-TileColor" content="#0088cc">
+    <meta name="msapplication-TileImage" content="img/ms-touch-icon.png">
+-->
+    
+    <?php print $scripts; ?>
+  </head>
+
+  <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   
-  <!--[if lt IE 9]>
-  <meta http-equiv="X-UA-Compatible" content="IE=8" />
-  <![endif]-->        
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,400,600,700,800' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>     
-  <?php print $styles; ?>
-  <?php print $scripts; ?>
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> 
-  <script src="http://www.ishoj.dk/sites/all/themes/ishoj/js/css3-mediaqueries.js"></script>
-  <![endif]-->        
-
-  <!--[if gte IE 9]>
-  <style type="text/css">
-     .gradient { filter:none; }
-  </style>
-  <![endif]-->
-
-
-  
-</head>
-<body class="<?php print $classes; ?>" <?php print $attributes;?>>
-
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/da_DK/all.js#xfbml=1&appId=132298483630026";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
   <div id="skip-link">
     <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $page_bottom; ?>
-  
-
 </body>
 </html>

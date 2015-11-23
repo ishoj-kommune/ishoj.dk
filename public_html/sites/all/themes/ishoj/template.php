@@ -1,79 +1,79 @@
 <?php
 
+// DRUPAL SNIPPETS: http://dropbucket.org/
 
 
+/************************/
+/*** PREPROCESS THEME ***/
+/************************/
+function ishoj_theme() {
+  
+  // Theming af user login, se http://dannyenglander.com/blog/customizing-user-login-page-drupal-7
+  $items = array();
+  // create custom user-login.tpl.php
+  $items['user_login'] = array(
+    'render element' => 'form',
+    'path' => drupal_get_path('theme', 'ishoj') . '/templates',
+      'template' => 'user-login',
+      'preprocess functions' => array(
+      'ishoj_preprocess_user_login'
+      ),
+    );
+  return $items;
+}
 
-//function ishoj_process_html(&$vars) {
-//  $vars['path_to_theme'] = drupal_get_path('theme', 'ishoj') . '/';
-//  $path = drupal_get_path_alias(); 
-//  $urlPath = $path;
-//
-//  // hvis path'en indeholder strengen 'infotv'
-//  if(strpos($urlPath, 'infotv') !== false) {
-//      $javascript = drupal_static('drupal_add_js', array());
-//      unset($javascript['misc/drupal.js']);
-//      drupal_static('drupal_add_js', $javascript);
-//  } 
-//
-//}
-//
-//function ishoj_preprocess_html(&$vars) {
-//    
-//  $vars['path_to_theme'] = drupal_get_path('theme', 'ishoj') . '/';
-//  $path = drupal_get_path_alias(); 
-//  $urlPath = $path;
-//
-//  // hvis path'en indeholder strengen 'infotv'
-//  if(strpos($urlPath, 'infotv') !== false) {
-//      drupal_static_reset('drupal_add_css');
-//      drupal_static_reset('drupal_add_js');
-//      
-//      $javascript = drupal_static('drupal_add_js', array());
-//      unset($javascript['misc/drupal.js']);
-//      drupal_static('drupal_add_js', $javascript);
-//      
-//      // Tilføjer styelsheets
-//      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-//      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
-//      drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
-//      // Tilføjer javascripts
-//      drupal_add_js($vars['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
-//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 1000));
-//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
-//      drupal_add_js($vars['path_to_theme'] . 'js/Chart.min.js', array('weight' => 1000));
-//      drupal_add_js($vars['path_to_theme'] . 'js/infotv.js', array('weight' => 1000));
-//
-//  } 
-//
-//  
-//}
 
-// Implementation of hook_preprocess_page()  /  tho
-function ishoj_preprocess_page(&$vars) {  
+/***********************/
+/*** PREPROCESS HTML ***/
+/***********************/
+function ishoj_preprocess_html(&$vars) {
 
-//  if ($vars['is_front']) {
-//    drupal_add_js(drupal_get_path('theme', 'ishoj')  . '/js/jquery.colorbox-min.js');
-//    drupal_add_css(drupal_get_path('theme', 'ishoj') . '/css/colorbox.css', array('group' => CSS_THEME, 'weight' => 115));
-    //	drupal_add_css(drupal_get_path('theme', 'ishoj') . '/css/ie/ie-7.css', array('group' => CSS_THEME, 'weight' => 115, 'browsers' => array('IE' => 'lte IE 7', '!IE' => FALSE), 'preprocess' => FALSE));
-//  }
+}
 
-  $vars['path_to_theme'] = drupal_get_path('theme', 'ishoj') . '/';
+
+/***********************/
+/*** PREPROCESS PAGE ***/
+/***********************/
+function ishoj_preprocess_page(&$variables) {
+  
+  // Fjerner "There is currently no content classified with this term."
+  if(isset($variables['page']['content']['system_main']['no_content'])) {
+    unset($variables['page']['content']['system_main']['no_content']);
+  }
+  
+  // Fjerner node-indlæsningen fra teaxonomier
+  // http://www.wardontheweb.com/remove-node-lists-from-taxonomy-pages-in-drupal-7/ 
+  if(arg(0) == "taxonomy" and arg(1) == "term") {
+      $variables['page']['content']['system_main']['nodes'] = null;
+  }  
+  
+  // Hvis brugeren er logget på (webredaktør-rolle)
+  if($variables['logged_in']) {
+    // Indlæs editor.css
+    drupal_add_css (path_to_theme() . '/css/editor.css', array('type' => 'file'));
+    // Indlæs editor.js
+    drupal_add_js(drupal_get_path('theme', 'ishoj') . '/js/editor.js');
+  }
+  
+  ////////////////////
+  // I N F O - T V  //
+  ////////////////////
+  $variables['path_to_theme'] = drupal_get_path('theme', 'ishoj') . '/';
   $path = drupal_get_path_alias(); 
   $urlPath = $path;
 
   // hvis path'en indeholder strengen 'infotv'
   if(strpos($urlPath, 'infotv') !== false) {
-//  if((strpos($urlPath, 'infotv') !== false) and ((strpos($urlPath, 'udv-infotv') !== true))) {
      $urlPath = 'infotv';
   } 
   // hvis path'en indeholder strengen 'udvikling' og ikke indeholder strengen 'udvikling'
-  if((strpos($urlPath, 'udvikling') !== false)) {
-     $urlPath = 'udvikling';
-  } 
+//  if((strpos($urlPath, 'udvikling') !== false)) {
+//     $urlPath = 'udvikling';
+//  } 
   // hvis path'en indeholder strengen 'tvigrafik'
-  if(strpos($urlPath, 'tvigrafik') !== false) {
-     $urlPath = 'tvigrafik';
-  } 
+//  if(strpos($urlPath, 'tvigrafik') !== false) {
+//     $urlPath = 'tvigrafik';
+//  } 
   // hvis path'en indeholder strengen 'uglentopnyheder'
   if(strpos($urlPath, 'uglentopnyheder') !== false) { 
      $urlPath = 'uglentopnyheder';
@@ -81,20 +81,20 @@ function ishoj_preprocess_page(&$vars) {
   
   switch ($urlPath) {
 
-      case 'udvikling':
-      drupal_static_reset('drupal_add_css');
-      drupal_static_reset('drupal_add_js');
+//      case 'udvikling':
+//      drupal_static_reset('drupal_add_css');
+//      drupal_static_reset('drupal_add_js');
       
       // Tilføjer styelsheets
-      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
+//      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
+//      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
+//      drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
       // Tilføjer javascripts
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/udv-infotv.js', array('weight' => 1000));
-      break;	
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
+//      drupal_add_js($vars['path_to_theme'] . 'js/udv-infotv.js', array('weight' => 1000));
+//      break;	
 
     
     case 'infotv':
@@ -102,339 +102,154 @@ function ishoj_preprocess_page(&$vars) {
       drupal_static_reset('drupal_add_js');
       
       // Tilføjer styelsheets
-      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_reset.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
       // Tilføjer javascripts
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/Chart.min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/infotv.js', array('weight' => 1000));
-      break;	
-		
-		
-    case 'tvigrafik':
-      // Tilføjer styelsheets
-      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
-      // Tilføjer javascripts
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/Chart.min.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/tvigrafik.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/infotv.js', array('weight' => 1000));
       break;	
 
     case 'uglentopnyheder':
       // Tilføjer styelsheets
-      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/uglen_forsidenyt.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_reset.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/uglen_forsidenyt.css', array('group' => CSS_THEME, 'weight' => 100));
       // Tilføjer javascripts
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 1000));
-      //drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
-      //drupal_add_js($vars['path_to_theme'] . 'js/jquery.sideswap.js', array('weight' => 1000));
-      drupal_add_js($vars['path_to_theme'] . 'js/uglen_forsidenyt.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/uglen_forsidenyt.js', array('weight' => 1000));
       break;	
 		
-    default:
-      // Tilføjer styelsheets  
-      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
-      drupal_add_css($vars['path_to_theme'] . 'css/default.css', array('group' => CSS_THEME, 'weight' => 101));
-      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 102));
-      drupal_add_css($vars['path_to_theme'] . 'css/responsive.css', array('group' => CSS_THEME, 'weight' => 103));
-      // Tilføjer javascripts
-      drupal_add_js($vars['path_to_theme'] . 'js/modernizr.custom.60073.js', array('weight' => 100));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 101));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.hoverIntent.minified.js', array('weight' => 102));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.timer.js', array('weight' => 103));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 104));
-      drupal_add_js($vars['path_to_theme'] . 'js/jquery.cookie.js', array('weight' => 105));
-      drupal_add_js($vars['path_to_theme'] . 'js/pages.js', array('weight' => 106));
-      drupal_add_js($vars['path_to_theme'] . 'js/front.js', array('weight' => 107));
-      break;
+//    default:
+//      // Tilføjer styelsheets  
+//      drupal_add_css($vars['path_to_theme'] . 'css/reset.css', array('group' => CSS_THEME, 'weight' => 100));
+//      drupal_add_css($vars['path_to_theme'] . 'css/default.css', array('group' => CSS_THEME, 'weight' => 101));
+//      drupal_add_css($vars['path_to_theme'] . 'css/flexslider.css', array('group' => CSS_THEME, 'weight' => 102));
+//      drupal_add_css($vars['path_to_theme'] . 'css/responsive.css', array('group' => CSS_THEME, 'weight' => 103));
+//      // Tilføjer javascripts
+//      drupal_add_js($vars['path_to_theme'] . 'js/modernizr.custom.60073.js', array('weight' => 100));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 101));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.hoverIntent.minified.js', array('weight' => 102));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.timer.js', array('weight' => 103));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.flexslider-min.js', array('weight' => 104));
+//      drupal_add_js($vars['path_to_theme'] . 'js/jquery.cookie.js', array('weight' => 105));
+//      drupal_add_js($vars['path_to_theme'] . 'js/pages.js', array('weight' => 106));
+//      drupal_add_js($vars['path_to_theme'] . 'js/front.js', array('weight' => 107));
+//      break;
   }
   
-  // Page is a panel.
- // $vars['is_panel'] = function_exists('panels_get_current_page_display') && panels_get_current_page_display();
-}
-
- 
-
-global $user;
-// Hvis man er logget ind (webredaktører), indlæses dette javascript
-if($user->uid != 0) {
-    drupal_add_js(drupal_get_path('theme', 'ishoj')  . '/js/admin.js');
-}
-
-// Implementation of hook_preprocess_node()
-// Se http://api.drupal.org/api/drupal/modules%21node%21node.module/function/template_preprocess_node/7
-//function ishoj_preprocess_node(&$variables) {
-
-  // Display post information only on certain node types.
-//  if (variable_get('node_submitted_' . $node->type, TRUE)) {
- //  if($variables['display_submitted']) {
-//    $variables['submitted'] = t('Submitted by !username on !datetime', array('!username' => $variables['name'], '!datetime' => $variables['date']));
-//    $variables['submitted'] = t('Senest redigeret !datetime', array('!datetime' => $variables['date']));	
-    //$variables['user_picture'] = theme_get_setting('toggle_node_user_picture') ? theme('user_picture', array('account' => $node)) : '';
-//  }
-/*  else {
-    $variables['display_submitted'] = FALSE;
-    $variables['submitted'] = '';
-    $variables['user_picture'] = '';
-  }
-*/
-//}
-
-// Tilføjer javascript til en specifik path
-/*function ishoj_preprocess_html(&$variables) {*/
-//  $theme_path = path_to_theme();
-//  $url = request_uri();
-
-/*  if ($url == '/home') {
-    drupal_add_js($theme_path . '/js/eureka.js');
-  }*/
   
-
-/*if(strpos(request_uri(), "/selvbetjening")) {
-
-	drupal_add_js(path_to_theme() . '/js/selvbetjening.js');
-}*/
-/*  if ($url == '/selvbetjening') {
-    drupal_add_js($vars['path_to_theme'] . '/js/selvbetjening.js');
-  }
-*/
-/*}*/
-
-function ishoj_preprocess_username(&$vars) {
-  if (isset($vars['link_path']) && isset($vars['surpress_link']) && $vars['surpress_link']) {
-    unset($vars['link_path']);
-  }
+  
 }
 
 
+
+/***********************/
+/*** PREPROCESS NODE ***/
+/***********************/
 function ishoj_preprocess_node(&$variables) {
-  $node = $variables['node'];
+  
+  // Tilføjer scripts for bestemte indholdstyper (https://www.drupal.org/node/2291369)
+  $node = &$variables['node'];
+  if(($node->type == 'thomas_tester') or 
+     ($node->type == 'os2web_base_contentpage') or 
+     ($node->type == 'os2web_borger_dk_article')){
+    drupal_add_js(path_to_theme() . '/js/google-maps.js', array(
+      'group' => JS_THEME,
+      'preprocess' => TRUE,
+      'scope' => 'footer',
+      'weight' => '999',
+      )
+    );
+  }
+  $js  = &$variables['js'];
+  $css = &$variables['css'];
+  if($node->type == 'os2web_borger_dk_article'){
+  //    drupal_add_js(drupal_get_path('module', 'os2web_borger_dk') . '/js/os2web_borger_dk.js', 'file');
+//    drupal_add_css(drupal_get_path('module', 'os2web_borger_dk') . '/css/os2web_borger_dk.css', 'file');
+//    unset($js[drupal_get_path('module', 'os2web_borger_dk') . '/js/os2web_borger_dk.js']);
 
-  // Only add the revision information if the node is configured to display
-//  if ($variables['display_submitted'] && ($node->revision_uid != $node->uid || $node->revision_timestamp != $node->created)) {
-  if ($variables['display_submitted']) {
-    // Append the revision information to the submitted by text.
-    $revision_account = user_load($node->revision_uid);
-//    $variables['revision_name'] = theme('username', array('account' => $revision_account));
-    $variables['revision_date'] = format_date($node->changed);
-	
-//    $variables['submitted'] .= t(' and last modified by !revision-name on !revision-date', array(
-//      '!name' => $variables['name'], '!date' => $variables['date'], '!revision-name' => $variables['revision_name'], '!revision-date' => $variables['revision_date']));
-
-    $variables['submitted'] = t('Senest redigeret !revision-date', array('!revision-date' => $variables['revision_date']));
-    $variables['created'] = t('Senest redigeret !revision-date', array('!revision-date' => $variables['revision_date']));
+  }
+  
+}
 
 
+/***********************/
+/*** PREPROCESS VIEW ***/
+/***********************/
+function ishoj_preprocess_views_view(&$vars) {
+  $view = &$vars['view'];
+
+  // AKTIVITETER 
+  if ($view->name == 'aktiviteter' && $view->current_display == 'aktivitet_kommende_aktiviteter') {
+    // add needed javascript
+//    drupal_add_js(drupal_get_path('theme', 'ishoj') . '/js/jquery.stellar.min.js', array('weight' => 1000));
+    // add needed stylesheet
+    // drupal_add_css(drupal_get_path('theme', 'your-theme') .'/your-css.css');
   }
 }
 
 
 
-
-// Fjerner div.panel-separator crap mellem panels  /  tho
-function ishoj_panels_default_style_render_region($vars) {
-  $output = '';
-  $output .= implode('', $vars['panes']);
-  return $output;
-}
-
-// Fjerner width- og height-attributter på image-elementer  /  tho
-function ishoj_preprocess_image(&$variables) {
-  $attributes = &$variables['attributes'];
-  foreach (array('width', 'height') as $key) {
-    unset($attributes[$key]);
-    unset($variables[$key]);
-  }
-}
-
-// Tilføjer klasser til image-elementer udfra image style-name  /  tho
-function ishoj_preprocess_image_style(&$variables)  {
-    if ($variables['style_name'] == 'ishoj_forside_selvbtj_teaserfoto') {
-        $variables['attributes']['class'][] = 'teaserImg';
-        $variables['attributes']['class'][] = 'round3';
-    }
-}
-
-// Ren unordered list uden klasser /  tho
-/*function ishoj_menu_tree($variables) {
-  return '<ul>' . $variables['tree'] . '</ul>';
-}
-*/
-
+/*************************/
+/*** hook_form_alter() ***/
+/*************************/
+//https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_alter/7
 function ishoj_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'search_block_form') {
-/*	$form['#prefix'] = '';
-    $form['#suffix'] = '';*/
-    $form['search_block_form']['#title'] = t('Hvad søger du?'); // Change the text on the label element
-    $form['search_block_form']['#title_display'] = 'invisible'; // Toggle label visibilty
-    //$form['search_block_form']['#size'] = 40;  // define size of the textfield
-    $form['search_block_form']['#default_value'] = t(''); // Set a default value for the textfield
-    $form['actions']['submit']['#value'] = t('Søg'); // Change the text on the submit button
-    //$form['actions']['submit'] = array('#type' => 'image_button', '#src' => base_path() . path_to_theme() . '/images/search-button.png');
-	
-/*	$form['name']['#prefix'] = '';
-    $form['name']['#suffix'] = '';*/
-// Add extra attributes to the text box
-//    $form['search_block_form']['#attributes']['onblur'] = "if (this.value == '') {this.value = 'Search';}";
-//    $form['search_block_form']['#attributes']['onfocus'] = "if (this.value == 'Search') {this.value = '';}";
+  if ($form['#id'] == 'user-login') {
+    $form['name']['#description'] = t(''); // Clear the description of name
+    $form['pass']['#description'] = t(''); // Clear the description of pass  
   }
-  if ($form_id == 'apachesolr_panels_search_block') {
-    $form['apachesolr_panels_search_block']['#title'] = t('Hvad søger du?'); // Change the text on the label element
-    $form['apachesolr_panels_search_block']['#title_display'] = 'invisible'; // Toggle label visibilty
-    $form['apachesolr_panels_search_block']['#default_value'] = t(''); // Set a default value for the textfield
-    $form['actions']['submit']['#value'] = t('Søg'); // Change the text on the submit button
-	$form['apachesolr_panels_search_block']['#attributes']['placeholder'] = t('Hvad søger du?');
-  }
-  if ($form_id == 'apachesolr_panels_search_form') {
-    $form['apachesolr_panels_search_form']['#title'] = t('Hvad søger du?'); // Change the text on the label element
-    $form['apachesolr_panels_search_form']['#title_display'] = 'invisible'; // Toggle label visibilty
-    //$form['apachesolr_panels_search_form']['#default_value'] = t(''); // Set a default value for the textfield
-    $form['actions']['submit']['#value'] = t('Søg'); // Change the text on the submit button
-	$form['apachesolr_panels_search_form']['#attributes']['placeholder'] = t('Hvad søger du?');
-  }
-
-/*  if ($form_id == 'apachesolr-panels-search-form') {
-    $form['apachesolr-panels-search-form']['#title'] = t('Hvad søger du?'); // Change the text on the label element
-    $form['apachesolr-panels-search-form']['#title_display'] = 'invisible'; // Toggle label visibilty
-    $form['apachesolr-panels-search-form']['#default_value'] = t(''); // Set a default value for the textfield
-    $form['actions']['submit']['#value'] = t('Søg'); // Change the text on the submit button
-  }*/
-
-
-} 
-
-// Menu Alternative
-function ishoj_menu_tree__menu_block__7(&$variables) {
-  return '<ul class="altMenu">' . $variables['tree'] . '</ul>';
-}
-// Menu Sitemap Erhverv
-function ishoj_menu_tree__menu_block__12(&$variables) {
-  return '<ul class="menu hideMe">' . $variables['tree'] . '</ul>';
-}
-// Menu Sitemap Politik
-function ishoj_menu_tree__menu_block__13(&$variables) {
-  return '<ul class="menu hideMe">' . $variables['tree'] . '</ul>';
-}
-// Menu Sitemap Om os
-function ishoj_menu_tree__menu_block__14(&$variables) {
-  return '<ul class="menu hideMe">' . $variables['tree'] . '</ul>';
+  if($form['#id'] == "views-exposed-form-aktiviteter-aktivitet-kommende-aktiviteter"){
+    $form['field_aktivitetstype_tid']['#options']['All'] = 'Vis alle';// overrides <All> on the dropdown
+    $form['field_aktivitetssted_tid']['#options']['All'] = 'Vis alle';// overrides <All> on the dropdown
+//    $form['submit']['#value'] = 'Søg';
+//    $form['field_aktivitetsdato_value2[value][date]']['value']['#date_format'] = 'Y-m-d';
+    
+  }  
 }
 
-// Mobil Menu
-function ishoj_menu_tree__menu_block__8(&$variables) {
-  return '<ul>' . $variables['tree'] . '</ul>';
+/************************/
+/*** hook_css_alter() ***/
+/************************/
+function ishoj_css_alter(&$css) {
+  unset($css[drupal_get_path('module', 'os2web_borger_dk') . '/css/os2web_borger_dk.css']);
 }
 
-// Breadcrumbs 
+/************************/
+/*** hook_js_alter() ***/
+/************************/
+function ishoj_js_alter(&$javascript) {
+  unset($javascript[drupal_get_path('module', 'os2web_borger_dk') . '/js/os2web_borger_dk.js']);
+}
+
+
+/*******************/
+/*** BREADCRUMBS ***/
+/*******************/
 function ishoj_breadcrumb($variables) {
   $breadcrumb = $variables['breadcrumb'];
   
   if (!empty($breadcrumb)) {
-	$breadcrumb[0] = '<a href="/forside" title="Gå til forsiden af Ishøj Kommunes hjemmeside">' . t("Forside") . '</a>';
+//	$breadcrumb[0] = '<a href="/" title="Gå til forsiden">' . t("Service") . '</a>';
+	$breadcrumb[0] = '<a href="/" title="Gå til forsiden">Forside</a>';
     //array_shift($breadcrumb); // Removes the Home item
-    $output = '<nav class="breadcrumb gradientWhiteRev"><span>' . t("Du er her:") . ' </span>' . implode(' > ', $breadcrumb) . '</nav>';
+    
+    $output = implode(' / ', $breadcrumb);
     return $output;
   }
 }
 
-
-function ishoj_form_element($variables) {
-  $element = &$variables['element'];
-
-  // This function is invoked as theme wrapper, but the rendered form element
-  // may not necessarily have been processed by form_builder().
-  $element += array(
-    '#title_display' => 'before',
-  );
-
-  // Add element #id for #type 'item'.
-  if (isset($element['#markup']) && !empty($element['#id'])) {
-    $attributes['id'] = $element['#id'];
-  }
-  // Add element's #type and #name as class to aid with JS/CSS selectors.
-  $attributes['class'] = array('form-item');
-  if (!empty($element['#type'])) {
-    $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
-  }
-  if (!empty($element['#name'])) {
-    $attributes['class'][] = 'form-item-' . strtr($element['#name'], array(' ' => '-', '_' => '-', '[' => '-', ']' => ''));
-  }
-  // Add a class for disabled elements to facilitate cross-browser styling.
-  if (!empty($element['#attributes']['disabled'])) {
-    $attributes['class'][] = 'form-disabled';
-  }
-  //$output = '<div' . drupal_attributes($attributes) . '>' . "\n";
-  $output = '';
-  
-  // If #title is not set, we don't display any label or required marker.
-  if (!isset($element['#title'])) {
-    $element['#title_display'] = 'none';
-  }
-  $prefix = isset($element['#field_prefix']) ? '<span class="field-prefix">' . $element['#field_prefix'] . '</span> ' : '';
-  $suffix = isset($element['#field_suffix']) ? ' <span class="field-suffix">' . $element['#field_suffix'] . '</span>' : '';
-
-  switch ($element['#title_display']) {
-    case 'before':
-    case 'invisible':
-      $output .= ' ' . theme('form_element_label', $variables);
-      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
-      break;
-
-    case 'after':
-      $output .= ' ' . $prefix . $element['#children'] . $suffix;
-      $output .= ' ' . theme('form_element_label', $variables) . "\n";
-      break;
-
-    case 'none':
-    case 'attribute':
-      // Output no label and no required marker, only the children.
-      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
-      break;
-  }
-
-  if (!empty($element['#description'])) {
-    $output .= '<div class="description">' . $element['#description'] . "</div>\n";
-  }
-
-  //$output .= "</div>\n";
-
-  return $output;
+/**************/
+/*** PANELS ***/
+/**************/
+function ishoj_panels_default_style_render_region($variables) {
+  // Fjerner <div class="panel-separator"></div> i outputtet
+    $output = '';
+    $output .= implode('', $variables['panes']);
+    return $output;
 }
-
-
-
-function ishoj_textfield($variables) {
-  $element = $variables['element'];
-  $element['#attributes']['type'] = 'text';
-  //element_set_attributes($element, array('id', 'name', 'value', 'size', 'maxlength'));
-  element_set_attributes($element, array('id', 'name', 'value'));
-  _form_set_class($element, array('form-text'));
-
-  $extra = '';
-  if ($element['#autocomplete_path'] && drupal_valid_path($element['#autocomplete_path'])) {
-    drupal_add_library('system', 'drupal.autocomplete');
-    $element['#attributes']['class'][] = 'form-autocomplete';
-
-    $attributes = array();
-    $attributes['type'] = 'hidden';
-    $attributes['id'] = $element['#attributes']['id'] . '-autocomplete';
-    $attributes['value'] = url($element['#autocomplete_path'], array('absolute' => TRUE));
-    $attributes['disabled'] = 'disabled';
-    $attributes['class'][] = 'autocomplete';
-    $extra = '<input' . drupal_attributes($attributes) . ' />';
-  }
-
-  $output = '<input' . drupal_attributes($element['#attributes']) . ' />';
-
-  return $output . $extra;
-}
-
 
 
