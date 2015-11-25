@@ -36,7 +36,7 @@ function ishoj_dagsorden_aktivitet_opret_ny_node($n) {
 //  Beskrivelse
     $dagsordenNodePath = "/" . drupal_get_path_alias("node/" . $n->nid);
     // $dagsordenNodePath viser ikke nodens path alias, formentlig fordi den endnu ikke er blevet oprettet...den viser node/nid
-    $beskrivelse  = "<p>" . taxonomy_term_load($n->field_os2web_meetings_committee['und'][0]['tid'])->name . " afholder møde " . lcfirst(format_date((strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200), 'ugedag_dato_aar_og_klokkeslaet'));
+//    $beskrivelse  = "<p>" . taxonomy_term_load($n->field_os2web_meetings_committee['und'][0]['tid'])->name . " afholder møde " . lcfirst(format_date((strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200), 'ugedag_dato_aar_og_klokkeslaet'));
     $beskrivelse .= "<p><a href=\"" . $dagsordenNodePath . "\" title=\"Læs mødets dagsorden\">Læs mødets dagsorden</a></p>";
     if($n->field_os2web_meetings_location) {
       $beskrivelse .= "<p>" . taxonomy_term_load($n->field_os2web_meetings_location['und'][0]['tid'])->name . "</p>";
