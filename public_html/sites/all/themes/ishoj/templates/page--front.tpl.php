@@ -270,13 +270,12 @@ print render($page['content']['metatags']);
               </div>
             </div>
             <!-- TV-Ishøj -->
-<!--
             <div class="row">
               <div class="grid-full">
                <h3>Nyt fra TV-Ishøj</h3>
                 <div class="swiper-container-news_tvi">
                   <div class="swiper-wrapper">
-                    <?php //print views_embed_view('nyhedsliste','youtubeliste_forside', $node->nid); ?>
+                    <?php print views_embed_view('nyhedsliste','youtubeliste_forside', $node->nid); ?>
                   </div>
                 </div>       
                 
@@ -286,7 +285,6 @@ print render($page['content']['metatags']);
                 </div>
               </div>
             </div>
--->
           </div>
         </section>
         <!-- NYHEDER SLUT -->

@@ -14,7 +14,8 @@ scripts[] = js/modernizr-2.6.2.min.js
 ;scripts[] = js/jquery.timer.js
 scripts[] = js/jquery.flexslider-min.js
 scripts[] = js/swiper.jquery.min.js
-scripts[] = js/ishoj.min.js
+scripts[] = js/ishoj.js
+scripts[] = js/ishoj.search.js
 
 
 ; REGIONS

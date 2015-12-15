@@ -86,8 +86,10 @@
 
 
 <?php
-function sortByTitle($a, $b){
-  return strcmp($a->title, $b->title);
+if (!function_exists('sortByTitle')) {
+  function sortByTitle($a, $b){
+    return strcmp($a->title, $b->title);
+  }
 }
 $output = "";
 ?>

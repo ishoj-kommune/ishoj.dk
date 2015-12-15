@@ -446,7 +446,7 @@
 		/*****************/
 		/**** ADD-ONS ****/
 		/*****************/
-
+        
         
         /***** NYHEDER PÅ UGLEN *****/
         var uglen = 0; 
@@ -458,8 +458,10 @@
           setInterval(function() {
             if($(".uglen-alle-nyheder").hasClass("currentSlide")) {
               if(!uglen) {
+                console.log("Så er klassen \"currentSlide\" på!");
                 var uglenInterval = setInterval(function() {
                     clearInterval(uglenInterval);
+                    console.log("Der er gået 3 sekunder!");
                     $(".uglen-alle-nyheder ul:first-of-type").addClass("action");
                 }, 10000);
                 uglen = 1; 

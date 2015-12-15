@@ -66,6 +66,10 @@ function ishoj_preprocess_page(&$variables) {
   if(strpos($urlPath, 'infotv') !== false) {
      $urlPath = 'infotv';
   } 
+  // hvis path'en indeholder strengen 'infotv-udvikling'
+  if(strpos($path, 'infotv-udvikling') !== false) {
+     $urlPath = 'infotv-udvikling';
+  } 
   // hvis path'en indeholder strengen 'udvikling' og ikke indeholder strengen 'udvikling'
 //  if((strpos($urlPath, 'udvikling') !== false)) {
 //     $urlPath = 'udvikling';
@@ -111,6 +115,22 @@ function ishoj_preprocess_page(&$variables) {
       drupal_add_js($variables['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
       drupal_add_js($variables['path_to_theme'] . 'js/infotv.js', array('weight' => 1000));
       break;	
+
+    case 'infotv-udvikling':
+      drupal_static_reset('drupal_add_css');
+      drupal_static_reset('drupal_add_js');
+      
+      // Tilføjer styelsheets
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_reset.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv_flexslider.css', array('group' => CSS_THEME, 'weight' => 100));
+      drupal_add_css($variables['path_to_theme'] . 'css/infotv/infotv.css', array('group' => CSS_THEME, 'weight' => 100));
+      // Tilføjer javascripts
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery-1.10.2.min.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery.flexslider-udv.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/jquery.easing.1.3.js', array('weight' => 1000));
+      drupal_add_js($variables['path_to_theme'] . 'js/infotv-udvikling.js', array('weight' => 1000));
+      break;	
+
 
     case 'uglentopnyheder':
       // Tilføjer styelsheets
