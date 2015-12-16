@@ -12,10 +12,11 @@
     <ul class="slides">
       <!-- info-tv start -->
       <?php
-          $output = "";          
+      $output = "";          
       
-      
-      // UGLEN - START
+      /////////////////////////////////////////
+      //////////////  U G L E N  //////////////
+      /////////////////////////////////////////
       if($_GET['uglen'] == '1') {
         
         // TOPNYHEDER
@@ -84,8 +85,88 @@
         }
 
       }
-      // UGLEN - SLUT
 
+      
+      
+      /////////////////////////////////////////////////////////
+      //////////////  U N G D O M S S K O L E N  //////////////
+      /////////////////////////////////////////////////////////
+      if($_GET['isung'] == '1') {
+        $url = "http://www.ishoj.dk/json-ungdomsskolen-dagsprogram?no_login=1&hest=" . rand();
+        $request = drupal_http_request($url);
+        $json_response = drupal_json_decode($request->data);
+        $json_count = sizeof($json_response);
+        if($json_count < 8) {
+          $json_last_in_first = $json_count;
+        }
+        else {
+          $json_last_in_first = 8;
+        }
+        $pages = 1;
+        if($json_count > 8) {
+          $pages = 2;
+        }
+
+        if($json_response) { 
+          $output .= '<li data-pages="' . $pages . '" data-elements="' . $json_count . '" class="infotv-skabelon ungdomsskolen-dagensprogram">';
+            $output .= '<div class="bar">';
+              $output .= '<h2 class="animationForward">' . format_date(time(), 'custom', 'l j. F Y') . '</h2>'; // Datoformat: FREDAG 6. NOVEMBER 2015
+            $output .= '</div>';
+
+            $i = 1;
+            foreach ($json_response as $response_data) {
+              
+              $output_line = '<li>';
+              $output_line .= '<span class="tid">' . $response_data['klokken'] . '</span>';
+              $output_line .= '<span class="fag">' . $response_data['fag'] . '</span>';
+              $output_line .= '<span class="navn">' . $response_data['underviser'] . '</span>';
+              $output_line .= '<span class="lokale">' . $response_data['lokale'] . '</span>';
+              $output_line .= '</li>';
+              
+              // <ul>
+              if($i == 1) {
+                $output .= '<ul>';  
+              }              
+              if($i == 9) {
+                $output .= '<ul class="last">';
+              }
+              
+              // <li>
+              if($i == $json_last_in_first) {
+                $output .= str_replace('<li>', '<li class="animationStart">', $output_line); 
+              }
+              else {
+                $output .= $output_line;
+              }
+              if(($i > 8) and ($i == $json_count)) {
+                $output .= '<li class="animationEnd"></li>';  
+              }
+
+              // </ul>
+              if(($i == $json_count) or ($i == $json_last_in_first)) {
+                $output .= '</ul>';
+              }
+               
+              $i++;
+
+            }
+
+          $output .= '</li>';
+
+        }
+      }
+      
+      
+      
+      ///////////////////////////////////////////////////////
+      //////////////  I D R Æ T S C E N T E R  //////////////
+      ///////////////////////////////////////////////////////
+      if($_GET['idraetscenter'] == '1') {
+      
+      }
+      
+
+      
       
       print $output;
       print $content['content']; 
