@@ -20,10 +20,10 @@
         var reloadPageMinutes = 0.05; // default = 5
         var slidesHTML = "";
         var slidesHTML_overlay = "";
-        var slidesHTML_uglen = "";
-        var visNyhederFraUglen = false;
-        var s_uglenTemp = "";
-        var denneURL = "";
+//        var slidesHTML_uglen = "";
+//        var visNyhederFraUglen = false;
+//        var s_uglenTemp = "";
+//        var denneURL = "";
 
         
         function reloadPage(i) {
@@ -68,12 +68,12 @@
             
             
             // http://api.jquery.com/jquery.get/
-            if(visNyhederFraUglen) {
-              denneURL = window.location + '&hash=' + Math.random();
-            }
-            else {
-              denneURL = window.location + '?hash=' + Math.random();
-            }
+//            if(visNyhederFraUglen) {
+//              denneURL = window.location + '&hash=' + Math.random();
+//            }
+//            else {
+            denneURL = window.location + '?hash=' + Math.random();
+//            }
             
             var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
 //            var jqxhr = $.get((window.location + '?hash=' + Math.random()), {timeout:5000, dataType:"json"},  function() {
@@ -239,9 +239,9 @@
         }
         // tjekker URL'en for om der er angivet en uglen=1
         // topnyheder fra Uglen læses ind
-        if(getURLParameter('uglen') == 1) {
-          visNyhederFraUglen = true;
-        }
+//        if(getURLParameter('uglen') == 1) {
+//          visNyhederFraUglen = true;
+//        }
 //        else {
 //          reloadPageTimer();
 //        }
@@ -335,7 +335,7 @@
           autoAdvancing = false;
           $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").unbind('webkitAnimationEnd'); 
           
-          initUglen(); // Bruges til nyheder fra uglen. Kig under "Add-ons"
+          initAddOns(); // Inits fra Add-Ons
         }        
         
         /***** FJERNER ALLE CURRENT SLIDE- OG REVERSE-KLASSER *****/
@@ -447,6 +447,11 @@
 		/**** ADD-ONS ****/
 		/*****************/
         
+        /***** INITS TIL ADD-ONS *****/
+        function initAddOns() {
+          initUglen();    // Nyheder fra uglen
+          initDagsplan(); // Dagsplaner på Ungdomsskolen
+        }
         
         /***** NYHEDER PÅ UGLEN *****/
         var uglen = 0; 
@@ -458,10 +463,8 @@
           setInterval(function() {
             if($(".uglen-alle-nyheder").hasClass("currentSlide")) {
               if(!uglen) {
-                console.log("Så er klassen \"currentSlide\" på!");
                 var uglenInterval = setInterval(function() {
                     clearInterval(uglenInterval);
-                    console.log("Der er gået 3 sekunder!");
                     $(".uglen-alle-nyheder ul:first-of-type").addClass("action");
                 }, 10000);
                 uglen = 1; 
@@ -469,6 +472,35 @@
             }
           }, 100); 
         }
+        
+        /***** DAGSPLAN PÅ UNGDOMSSKOLEN *****/
+        var dagsplan = 0; 
+        function initDagsplan() {
+          dagsplan = 0;
+          $(".ungdomsskolen-dagensprogram ul:first-of-type").removeClass("action");
+          $(".ungdomsskolen-dagensprogram .pager .page-1").addClass("action");
+          $(".ungdomsskolen-dagensprogram .pager .page-2").removeClass("action");
+        }
+        if($(".ungdomsskolen-dagensprogram").length) { 
+          setInterval(function() {
+            if($(".ungdomsskolen-dagensprogram").hasClass("currentSlide")) {
+              if(!dagsplan) {
+                var dagsplanInterval = setInterval(function() {
+                    clearInterval(dagsplanInterval);
+                    $(".ungdomsskolen-dagensprogram ul:first-of-type").addClass("action");
+                    var isungPagerInterval = setInterval(function() {
+                      clearInterval(isungPagerInterval);
+                      $(".ungdomsskolen-dagensprogram .pager .page-1").removeClass("action");
+                      $(".ungdomsskolen-dagensprogram .pager .page-2").addClass("action");
+                    }, 1000);
+                }, 10000);
+                uglen = 1; 
+              }
+            }
+          }, 100); 
+        }
+        
+        
         
 
         /***** YOUTUBE VIDEO *****/  // Se i øvrigt https://developers.google.com/youtube/iframe_api_reference#Overview
