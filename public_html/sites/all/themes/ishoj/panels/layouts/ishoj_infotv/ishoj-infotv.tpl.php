@@ -13,6 +13,10 @@
       <!-- info-tv start -->
       <?php
       $output = "";          
+
+      // Dummy
+//      $output .= "<li data-duration=\"0.001\" class=\"infotv-dummy\"></li>"; 
+
       
       /////////////////////////////////////////
       //////////////  U G L E N  //////////////

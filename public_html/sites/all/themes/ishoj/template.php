@@ -225,6 +225,10 @@ function ishoj_form_alter(&$form, &$form_state, $form_id) {
   if($form['#id'] == "views-exposed-form-aktiviteter-aktivitet-kommende-aktiviteter"){
     $form['field_aktivitetstype_tid']['#options']['All'] = 'Vis alle';// overrides <All> on the dropdown
     $form['field_aktivitetssted_tid']['#options']['All'] = 'Vis alle';// overrides <All> on the dropdown
+    $form['field_arrangor_tid']['#options']['All'] = 'Vis alle';// overrides <All> on the dropdown
+      
+      
+    
 //    $form['submit']['#value'] = 'Søg';
 //    $form['field_aktivitetsdato_value2[value][date]']['value']['#date_format'] = 'Y-m-d';
     

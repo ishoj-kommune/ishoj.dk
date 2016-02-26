@@ -94,12 +94,12 @@ if (!function_exists('sortByTitle')) {
 $output = "";
 ?>
 
-                     
+
         <!-- ARTIKEL START -->
-<?php       
+<?php
 
         if($node->field_indholdstype) {
-          // Hvis kriseinformation 
+          // Hvis kriseinformation
           if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Kriseinformation") {
             $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel breaking-artikel\">";
           }
@@ -111,10 +111,10 @@ $output = "";
           $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel\">";
         }
 
-         
+
           $output = $output . "<div class=\"container\">";
 
-// Get menu from kategori term ref by term KLE                     
+// Get menu from kategori term ref by term KLE
     $query = new EntityFieldQuery;
 $result2 = $query
   ->entityCondition('entity_type', 'taxonomy_term')
@@ -122,16 +122,16 @@ $result2 = $query
   ->fieldCondition('field_os2web_base_field_kle_ref', 'tid', $node->field_os2web_base_field_kle_ref['und'][0]['tid'])
   ->execute();
 $bufcount = 0;
-$buftid = 0; 
+$buftid = 0;
 foreach($result2 as $v1) {
 foreach($v1 as $v2) {
-if ($bufcount == 0) {   
+if ($bufcount == 0) {
 $buftid = $v2->tid;
 ++$bufcount;
-}        
-}    
-}                       
-$bterm = taxonomy_term_load($buftid);  
+}
+}
+}
+$bterm = taxonomy_term_load($buftid);
 
 
 
@@ -143,24 +143,24 @@ $bterm = taxonomy_term_load($buftid);
               $output = $output . "</div>";
             $output = $output . "</div>";
 
-           
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
                 $output = $output . "<h1 id=\"main-content\">" . $title . "</h1>";
               $output = $output . "</div>";
               $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
             $output = $output . "</div>";
-  
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
                 $output = $output . "<!-- ARTIKEL TOP START -->";
                 $output = $output . "<div class=\"artikel-top\">";
                     // FOTO
                     $output = $output . "<!-- FOTO START -->";
-                    
+
                     if($node->field_os2web_base_field_image) {
                       hide($content['field_image_flexslider']);
-                      
+
                       $output = $output . render($content['field_os2web_base_field_image']);
                       if($node->field_billedtekst) {
                         $output = $output . "<p class=\"foto-tekst\">" . $node->field_billedtekst['und'][0]['value'] . "</p>";
@@ -175,9 +175,9 @@ $bterm = taxonomy_term_load($buftid);
                         $output = $output . "<ul class=\"slides\">";
                         $length = sizeof($node->field_image_flexslider['und']);
                         for ($i = 0; $i < $length; $i++) {
-                          $output = $output . "<li>" . render($content['field_image_flexslider'][$i]) . "</li>"; 
+                          $output = $output . "<li>" . render($content['field_image_flexslider'][$i]) . "</li>";
                         }
-                        $output = $output . "</ul>";                  
+                        $output = $output . "</ul>";
                       $output = $output . "</div>";
                     }
                     $output = $output . "<!-- FLEXSLIDER SLUT -->";
@@ -198,39 +198,39 @@ $bterm = taxonomy_term_load($buftid);
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
-                
+
                 // UNDEROVERSKRIFT
                 $output = $output . "<!-- UNDEROVERSKRIFT START -->";
                 if($node->field_os2web_base_field_summary) {
                   $output = $output . "<h2>" . $node->field_os2web_base_field_summary['und'][0]['safe_value'] . "</h2>";
                 }
                 $output = $output . "<!-- UNDEROVERSKRIFT SLUT -->";
-               
+
                 // SELVBETJENINGSLØSNING
                 $output = $output . "<!-- SELBETJENINGSLØSNING START -->";
                 $output = $output . views_embed_view('selvbetjeningslosning','default', $node->nid);
                 $output = $output . "<!-- SELBETJENINGSLØSNING SLUT -->";
-               
-                
+
+
                 // TEKSTINDHOLD
                 $output = $output . "<!-- TEKSTINDHOLD START -->";
                 hide($content['comments']);
                 hide($content['links']);
                 $output = $output . render($content);
                 $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
-                
-                
+
+
                 // MIKROARTIKLER
                 $output = $output . "<!-- MIKROARTIKLER START -->";
-                if($node->field_mikroartikler_titel1 or 
-                  $node->field_mikroartikler_titel2 or 
-                  $node->field_mikroartikler_titel3 or 
-                  $node->field_mikroartikler_titel4 or 
-                  $node->field_mikroartikler_titel5 or 
-                  $node->field_mikroartikler_titel6 or 
-                  $node->field_mikroartikler_titel7 or 
-                  $node->field_mikroartikler_titel8 or 
-                  $node->field_mikroartikler_titel9 or 
+                if($node->field_mikroartikler_titel1 or
+                  $node->field_mikroartikler_titel2 or
+                  $node->field_mikroartikler_titel3 or
+                  $node->field_mikroartikler_titel4 or
+                  $node->field_mikroartikler_titel5 or
+                  $node->field_mikroartikler_titel6 or
+                  $node->field_mikroartikler_titel7 or
+                  $node->field_mikroartikler_titel8 or
+                  $node->field_mikroartikler_titel9 or
                   $node->field_mikroartikler_titel10) {
 
                   $mikroartikel = '<div class="microArticleContainer">';
@@ -335,7 +335,7 @@ $bterm = taxonomy_term_load($buftid);
                   }
 
                   $mikroartikel = $mikroartikel . "</div>";
-                  $output = $output . $mikroartikel;	
+                  $output = $output . $mikroartikel;
                 }
                 $output = $output . "<!-- MIKROARTIKLER SLUT -->";
 
@@ -343,6 +343,15 @@ $bterm = taxonomy_term_load($buftid);
                 // --------------------------------- //
                 //  S P E C I F I K K E   N O D E R  //
                 // --------------------------------- //
+
+                // MIDLERTIDIG SIDE, SOM HR SKAL BRUGE TIL AT TESTE E-REKRUTTERINGSSYSTEM. SKAL SLETTES SENERE
+                // NODEN "Test af e-rekrutteringssystem fra HR-Skyen" - node-id: 38683
+                if($node->nid == 38683) {
+                  $output .= "<script src=\"https://hr-skyen.dk/hr/frame-api/hr.js\" type=\"text/javascript\"></script>";
+                  $output .= "<div id=\"hrskyen\"><noscript>This page requires javascript<br /> <a href=\"https://hr-skyen.dk/list-jobs/\">Visit our job page</a></noscript></div>";
+                  $output .= "<script src=\"https://hr-skyen.dk/hr/frame-api/customers/ishoj.js\" type=\"text/javascript\"></script>";
+                }
+
 
                 // NODEN "Politiske udvalg" - node-id: 796
                 if($node->nid == 796) {
@@ -374,7 +383,7 @@ $bterm = taxonomy_term_load($buftid);
                 // ------------------------------------------------- //
 
 
-                // Hvis indholdstypen er en ledig stilling 
+                // Hvis indholdstypen er en ledig stilling
                 if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Ledig stilling") {
                   $output .= "<div class=\"artikel-boks\"><p>Ishøj Kommune ønsker at afspejle samfundet. Derfor opfordres kvinder og mænd uanset alder, religion, handicap og etnisk baggrund til at søge.</p></div>";
                 }
@@ -382,10 +391,10 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 if($node->field_indholdstype) {
-                  
-                  // Hvis det ikke er af typen kriseinformation 
+
+                  // Hvis det ikke er af typen kriseinformation
                   if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name <> "Kriseinformation") {
-                                                    
+
                     // DIVERSE BOKS
                     $output = $output . "<!-- DIVERSE BOKS START -->";
                     if($node->field_diverse_boks) {
@@ -396,8 +405,8 @@ $bterm = taxonomy_term_load($buftid);
                     $output = $output . "<!-- DIVERSE BOKS SLUT -->";
                   }
                 }
-                
-                
+
+
                 // LÆS OGSÅ
                 $output = $output . "<!-- LÆS OGSÅ START -->";
                 if($node->field_url) {
@@ -436,8 +445,8 @@ $bterm = taxonomy_term_load($buftid);
                   $output = $output . "</ul>";
                 }
                 $output = $output . "<!-- HVAD SIGER LOVEN? SLUT -->";
-                
-                
+
+
                 // KONTAKT
                 $output .= "<!-- KONTAKT START -->";
                 if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
@@ -449,9 +458,9 @@ $bterm = taxonomy_term_load($buftid);
                 $view->set_display('default');
                 $view->set_arguments($args);
                 $view->execute();
-                if(count($view->result) > 0) { 
+                if(count($view->result) > 0) {
                  $output .= $view->render();
-                } 
+                }
                 else {
                   $output .= views_embed_view('kontakt_kle','default', 1968);
                 }
@@ -459,17 +468,17 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 // DEL PÅ SOCIALE MEDIER
-                // Hvis noden er en indholdsside, borger.dk-artikel eller en aktivitet 
+                // Hvis noden er en indholdsside, borger.dk-artikel eller en aktivitet
                 if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article')) {
                   include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
                 }
 
-                
+
                 // SENEST OPDATERET
                 $output = $output . "<!-- SENEST OPDATERET START -->";
                 $output = $output . "<p class=\"last-updated\">Senest opdateret " . format_date($node->changed, 'senest_redigeret') . "</p>";
                 $output = $output . "<!-- SENEST OPDATERET SLUT -->";
-                
+
 
                 // REDIGÉR-KNAP
                 if($logged_in) {
@@ -478,17 +487,17 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 $output = $output . "</div>";
-              
-              
-              // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+
+
+              // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
               if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article')) {
-                
+
                 $output = $output . "<div class=\"grid-third\">";
-                
-                
+
+
                 // HVIS DER ER VALGT EN INDHOLDSTYPE VED "OPRET INDHOLD"
                 if($node->field_indholdstype) {
-                  
+
                   // Hvis indholdstypen er Nyhed
                   if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Nyhed") {
                     // LISTE OVER NYHEDER START
@@ -505,8 +514,8 @@ $bterm = taxonomy_term_load($buftid);
                     $output = $output . "</nav>";
                   }
                   // LISTE OVER NYHEDER SLUT
-                  
-                  // Hvis indholdstypen er en kriseinformation 
+
+                  // Hvis indholdstypen er en kriseinformation
                   elseif(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Kriseinformation") {
                     // DIVERSE BOKS
                     $output = $output . "<!-- DIVERSE BOKS START -->";
@@ -518,7 +527,7 @@ $bterm = taxonomy_term_load($buftid);
                     $output = $output . "<!-- DIVERSE BOKS SLUT -->";
                   }
 
-                  // Hvis indholdstypen er en ledig stilling 
+                  // Hvis indholdstypen er en ledig stilling
                   if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Ledig stilling") {
                     // LISTE OVER LEDIGE STILLINGER START
                     $output = $output . "<nav class=\"menu-underside\">";
@@ -535,12 +544,12 @@ $bterm = taxonomy_term_load($buftid);
                   // LISTE OVER LEDIGE STILLINGER SLUT
 
                   else {
-                    
-                    
-                    
+
+
+
                     // MENU TIL UNDERSIDER START
                     $output = $output . "<nav class=\"menu-underside\">";
-                 
+
  // http://stackoverflow.com/questions/4731420/how-to-insert-a-block-into-a-node-or-template-in-drupal-7
 //                    $block = module_invoke('module_name', 'block_view', 'block_delta');
                //     $block = module_invoke('menu_block', 'block_view', '4');
@@ -549,7 +558,7 @@ $bterm = taxonomy_term_load($buftid);
                       $output = $output . "<li class=\"first expanded active-trail\">";
                         $output = $output . "<a href=\"#\">" . $node->title . "</a>";
                         $output = $output . "<ul class=\"menu\">";
-                        $a = taxonomy_select_nodes($node->field_os2web_base_field_kle_ref['und'], $pager = FALSE); 
+                        $a = taxonomy_select_nodes($node->field_os2web_base_field_kle_ref['und'], $pager = FALSE);
                         $nodes = array();
                         foreach($a as $nid) {
                           $checkifitis = 0;
@@ -565,7 +574,7 @@ $bterm = taxonomy_term_load($buftid);
                         usort($nodes, 'sortByTitle');
                         foreach($nodes as $nid1) {
                           if ($node->nid != $nid1->nid) {
-                            $output = $output . "<li><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a></li>"; 
+                            $output = $output . "<li><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a></li>";
                           }
                         }
 
@@ -573,7 +582,7 @@ $bterm = taxonomy_term_load($buftid);
                       $output = $output . "</ul>";
                       $output = $output . "</li>";
                       // GET ALL NOTES FROM KLE REF BY TERM KLE
-                      $a = taxonomy_select_nodes($bterm->field_os2web_base_field_kle_ref['und'], $pager = FALSE); 
+                      $a = taxonomy_select_nodes($bterm->field_os2web_base_field_kle_ref['und'], $pager = FALSE);
                       $nodes = array();
                       foreach($a as $nid2) {
                         $checkifitis = 0;
@@ -593,7 +602,7 @@ $bterm = taxonomy_term_load($buftid);
                           $output = $output . "<li class=\"collapsed\"><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a><li>";
                         }
                       }
-                      $output = $output . "</ul>";                  
+                      $output = $output . "</ul>";
                       // til BLOCK MENU SITES
                       // $block = module_invoke('menu_block', 'block_view', '4');
                       // $output.= render($block['content']);
@@ -605,36 +614,36 @@ $bterm = taxonomy_term_load($buftid);
 
                 $output = $output . "</div>";
               }
-              
+
             $output = $output . "</div>";
           $output = $output . "</div>";
         $output = $output . "</section>";
         $output = $output . "<!-- ARTIKEL SLUT -->";
 
-       
+
         // DIMMER DEL SIDEN
         $output = $output . "<!-- DIMMER DEL SIDEN START -->";
-        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER, 
-        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER,
+        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
         if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article')) {
           $options = array('absolute' => TRUE);
           $nid = $node->nid; // Node ID
           $abs_url = url('node/' . $nid, $options);
 
           $output = $output . "<div class=\"dimmer-delsiden hidden\">";
-          
+
           $output .= "<a class=\"breaking-close\" href=\"#\" title=\"Luk\">Luk</a>";
-            
+
             $output = $output . "<ul>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-facebook\" href=\"https://www.facebook.com/sharer/sharer.php?u=" . $abs_url . "\" title=\"Del siden på Facebook\"><span><span class=\"screen-reader\">Del siden på Facebook</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";
             $output = $output . "</ul>";
             $output = $output . "<div class=\"link-url\">";
-            $output = $output . "<label for=\"textareaurl\">Label for textarea</label>";            
+            $output = $output . "<label for=\"textareaurl\">Label for textarea</label>";
             $output = $output . "<textarea id=\"textareaurl\">" . $abs_url . "</textarea>";
             $output = $output . "</div>";
           $output = $output . "</div>";
@@ -642,14 +651,11 @@ $bterm = taxonomy_term_load($buftid);
         $output = $output . "<!-- DIMMER DEL SIDEN SLUT -->";
 
           // BREAKING
-          $output .= views_embed_view('kriseinformation','nodevisning', $node->nid); 
+          $output .= views_embed_view('kriseinformation','nodevisning', $node->nid);
 
         print $output;
         print render($content['links']);
-        print render($content['comments']); 
+        print render($content['comments']);
 
 
 ?>
-
-       
-

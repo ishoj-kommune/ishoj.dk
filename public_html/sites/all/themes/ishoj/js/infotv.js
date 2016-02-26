@@ -483,8 +483,10 @@
           $(".ungdomsskolen-dagensprogram .pager .page-2").removeClass("action");
         }
         if($(".ungdomsskolen-dagensprogram").length) { 
+          // console.log("Her 1"); 
           setInterval(function() {
             if($(".ungdomsskolen-dagensprogram").hasClass("currentSlide")) {
+              // console.log("Her 2");
               if(!dagsplan) {
                 var dagsplanInterval = setInterval(function() {
                     clearInterval(dagsplanInterval);
