@@ -72,39 +72,39 @@
  * @ingroup themeable
  */
 ?>
- 
- 
-<?php 
+
+
+<?php
 
 // Sætter metatags på forsiden
-print render($page['content']['metatags']); 
+print render($page['content']['metatags']);
 
 ?>
-  
+
     <!-- HEADER START -->
     <header data-role="header">
-      
+
       <!-- NAVIGATION START -->
       <div class="container">
 
             <!-- ARROW START -->
             <div class="arrow action">
-            
+
               <!-- IKONER START -->
               <i class="icon icon-list btn-mobilmenu" title="Vis menu"></i>
               <i class="icon icon-cross btn-mobilmenu-hide hide-me" title="Skjul menu"></i>
               <i class="icon icon-search btn-search"  title="Søg"></i>
               <!-- IKONER SLUT -->
-              
+
               <!-- MENU START -->
               <nav class="mainMenu">
                 <?php print render($page['menu']); ?>
               </nav>
               <!-- MENU SLUT -->
-              
+
               <!-- LOGO START -->
               <?php
-              if($logo or $site_name) { 
+              if($logo or $site_name) {
                 // site version
                 $logoContent = "<div class=\"logo-container\">";
                 $logoContent .= "<a class=\"logo-site\" href=\"" . $front_page . "\" title=\"Gå til forsiden\" rel=\"home\">";
@@ -116,16 +116,16 @@ print render($page['content']['metatags']);
                   $logoContent .= "<span>" . $site_name . "</span>";
                 }
                 $logoContent .= "</a></div>";
-                
+
                 // print version
                 print $logoContent;
               }
               ?>
               <!-- LOGO SLUT -->
-            
+
             </div>
             <!-- ARROW SLUT -->
-            
+
       </div>
       <!-- NAVIGATION SLUT -->
 
@@ -134,8 +134,8 @@ print render($page['content']['metatags']);
         <?php print render($page['menu_mobile']); ?>
       </nav>
       <!-- MOBILMENU SLUT -->
-                 
-                  
+
+
       <!-- SØGEBAR START -->
 <!--      <section class="soegebar animate">-->
       <section class="soegebar animate bg bg-<?php echo mt_rand(1,9); ?>">
@@ -146,26 +146,26 @@ print render($page['content']['metatags']);
               <form action="/" method="post" accept-charset="UTF-8">
                 <label class="" for="soegefelt">Søg</label>
                 <input id="soegefelt" placeholder="Indtast dit søgeord"/>
-              </form>              
-            </div>      
+              </form>
+            </div>
           </div>
         </div>
       </section>
-      <!-- SØGEBAR SLUT -->      
+      <!-- SØGEBAR SLUT -->
 
       <!-- SØGERESULTATER START -->
-      <section id="soegebar-resultater" class="soegebar-resultater"> 
+      <section id="soegebar-resultater" class="soegebar-resultater">
         <div class="container">
         </div>
       </section>
       <!-- SØGERESULTATER SLUT -->
 
     </header>
-    <!-- HEADER SLUT --> 
-    
+    <!-- HEADER SLUT -->
+
     <!-- PAGE START -->
-    <div data-role="page"> 
-    
+    <div data-role="page">
+
       <?php if ($messages): ?>
       <!-- DRUPAL MESSAGES START -->
       <div class="drupal-messages">
@@ -182,11 +182,11 @@ print render($page['content']['metatags']);
       </div>
       <!-- DRUPAL MESSAGES SLUT -->
       <?php endif; ?>
-    
-        
+
+
       <?php if($page['editor'] and $logged_in): ?>
       <?php //if($logged_in): ?>
-        <!-- REDAKTØRMENU START -->        
+        <!-- REDAKTØRMENU START -->
         <section class="redaktormenu">
           <div class="container">
             <div class="row">
@@ -202,12 +202,12 @@ print render($page['content']['metatags']);
         </section>
         <!-- REDAKTØRMENU SLUT -->
       <?php endif; ?>
-      
-      
-      
+
+
+
       <!-- CONTENT START -->
-      <div data-role="content"> 
-       
+      <div data-role="content">
+
       <?php
         $output = "";
 
@@ -234,7 +234,7 @@ print render($page['content']['metatags']);
     default:
       $output = $output . "<li><a href=\"" . url('taxonomy/term/' . $term->tid) . "\" title=\"" . $term->name . "\"><span class=\"cat-icon\"></span><span class=\"cat-text\">" . $term->name . "</span></a></li>";
 }
-                       
+
                       }
                       $output = $output . "</ul>";
                     }
@@ -245,7 +245,7 @@ print render($page['content']['metatags']);
             $output = $output . "</div>";
           $output = $output . "</div>";
         $output = $output . "</section>";
-        $output = $output . "<!-- CONTENT CATEGORY SLUT -->";     
+        $output = $output . "<!-- CONTENT CATEGORY SLUT -->";
 
         print $output;
         ?>
@@ -261,8 +261,8 @@ print render($page['content']['metatags']);
                   <div class="swiper-wrapper">
                     <?php print views_embed_view('nyhedsliste','panel_pane_2', $node->nid); ?>
                   </div>
-                </div>       
-                
+                </div>
+
                 <div class="news-swiper-button-container">
                   <div class="swiper-button white news-swiper-button-prev "></div>
                   <div class="swiper-button white news-swiper-button-next "></div>
@@ -277,8 +277,8 @@ print render($page['content']['metatags']);
                   <div class="swiper-wrapper">
                     <?php print views_embed_view('nyhedsliste','youtubeliste_forside', $node->nid); ?>
                   </div>
-                </div>       
-                
+                </div>
+
                 <div class="news_tvi-swiper-button-container">
                   <div class="swiper-button white news_tvi-swiper-button-prev "></div>
                   <div class="swiper-button white news_tvi-swiper-button-next "></div>
@@ -288,30 +288,9 @@ print render($page['content']['metatags']);
           </div>
         </section>
         <!-- NYHEDER SLUT -->
-        
-        <!-- SOCIAL CONTENT START --> 
-        <section class="social-content">
-          <div class="container">
-            <div class="row">
-              <div class="grid-full">
-                <h2>Nyt på vores sociale medier</h2>
-                <div class="swiper-container-social-content">
-                  <div class="swiper-wrapper">
-                    <?php print views_embed_view('social_content','default'); ?>
-                  </div>
-                </div>        
-                <div class="swiper-button-container">
-                  <div class="swiper-button swiper-button-prev"></div>
-                  <div class="swiper-button swiper-button-next"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- SOCIAL CONTENT SLUT --> 
-        
+
         <!-- AKTIVITER START -->
-        <section class="activities">
+        <section class="activities"> 
           <div class="container">
             <div class="row">
               <div class="grid-full">
@@ -320,7 +299,7 @@ print render($page['content']['metatags']);
                   <div class="swiper-wrapper">
                     <?php print views_embed_view('aktiviteter','aktivitet_forside'); ?>
                   </div>
-                </div>        
+                </div>
                 <div class="activities-swiper-button-container">
                   <div class="swiper-button activities-swiper-button-prev"></div>
                   <div class="swiper-button activities-swiper-button-next"></div>
@@ -334,13 +313,35 @@ print render($page['content']['metatags']);
         </section>
         <!-- AKTIVITER SLUT -->
 
-       
+        <!-- SOCIAL CONTENT START -->
+        <section class="social-content">
+          <div class="container">
+            <div class="row">
+              <div class="grid-full">
+                <h2>Nyt på vores sociale medier</h2>
+                <div class="swiper-container-social-content">
+                  <div class="swiper-wrapper">
+                    <?php print views_embed_view('social_content','default'); ?>
+                  </div>
+                </div>
+                <div class="swiper-button-container">
+                  <div class="swiper-button swiper-button-prev"></div>
+                  <div class="swiper-button swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- SOCIAL CONTENT SLUT -->
+
+
+
         <?php //print render($page['content']); ?>
       </div>
-      <!-- CONTENT SLUT --> 
-      
+      <!-- CONTENT SLUT -->
 
-      
+
+
       <!-- FOOTER START -->
       <footer data-role="footer">
         <div class="container">
@@ -350,18 +351,16 @@ print render($page['content']['metatags']);
               <form>
                 <label for="hjemmesider">Andre hjemmesider</label>
                   <select name="hjemmesider" id="hjemmesider" class="sprite-menu">
-                  <optgroup label="Andre hjemmesider">
-                   <option value="0" selected="">Vælg en hjemmeside</option>                  
-                  <?php print views_embed_view('andre_kommunale_hjemmesider','default', $node->nid); ?>
-                  </optgroup>
+                   <option value="0" selected="">Vælg en hjemmeside</option>
+                   <?php print views_embed_view('andre_kommunale_hjemmesider','andre_kommunale_hjemmesider', $node->nid); ?>
                       <?php print render($page['footer_hjemmesider']); ?>
-                
+
                     </select>
               </form>
             </div>
             <div class="grid-third">
               <?php //print render($page['footer_kontakt']); ?>
-              
+
               <h3>Ishøj Kommune</h3>
               <p>Ishøj Store Torv 20<br />
               2635 Ishøj<br />
@@ -370,7 +369,7 @@ print render($page['content']['metatags']);
 
             </div>
             <div class="grid-third sociale-medier">
-              <?php print render($page['footer_sociale']); ?>           
+              <?php print render($page['footer_sociale']); ?>
               <h3>Følg os på sociale medier</h3>
               <p>
                 <a class="sprite sprite-facebook footer" href="http://www.facebook.com/ishojkommune" title="Følg Ishøj Kommune på Facebook"><span><span class="screen-reader">Følg Ishøj Kommune på Facebook</span></span></a>
@@ -379,18 +378,17 @@ print render($page['content']['metatags']);
                 <a class="sprite sprite-youtube footer" href="http://www.youtube.com/tvishoj" title="Følg Ishøj Kommune på Youtube"><span><span class="screen-reader">Følg Ishøj Kommune på Youtube</span></span></a>
               </p>
             </div>
-          </div>             
-        </div>   
+          </div>
+        </div>
       </footer>
       <!-- FOOTER SLUT-->
-      
+
       <?php
       // BREAKING
       print views_embed_view('kriseinformation', 'pagevisning');
       ?>
 
 
-            
+
     </div>
     <!-- PAGE SLUT -->
-    

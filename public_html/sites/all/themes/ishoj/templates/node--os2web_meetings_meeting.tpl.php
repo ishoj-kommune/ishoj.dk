@@ -155,6 +155,7 @@ $output .= $node->field_forsidetekst['und'][0]['safe_value'];
                     
                     if($aabenlukket !== "") {
                        $output .= "<p>Intet indhold til denne sag.</p>";  
+                                            
                     }
                     else {
 //                      $output .= "<p>Sagstekst kommer her...</p>";

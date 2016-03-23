@@ -44,7 +44,7 @@
  */
 
 ?><!doctype html>
-<html lang="da" class="no-js _no-svg"> 
+<html lang="da" class="no-js _no-svg">
   <head>
     <meta charset="utf-8">
     <?php print $head; ?>
@@ -52,17 +52,17 @@
     <title><?php print $head_title; ?></title>
 <!--    <meta name="description" content="">-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
     <?php print $styles; ?>
 
     <!-- HTML5 Shim for IE 6-8 -->
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->    
-    
+    <![endif]-->
+
     <!-- Favicon -->
 <!--    <link rel="shortcut icon" type="image/ico" href="">-->
-    
+
     <!-- Apple Touch Icons -->
 <!--
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -70,18 +70,19 @@
     <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114.png">
     <link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-144.png">
 -->
-    
+
     <!-- MS Homescreen Icons -->
 <!--
     <meta name="msapplication-TileColor" content="#0088cc">
     <meta name="msapplication-TileImage" content="img/ms-touch-icon.png">
 -->
-    
+
     <?php print $scripts; ?>
+
   </head>
 
   <body class="<?php print $classes; ?>" <?php print $attributes;?>>
-  
+
   <div id="skip-link">
     <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>

@@ -72,32 +72,32 @@
  * @ingroup themeable
  */
 ?>
-  
-  
+
+
     <!-- HEADER START -->
     <header data-role="header">
-      
+
       <!-- NAVIGATION START -->
       <div class="container">
 
             <!-- ARROW START -->
             <div class="arrow">
-            
+
               <!-- IKONER START -->
               <i class="icon icon-list btn-mobilmenu" title="Vis menu"></i>
               <i class="icon icon-cross btn-mobilmenu-hide hide-me" title="Skjul menu"></i>
-            <i class="icon icon-search btn-search" title="Søg"></i> 
+            <i class="icon icon-search btn-search" title="Søg"></i>
               <!-- IKONER SLUT -->
-              
+
               <!-- MENU START -->
               <nav class="mainMenu">
                 <?php print render($page['menu']); ?>
               </nav>
               <!-- MENU SLUT -->
-              
+
               <!-- LOGO START -->
               <?php
-              if($logo or $site_name) { 
+              if($logo or $site_name) {
                 // site version
                 $logoContent = "<div class=\"logo-container\">";
                 $logoContent .= "<a class=\"logo-site\" href=\"" . $front_page . "\" title=\"Gå til forsiden\" rel=\"home\">";
@@ -109,17 +109,17 @@
                   $logoContent .= "<span>" . $site_name . "</span>";
                 }
                 $logoContent .= "</a></div>";
-                
+
                 // print version
                 print $logoContent;
               }
               ?>
               <!-- LOGO SLUT -->
 
-            
+
             </div>
             <!-- ARROW SLUT -->
-            
+
       </div>
       <!-- NAVIGATION SLUT -->
 
@@ -128,7 +128,7 @@
         <?php print render($page['menu_mobile']); ?>
       </nav>
       <!-- MOBILMENU SLUT -->
-                  
+
       <!-- SØGEBAR START -->
       <section class="soegebar">
         <div class="container">
@@ -140,26 +140,26 @@
                   <label class="" for="soegefelt">Søg</label>
                   <input id="soegefelt" placeholder="Indtast dit søgeord"/>
 
-              </form>              
-            </div>      
+              </form>
+            </div>
           </div>
         </div>
       </section>
-     <!--   SØGEBAR SLUT -->      
-     
+     <!--   SØGEBAR SLUT -->
+
     <!-- SØGERESULTATER START -->
-    <section id="soegebar-resultater" class="soegebar-resultater"> 
+    <section id="soegebar-resultater" class="soegebar-resultater">
       <div class="container">
       </div>
     </section>
     <!-- SØGERESULTATER SLUT -->
-      
+
     </header>
-    <!-- HEADER SLUT --> 
-    
+    <!-- HEADER SLUT -->
+
     <!-- PAGE START -->
-    <div data-role="page"> 
-    
+    <div data-role="page">
+
       <!-- DRUPAL MESSAGES START -->
       <?php if ($messages): ?>
       <div class="drupal-messages">
@@ -176,10 +176,10 @@
       </div>
       <?php endif; ?>
       <!-- DRUPAL MESSAGES SLUT -->
-      
-      
+
+
       <?php if($logged_in): ?>
-        <!-- REDAKTØRMENU START -->        
+        <!-- REDAKTØRMENU START -->
         <section class="redaktormenu">
           <div class="container">
             <div class="row">
@@ -196,13 +196,13 @@
         <!-- REDAKTØRMENU SLUT -->
       <?php endif; ?>
 
-      
+
       <!-- CONTENT START -->
-      <div data-role="content"> 
+      <div data-role="content">
         <?php print render($page['content']); ?>
       </div>
-      <!-- CONTENT SLUT --> 
-      
+      <!-- CONTENT SLUT -->
+
       <!-- FOOTER START -->
       <footer data-role="footer">
         <div class="container">
@@ -212,12 +212,10 @@
             <form>
                 <label for="hjemmesider">Andre hjemmesider</label>
                   <select name="hjemmesider" id="hjemmesider" class="sprite-menu">
-                  <optgroup label="Andre hjemmesider">
-                   <option value="0" selected="">Vælg en hjemmeside</option>                  
-                  <?php print views_embed_view('andre_kommunale_hjemmesider','default', $node->nid); ?>
-                  </optgroup>
+                   <option value="0" selected="">Vælg en hjemmeside</option>
+                  <?php print views_embed_view('andre_kommunale_hjemmesider','andre_kommunale_hjemmesider', $node->nid); ?>
                       <?php print render($page['footer_hjemmesider']); ?>
-                
+
                     </select>
               </form>
             </div>
@@ -231,7 +229,7 @@
 
             </div>
             <div class="grid-third sociale-medier">
-              <?php print render($page['footer_sociale']); ?>           
+              <?php print render($page['footer_sociale']); ?>
              <h3>Følg os på sociale medier</h3>
               <p>
                 <a class="sprite sprite-facebook footer" href="http://www.facebook.com/ishojkommune" title="Følg Ishøj Kommune på Facebook"><span><span class="screen-reader">Følg Ishøj Kommune på Facebook</span></span></a>
@@ -239,20 +237,20 @@
                 <a class="sprite sprite-twitter footer" href="http://www.twitter.com/ishojkommune" title="Følg Ishøj Kommune på Twitter"><span><span class="screen-reader">Følg Ishøj Kommune på Twitter</span></span></a>
                 <a class="sprite sprite-youtube footer" href="http://www.youtube.com/tvishoj" title="Følg Ishøj Kommune på Youtube"><span><span class="screen-reader">Følg Ishøj Kommune på Youtube</span></span></a>
 
-              </p> 
+              </p>
             </div>
-          </div>             
-        </div>   
+          </div>
+        </div>
       </footer>
       <!-- FOOTER SLUT-->
-      
+
       <!-- BREAKING START -->
-      <?php //if ($is_admin and $logged_in): ?> 
+      <?php //if ($is_admin and $logged_in): ?>
         <?php if ($page['krisekommunikation']): ?>
           <div class="breaking"><?php print render($page['krisekommunikation']); ?></div>
       	<?php endif; ?>
-      <? //endif ?>         
+      <? //endif ?>
       <!-- BREAKING SLUT -->
-            
+
     </div>
     <!-- PAGE SLUT -->
