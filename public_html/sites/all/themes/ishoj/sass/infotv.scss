@@ -1,0 +1,769 @@
+
+
+//@import url(http://reset5.googlecode.com/hg/reset.min.css); // Reset styles
+@import "config";
+@import "compass/reset";
+@import "mixins";     // Mixins 
+@import "animations"; // Animationer
+//@import	"components/flexslider";  
+
+//@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,300italic,400italic,700,700italic);
+
+//@import "styles";     // Styles til info-tv
+//@import "kv2013";     // Kommunalvalg 2013
+//@import "tvi-grafik"; // TVI-grafik
+ 
+
+
+/* VARIABLER */
+$link-color:        #428bca; 
+$safe-color:        #f1f3f6;
+$text-dark:         #231f20; 
+$counter-dark:      #5686be;
+$bg-blue:           #77a5d2;
+$bg-lightgrey:      #e1e4e6;
+$tableheader-color: #526c8a;
+$text-infotv-dark:  #1f1f20;
+$uglen-green:       #53a153;
+$uglen-grey:        #f0f2f3;
+
+.hide {
+  display: none; 
+}
+
+
+html {
+  width:100%;
+  height:100%;
+  cursor:none;
+  cursor: url(../../img/sprites-no/cursorblank.png), none; 
+}
+
+body {  
+  width:100%;
+  height:100%;
+	margin:0;   
+	padding:0;  
+	font: {
+		style:normal; 
+		size:100%;
+		family:'Roboto Condensed', sans-serif; 
+		weight:300;
+	}
+	color:#000; 
+	overflow:hidden; 
+	background:$safe-color/*#f1f3f6*/;
+  * {
+    cursor:none;
+    cursor: url(../../img/sprites-no/cursorblank.png), none;
+  }
+}
+
+strong {
+  font: {
+    weight:400;
+  }
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+
+/* DRUPAL RESET */
+#skip-link { display:none;}
+.region, .region-content, .block, .block-system {
+  width:100%;
+  height: 100%;
+  margin: 0;
+}
+
+
+/********************************************/
+/********************************************/
+/********************************************/
+
+
+
+
+/**************************/
+/**** INFO-TV SKABELON ****/
+/**************************/
+
+.infotv-skabelon {
+  display:none; 
+//  img {
+//      display: none;
+//  }
+  
+  // Fixes:
+    // UNGDOMSKOLEN
+    &.ungdomsskolen-dagensprogram { 
+      .bar {
+        h2 {
+          display: none;
+        }
+      }  
+      ul { 
+        display: none; 
+      } 
+  }
+}
+.currentSlide {
+  &.infotv-skabelon {
+    position: relative;
+    width:1920px !important;
+    height: 1080px !important;
+    display:block;
+    img {
+      width:100%;
+      height: 100%;
+    }
+    .bgBox {
+      position: absolute;
+      left:0;
+      bottom:-700px;
+      width: 100%;
+      height: 700px;
+      background: url(../../img/sprites-no/bg_white_80pct.png); 
+      opacity:1;
+      &.animationForward {
+        -webkit-animation: slideInFromBottom700px 0.6s ease; 
+        -webkit-animation-fill-mode:forwards;
+        -webkit-animation-delay: 2.0s;        
+      }
+      &.full {
+        bottom:-1080px;
+        height: 1080px;
+        -webkit-animation: slideInFromBottom1080px 0.9257s ease; 
+        -webkit-animation-fill-mode:forwards;
+        -webkit-animation-delay: 2.0s; 
+      }
+    }
+    .bgBoxInvisible {
+      position: absolute;
+      left:0;
+      bottom:-700px;
+      width: 100%;
+      height: 700px;
+      background:none;
+      opacity:1;
+      &.animationForward {
+        -webkit-animation: slideInFromBottom700px 0.6s ease; 
+        -webkit-animation-fill-mode:forwards;
+        -webkit-animation-delay: 2.0s;        
+      }
+      &.full {
+        bottom:-1080px;
+        height: 1080px;
+        -webkit-animation: slideInFromBottom1080px 0.9257s ease; 
+        -webkit-animation-fill-mode:forwards;
+        -webkit-animation-delay: 2.0s; 
+      }
+      > * {
+        width: 88%;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 6%;
+        margin-right: 6%;
+        padding: 0;
+        > h1, h2, p {
+          margin-right: 0;
+          margin-left: 0;
+        }
+      }
+      h1 {
+        margin-top: 70px;
+        margin-bottom: 50px;
+        padding:0;
+        font: {
+          weight:400;
+          size:6.125em;
+        }
+        letter-spacing:1px;
+        color:$text-infotv-dark;
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 50px;
+        font: {
+          weight:400;
+          size:3.5em;
+        }
+        letter-spacing:1px;
+        color:$text-infotv-dark;        
+      }
+      p, li {
+        margin-top: 0;
+        margin-bottom: 50px;
+        font: {
+          weight:300;
+          size:3.5em;
+        }
+        letter-spacing:1px;
+        line-height: 130%;
+        color:$text-infotv-dark;
+      }
+//      li {
+//        list-style: disc;
+//      }
+      .aabningstider-col-1 {
+        float: left; 
+        width: 15%; 
+        display: block; 
+        margin: 40px 0 0 0; 
+        padding: 0;
+      }
+      .aabningstider-col-2 {
+        @extend .aabningstider-col-1; 
+        width: 85%; 
+        p {
+          width: 100%;
+        }
+      }
+
+    }
+    // AKTIVITET
+    &.aktivitet {
+
+      h1 {
+        text-transform: uppercase;
+        font: {
+          weight: 700; 
+          size: 5.5em;
+        }
+      }
+      .aktivitet-dato {
+        position: absolute;
+//        margin:0 auto;
+        top: 10%;
+        left: 6%;
+        opacity:0; 
+        -webkit-transform: translate(0px, -10%);
+        padding: 0 .75em;
+//        width: 50%;
+//        max-width: calc-em(80px);
+        background: $color-blue-normal;
+        text-align: center;
+        line-height: 220%;
+        font: {
+          size: calc-em(80px);
+          weight: 400;
+        }
+        color: $color-white;
+        text-transform: uppercase;
+        letter-spacing: calc-em(1px);
+
+
+        @include border-radius(calc-em(1px)); 
+
+        &:after, 
+        &:before {
+          top: 100%;
+          left: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+        }
+        &:after {
+          border: {
+            top-color: $color-blue-normal;
+            width: calc-em(6px);  
+          }
+          margin-left: calc-em(-6px);
+        }
+        &.animationForward {
+          -webkit-animation: aktivitetDatoSlideInFromTop 0.6s ease; 
+          -webkit-animation-fill-mode: forwards;
+          -webkit-animation-delay: 2.0s;        
+        }
+      }
+      .aktivitet-fuld-dato {
+        margin-bottom: 1.125em;
+        font: {
+          size:4.0em;
+        }
+      }
+      .aktivitet-sted {
+        margin-bottom: .25em;
+        font: {
+//          size:2.5em;
+        }
+      }
+      .aktivitet-arrangor {
+        @extend .aktivitet-sted;
+        margin-bottom: .75em;
+      }
+      .aktivitet-url {
+        color: $color-blue-normal;
+      }
+    }  
+    // UGLEN - ALLE NYHEDER SOM IKKE ER TOPNYHEDER 
+    &.uglen-alle-nyheder {
+      h1 {
+        position: absolute;
+        width: 88%;
+        top: 135px; 
+        left: 6%;
+        font: {
+          weight:400;
+          size:6.125em;
+        }
+        letter-spacing:1px;
+        color: $uglen-green;
+        opacity: 0;
+        -webkit-transform: translate(80px, 0);
+        &.animationForward {
+          -webkit-animation: uglen-translate-in 0.6s ease; 
+          -webkit-animation-fill-mode:forwards;
+          -webkit-animation-delay: 0.10s;
+        }
+      }
+      ul {
+        position: absolute;
+        width: 58%;  
+        top: 345px;  
+        left: 6%;
+        li {
+          margin-bottom: 100px;
+          font: {
+            weight:300;
+            size:3.5em;
+          }
+          letter-spacing:1px;
+          line-height: 130%;
+          color: $uglen-grey; 
+          opacity: 0;          
+          -webkit-transform: translate(80px, 0);
+
+          -webkit-animation: uglen-translate-in 0.60s ease;  
+          -webkit-animation-fill-mode: forwards;
+          &:nth-child(1) {
+            -webkit-animation-delay: 0.65s;        
+          }          
+          &:nth-child(2) {
+            -webkit-animation-delay: 0.80s;        
+          }          
+          &:nth-child(3) {
+            -webkit-animation-delay: 0.95s;        
+          }          
+        }
+        &.action {
+          li {
+            opacity: 1;
+            -webkit-transform: translate(0, 0);
+            -webkit-animation: uglen-translate-out 0.60s ease;  
+            -webkit-animation-fill-mode: forwards;
+            &:nth-child(1) {
+              -webkit-animation-delay: 0.30s;        
+            }          
+            &:nth-child(2) {
+              -webkit-animation-delay: 0.15s;        
+            }          
+            &:nth-child(3) {
+              -webkit-animation-delay: 0s;     
+            }          
+          }
+        }        
+        &.last {
+          li {
+            &:nth-child(1) {
+              -webkit-animation-delay: 11.60s;        
+            }          
+            &:nth-child(2) {
+              -webkit-animation-delay: 11.75s;        
+            }          
+            &:nth-child(3) {
+              -webkit-animation-delay: 11.90s;
+            }          
+            &:nth-child(4) { 
+              -webkit-animation-delay: 21.90s; // + 10 sek. - animationEnd
+            }          
+          }
+        } 
+      }
+    }
+    
+    // UNGDOMSKOLEN
+    &.ungdomsskolen-dagensprogram { 
+      
+      .pager {
+        position: absolute;
+        top: 85px;
+        right: 90px;
+        display: flex;
+        span {
+          width: 40px;
+          height: 40px;
+          border: 4px solid #a0a0a0;
+          border-radius: 24px;
+          background-color: transparent;            
+          @include transition(all, 0.5s, ease); 
+          &.page-1 {
+            margin-right: 40px;
+          }
+          &.action {
+            background-color: #a0a0a0;            
+          }
+        }
+      }
+      
+      .bar {
+//        float: left;
+        width: 1700px;
+        height: 163px;
+        padding: 35px 110px 0 110px;
+        background-color: #3d3d3d;
+        h2 {
+          float: left;
+          display: inline;
+          padding: 14px 28px;
+          margin-left: 3px;
+          margin-top: 18px;
+          background-color: #da0022;
+          font-size: 60px;
+          letter-spacing: 1px;
+          color: #ffffff;
+          text-transform: uppercase;
+          opacity: 0;
+          &.animationForward {
+            -webkit-animation: AnimShow 0.6s ease; 
+            -webkit-animation-fill-mode:forwards;
+            -webkit-animation-delay: 0.10s;
+          }
+        } 
+        
+      }  
+      ul {
+        position: absolute;
+        top: 198px;
+        width: 100%;
+        height: 880px;
+        display: block; 
+        li {
+          opacity: 0;
+          float: left;
+          width: 1700px;
+          height: 110px;
+          padding: 0 110px;
+          color: #3d3d3d;
+          background-color: #ffffff;
+          &:nth-child(even) {
+            background-color: #e9e9e9;
+          }
+          span {
+            float: left;
+            height: 100%;
+            line-height: 110px;
+            font: {
+              size: 48px;
+//              weight: 700;
+              weight: 400;
+            }
+//            text-transform: uppercase;
+          }
+          .tid  {
+            width: 15%;
+          }
+          .fag {
+            width: 30%;
+          }
+          .navn {
+            width: 40%;
+//            font-weight: 300;
+          }
+          .lokale {
+            width: 15%;
+          }
+        }
+        &.animationForward {
+          li {
+            -webkit-animation: AnimShow 0.6s ease; 
+            -webkit-animation-fill-mode:forwards;
+            -webkit-animation-delay: .5s;
+            &:nth-child(2) {
+              -webkit-animation-delay: 0.60s;
+            }
+            &:nth-child(3) {
+              -webkit-animation-delay: 0.70s;
+            }
+            &:nth-child(4) {
+              -webkit-animation-delay: 0.80s;
+            }
+            &:nth-child(5) {
+              -webkit-animation-delay: 0.90s;
+            }
+            &:nth-child(6) {
+              -webkit-animation-delay: 1.00s;
+            }
+            &:nth-child(7) {
+              -webkit-animation-delay: 1.10s;
+            }
+            &:nth-child(8) {
+              -webkit-animation-delay: 1.20s;
+            }
+          }
+        }
+        &.action {
+          li {
+            opacity: 1;
+            -webkit-animation: AnimHide 0.6s ease;  
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-delay: 0.70s;
+            &:nth-child(2) {
+              -webkit-animation-delay: 0.60s;
+            }
+            &:nth-child(3) {
+              -webkit-animation-delay: 0.50s;
+            }
+            &:nth-child(4) {
+              -webkit-animation-delay: 0.40s;
+            }
+            &:nth-child(5) {
+              -webkit-animation-delay: 0.30s;
+            }
+            &:nth-child(6) {
+              -webkit-animation-delay: 0.20s;
+            }
+            &:nth-child(7) {
+              -webkit-animation-delay: 0.10s;
+            }
+            &:nth-child(8) {
+              -webkit-animation-delay: 0.00s;
+            }
+          }
+        }
+        
+        &.last {
+          li { 
+            -webkit-animation: AnimShow 0.6s ease; 
+            -webkit-animation-fill-mode:forwards;
+            -webkit-animation-delay: .5s;
+
+            &:nth-child(1) {
+              -webkit-animation-delay: 11.60s;        
+            }          
+            &:nth-child(2) {
+              -webkit-animation-delay: 11.70s;        
+            }          
+            &:nth-child(3) {
+              -webkit-animation-delay: 11.80s;
+            }          
+            &:nth-child(4) { 
+              -webkit-animation-delay: 11.90s; 
+            }          
+            &:nth-child(5) {
+              -webkit-animation-delay: 12.00s;        
+            }          
+            &:nth-child(6) {
+              -webkit-animation-delay: 12.10s;        
+            }          
+            &:nth-child(7) {
+              -webkit-animation-delay: 12.20s;
+            }          
+            &:nth-child(8) { 
+              -webkit-animation-delay: 12.30s; 
+            }       
+            &.animationEnd {
+              -webkit-animation-delay: 21.60s; // + ca. 10 sek. - animationEnd       
+              background-color: transparent;
+            }
+          }
+        } 
+
+
+      }
+    }
+    
+
+  }
+  &.reverse {
+    &.infotv-skabelon {
+      .bgBox {
+        &.animationBack {
+        -webkit-animation: slideOutToBottom700px 0.6s ease; 
+        -webkit-animation-fill-mode:forwards;
+        }
+        &.full {
+          -webkit-animation: slideOutToBottom1080px 0.9257s ease; 
+          -webkit-animation-fill-mode:forwards;
+        }
+      }
+      .bgBoxInvisible {
+        &.animationBack {
+        -webkit-animation: slideOutToBottom700px 0.6s ease; 
+        -webkit-animation-fill-mode:forwards;
+        }
+        &.full {
+          -webkit-animation: slideOutToBottom1080px 0.9257s ease; 
+          -webkit-animation-fill-mode:forwards;
+        }
+      }
+      // AKTIVITET
+      &.aktivitet {
+        .aktivitet-dato {
+          -webkit-animation: aktivitetDatoSlideOutToTop 0.5s ease; 
+          -webkit-animation-fill-mode: forwards;
+        }
+      }
+    }    
+  }
+} 
+
+
+
+
+
+/********************************************************/
+/****** OVERLAY - lægger sig ovenpå info-tv-rullen ******/
+/********************************************************/
+
+.overlay { 
+  position:absolute;
+  z-index:10;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/****** SPINNER ******/
+.spinner {
+  width: 200px;
+  height: 200px;
+  background-color: #aaa;
+
+  margin: 440px auto;
+  -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: perspective(800px) }
+  50% { -webkit-transform: perspective(800px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(800px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes rotateplane {
+  0% {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+  } 50% {
+    transform: perspective(800px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(800px) rotateX(-180.1deg) rotateY(0deg);
+  } 100% {
+    transform: perspective(800px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(800px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+
+
+/****** KRISEINFORMATION ******/ 
+.kriseinformation {
+  position: absolute;
+  z-index: 100;
+//  width: 1920px;
+//  height:1080px;
+  width: 100%;
+  height: 100%;
+//  background: url(../../img/sprites-no/bg_kriseinformation.png) no-repeat;
+  background: $color-yellow-normal;
+
+  h1 {
+    width:82%;
+    margin:80px 6% 50px;
+    padding:0;
+    font: {
+      weight:400;
+      size:8em;
+    }
+    line-height: 120%;
+    text-transform: uppercase;
+    letter-spacing:1px;
+    color:$text-infotv-dark;
+  }
+  h2 {
+    width:82%;
+    margin:0 6% 60px;
+    font: {
+      weight:400;
+      size:4.0em;
+    }
+    letter-spacing:1px;
+    line-height: 130%;
+    color:$text-infotv-dark;        
+  }
+  p {
+    width:82%;
+    margin:0 6% 60px;
+    font: {
+      weight:300;
+      size:3.5em;
+    }
+    letter-spacing:1px;
+    line-height: 130%;
+    color:$text-infotv-dark;
+    span {
+      font: {
+        weight:100;
+        size:.75em;
+      }
+    }
+  }
+}
+
+/****** UR ******/
+.ur {
+  position:absolute;
+  z-index:10;
+  width:200px;
+  height:90px; 
+  top:35px;
+  right:35px;
+  margin:0;
+  padding:0;
+  background: rgba(34, 34, 34, 0.75);
+  /*background: rgba(255, 255, 255, 0.75);*/  
+  font: {
+    size: 4em;
+    family: 'Roboto Condensed', 'Droid Sans Mono', sans-serif;
+    weight: 400;
+  }
+  color:/*#222;*/#f1f3f6;
+  text-align:center;
+  letter-spacing:4px;
+  border-radius:4px; 
+  line-height: 86px;
+}
+  
+.ur span { 
+  color:/*#333*/#dcddde; 
+}
+
+.error {
+  position:absolute;
+  z-index:10;
+  width:100px;
+  height:100px; 
+  bottom:35px;
+  right:35px;
+  margin:0;
+  padding:0;
+  opacity: 0; 
+  background-repeat: no-repeat;
+  background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMjgzLjUgMjgzLjUiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI4My41IDI4My41IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik0yMDguOSwyMTMuOWwyMS40LTIyLjRjLTEzLjEtMTguMi0yOC45LTI4LjQtNTAuNS0zNS45bC0yLjYsMzNDMTkxLjYsMTk1LjUsMTk5LjEsMjAxLjUsMjA4LjksMjEzLjl6Ii8+DQo8cGF0aCBkPSJNNzUuNiwyMTMuNGMxMC40LTEyLjcsMTcuMi0xOCwzMS41LTI0LjljLTEtMTAuNC0yLTIxLjUtMy0zMi45Yy0yMS40LDcuNi0zNywxNy42LTUwLDM1LjZMNzUuNiwyMTMuNHoiLz4NCjxwYXRoIGQ9Ik0yNjEuMSwxNTkuOGwyMS4zLTIyLjNjLTI0LjktMjguNC01OC41LTQ5LjEtOTYuNS01OC4xbC0yLjYsMzIuN0MyMTQuMiwxMjAuNSwyNDEuMywxMzUuNywyNjEuMSwxNTkuOHoiLz4NCjxwYXRoIGQ9Ik0yMywxNjBjMTkuNy0yMy45LDQ2LjUtMzkuMSw3Ny4yLTQ3LjZjLTEtMTEuMi0yLTIyLjMtMi45LTMyLjdjLTM3LjgsOS4xLTcxLjEsMjkuOS05NS44LDU4LjJMMjMsMTYweiIvPg0KPHBhdGggZD0iTTE1Ny4yLDE5OC40Yy00LjQsNC41LTI1LjEsNC40LTMwLjcsMHMtMTMtMTQ3LjctMTMuMy0xNTAuN2MtMC4yLTMtMC40LTUuMy0wLjQtNi45YzAtOS41LDIuNS0xNyw3LjUtMjIuMg0KCWM1LTUuMywxMi4xLTcuOSwyMS4zLTcuOWM5LjIsMCwxNi4zLDIuNywyMS40LDguMmM1LjEsNS41LDcuNiwxMy4xLDcuNiwyMy4xYzAsMi40LTAuMSw1LjEtMC40LDguMQ0KCUMxNzAsNTMuMSwxNjEuNiwxOTMuOSwxNTcuMiwxOTguNHogTTE0MS42LDIxNmM3LjksMCwxNC43LDIuOSwyMC4zLDguNmM1LjYsNS43LDguNCwxMi42LDguNCwyMC44YzAsNy45LTIuOCwxNC43LTguNCwyMC4yDQoJYy01LjYsNS41LTEyLjMsOC4zLTIwLjMsOC4zYy03LjgsMC0xNC41LTIuOC0yMC4xLTguNGMtNS42LTUuNi04LjQtMTIuMy04LjQtMjAuMWMwLTguMiwyLjgtMTUuMSw4LjQtMjAuOA0KCUMxMjcuMSwyMTguOCwxMzMuOCwyMTYsMTQxLjYsMjE2eiIvPg0KPC9zdmc+DQo=);
+  
+  &.action {
+    opacity: .5; 
+  }
+
+}
+
+
+
+
+
