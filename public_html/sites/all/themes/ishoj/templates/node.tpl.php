@@ -383,7 +383,7 @@ $bterm = taxonomy_term_load($buftid);
                   // Emply Hire (Ofir.dk)
                   $output .= "<ul style=\"margin-bottom:0;\">";
                     $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/VacancyAd.aspx?vacancyId=18\" title=\"Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje\">Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje</a></li>";
-                    $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=14\" title=\"Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset\">Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset</a></li>";
+                    // $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=14\" title=\"Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset\">Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset</a></li>";
                   $output .= "</ul>";
                   // ISHOJ.DK
                   $output .= "<ul>" . views_embed_view('ledig_stilling','ledige_stillinger_liste') . "</ul>";
