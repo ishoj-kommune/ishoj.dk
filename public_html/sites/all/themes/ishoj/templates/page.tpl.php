@@ -249,7 +249,7 @@
         <?php if ($page['krisekommunikation']): ?>
           <div class="breaking"><?php print render($page['krisekommunikation']); ?></div>
       	<?php endif; ?>
-      <? //endif ?>
+      <?php //endif ?>
       <!-- BREAKING SLUT -->
 
     </div>
