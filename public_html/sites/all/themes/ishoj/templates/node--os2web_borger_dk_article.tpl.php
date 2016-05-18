@@ -168,11 +168,11 @@
           else {
             $divArray = preg_split('/\r\n<[\/]div>\r\n/', $node->body['und']['0']['value'], -1, PREG_SPLIT_DELIM_CAPTURE);
           }
-          
+
           foreach ($divArray as $key => $text) {
             $tmpShow .= str_replace('<h3>', '<h3 class="mArticle" id="mArticle' . ($key + 1) . '">', $divArray[$key]);
             $tmpShow .= "\n</div>";
-            $tmpShow .= "\n"; 
+            $tmpShow .= "\n";
           }
           $content_field['body'] = "<div class=\"microArticleContainer\">" . $tmpShow;
         }
@@ -239,7 +239,7 @@ function strpos_offset($needle, $haystack, $occurrence) {
 //    }
 //    print "</div></div>";
   ?>
-  
+
 <!--  <div class="content clearfix"<?php //print $content_attributes; ?>>-->
   <?php
 //    if (!empty($content_field['field_os2web_borger_dk_selfservi'])) {
@@ -296,8 +296,8 @@ function strpos_offset($needle, $haystack, $occurrence) {
     </div>
   </div>
 -->
-  
-  
+
+
 <!-- START START START START START START START START -->
 
 <?php
@@ -307,12 +307,12 @@ function sortByTitle($a, $b){
 $output = "";
 ?>
 
-                     
+
         <!-- ARTIKEL START -->
-<?php       
+<?php
           $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel\">";
           $output = $output . "<div class=\"container\">";
-// Get menu from kategori term ref by term KLE                     
+// Get menu from kategori term ref by term KLE
     $query = new EntityFieldQuery;
 $result2 = $query
   ->entityCondition('entity_type', 'taxonomy_term')
@@ -323,13 +323,13 @@ $bufcount = 0;
 $buftid = 0;
 foreach($result2 as $v1) {
 foreach($v1 as $v2) {
-if ($bufcount == 0) {   
+if ($bufcount == 0) {
 $buftid = $v2->tid;
 ++$bufcount;
-}        
-}    
-}                       
-$bterm = taxonomy_term_load($buftid);            
+}
+}
+}
+$bterm = taxonomy_term_load($buftid);
            // Brødkrummesti
             $output = $output . "<div class=\"row\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
@@ -338,14 +338,14 @@ $bterm = taxonomy_term_load($buftid);
               $output = $output . "</div>";
             $output = $output . "</div>";
 
-           
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
                   $output = $output . "<h1>" . $title . "</h1>";
               $output = $output . "</div>";
               $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
             $output = $output . "</div>";
-  
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
 
@@ -355,12 +355,12 @@ $bterm = taxonomy_term_load($buftid);
                   $output = $output . "<h2>" . render($content_field['field_os2web_borger_dk_header']) . "</h2>";
                 }
                 $output = $output . "<!-- UNDEROVERSKRIFT SLUT -->";
-              
+
 // ISHOJ.DK TEXT
 if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
    $output = $output . $node->field_ishojdk_tekst['und'][0]['value'];
     }
- 
+
                 // SELVBETJENINGSLØSNING
                 $output = $output . "\n\n\n<!-- SELBETJENINGSLØSNING START -->";
 //                $output = $output . views_embed_view('selvbetjeningslosning','default', $node->nid);
@@ -382,16 +382,16 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 
 
                 // LÆS OM...
-                $output = $output . "<h2>Læs om " . lcfirst($node->title) . "</h2>";  
+                $output = $output . "<h2>Læs om " . lcfirst($node->title) . "</h2>";
 
 
                 // TEKSTINDHOLD
                 // Borger.dk body-outputtet undeholder også mikroartikler. Det gjorde det ikke i den tidligere version
                 $output = $output . "<!-- TEKSTINDHOLD START -->";
                 hide($content['comments']);
-                hide($content['links']); 
+                hide($content['links']);
 //                $output = $output . "<div>";
-                
+
                 if(!empty($content_field['field_os2web_borger_dk_pre_te$node->titlet'])) {
                   $output = $output . render($content_field['field_os2web_borger_dk_pre_text']);
                 }
@@ -405,19 +405,19 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 //                $output = $output . render($content);
 //                $output = $output . "</div>";
                 $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
-                
-                
+
+
                 // MIKROARTIKLER
 //                $output = $output . "<!-- MIKROARTIKLER START -->";
-//                if($node->field_mikroartikler_titel1 or 
-//                  $node->field_mikroartikler_titel2 or 
-//                  $node->field_mikroartikler_titel3 or 
-//                  $node->field_mikroartikler_titel4 or 
-//                  $node->field_mikroartikler_titel5 or 
-//                  $node->field_mikroartikler_titel6 or 
-//                  $node->field_mikroartikler_titel7 or 
-//                  $node->field_mikroartikler_titel8 or 
-//                  $node->field_mikroartikler_titel9 or 
+//                if($node->field_mikroartikler_titel1 or
+//                  $node->field_mikroartikler_titel2 or
+//                  $node->field_mikroartikler_titel3 or
+//                  $node->field_mikroartikler_titel4 or
+//                  $node->field_mikroartikler_titel5 or
+//                  $node->field_mikroartikler_titel6 or
+//                  $node->field_mikroartikler_titel7 or
+//                  $node->field_mikroartikler_titel8 or
+//                  $node->field_mikroartikler_titel9 or
 //                  $node->field_mikroartikler_titel10) {
 //
 //                  $mikroartikel = '<div class="microArticleContainer">';
@@ -473,11 +473,11 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 //                  }
 //
 //                  $mikroartikel = $mikroartikel . "</div>";
-//                  $output = $output . $mikroartikel;	
+//                  $output = $output . $mikroartikel;
 //                }
-//                $output = $output . "<!-- MIKROARTIKLER SLUT -->";         
+//                $output = $output . "<!-- MIKROARTIKLER SLUT -->";
 
-                                
+
                 // DIVERSE BOKS
 //                $output = $output . "<!-- DIVERSE BOKS START -->";
 //                if($node->field_diverse_boks) {
@@ -485,7 +485,7 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 //                  $output = $output . $node->field_diverse_boks['und'][0]['safe_value'];
 //                  $output = $output . "</div>";
 //                }
-//                $output = $output . "<!-- DIVERSE BOKS SLUT -->";                    
+//                $output = $output . "<!-- DIVERSE BOKS SLUT -->";
 
 
                 // HUSKELISTE
@@ -498,7 +498,7 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
                   $output = $output . $huskeliste;
                 }
 
-                
+
                 // LÆS OGSÅ
                 $output = $output . "<!-- LÆS OGSÅ START -->";
 //                if($node->field_url) {
@@ -559,8 +559,8 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
                 }
 //                print "</div></div>";
                 $output = $output . "<!-- HVAD SIGER LOVEN? SLUT -->";
-                
-       
+
+
   // KONTAKT
                 $output = $output . "<!-- KONTAKT START -->";
                   if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
@@ -573,10 +573,10 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
                   $view->set_display('default');
                   $view->set_arguments($args);
                $view->execute();
-               if(count($view->result) > 0) { 
-                    
+               if(count($view->result) > 0) {
+
                    $output .= $view->render();
-                  
+
                   } else  {
                   $output = $output . views_embed_view('kontakt_kle','default', 1968);
                   }
@@ -608,7 +608,7 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
                 $output = $output . "<!-- SENEST OPDATERET SLUT -->";
 
 
-                // SKREVET AF 
+                // SKREVET AF
                 if (!empty($content_field['field_os2web_borger_dk_byline'])) {
                   $output = $output . "<!-- SKREVET AF START -->";
                   $output = $output . "<p class=\"byline\">" . render($content_field['field_os2web_borger_dk_byline']) . "</p>";
@@ -618,8 +618,8 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 
 
                 $output = $output . "</div>";
-              
-              
+
+
                 $output = $output . "<div class=\"grid-third\">";
                   // MENU TIL UNDERSIDER START
                   $output = $output . "<nav class=\"menu-underside\">";
@@ -630,7 +630,7 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
                       $output = $output . "<li class=\"first expanded active-trail\">";
                         $output = $output . "<a href=\"#\">" . $node->title . "</a>";
                         $output = $output . "<ul class=\"menu\">";
-                        $a = taxonomy_select_nodes($node->field_os2web_base_field_kle_ref['und'], $pager = FALSE); 
+                        $a = taxonomy_select_nodes($node->field_os2web_base_field_kle_ref['und'], $pager = FALSE);
   $nodes = array();
       foreach($a as $nid) {
           $checkifitis = 0;
@@ -646,7 +646,7 @@ if (!empty($node->field_ishojdk_tekst['und'][0]['value'])) {
 usort($nodes, 'sortByTitle');
 foreach($nodes as $nid1) {
      if ($node->nid != $nid1->nid) {
- $output = $output . "<li><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a></li>"; 
+ $output = $output . "<li><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a></li>";
      }
 }
 
@@ -669,7 +669,7 @@ $a = taxonomy_select_nodes($bterm->field_os2web_base_field_kle_ref['und'], $page
           $nodes[] = node_load($nid2);
             }
           }
-      
+
 usort($nodes, 'sortByTitle');
  foreach($nodes as $nid1) {
      if ($node->nid != $nid1->nid) {
@@ -685,11 +685,11 @@ usort($nodes, 'sortByTitle');
         $output = $output . "</section>";
         $output = $output . "<!-- ARTIKEL SLUT -->";
 
-       
+
         // DIMMER DEL SIDEN
         $output = $output . "<!-- DIMMER DEL SIDEN START -->";
-        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER, 
-        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER,
+        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
         if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
           $options = array('absolute' => TRUE);
           $nid = $node->nid; // Node ID
@@ -700,9 +700,9 @@ usort($nodes, 'sortByTitle');
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-facebook\" href=\"https://www.facebook.com/sharer/sharer.php?u=" . $abs_url . "\" title=\"Del siden på Facebook\"><span><span class=\"screen-reader\">Del siden på Facebook</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . " title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "&body=" . $abs_url . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";
             $output = $output . "</ul>";
             $output = $output . "<div class=\"link-url\">";
               $output = $output . "<textarea>" . $abs_url . "</textarea>";
@@ -718,7 +718,7 @@ usort($nodes, 'sortByTitle');
 
         print $output;
         print render($content['links']);
-        print render($content['comments']); 
+        print render($content['comments']);
 
 
 ?>
@@ -732,8 +732,8 @@ usort($nodes, 'sortByTitle');
 <!-- SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT -->
 <!-- SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT -->
 <!-- SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT SLUT -->
-  
-  
+
+
 
   <?php
     // Remove the "Add new comment" link on the teaser page or if the comment

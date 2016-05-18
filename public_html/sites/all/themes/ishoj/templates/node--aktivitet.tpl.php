@@ -91,9 +91,9 @@
 $output = "";
 ?>
 
-                     
+
         <!-- ARTIKEL START -->
-<?php       
+<?php
           $output = $output . "<section class=\"section-breadcrumbs\">";
             $output = $output . "<div class=\"container\">";
 
@@ -111,7 +111,7 @@ $output = "";
           $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel activities aktivitet-node node-visning\">";
             $output = $output . "<div class=\"container\">";
 
-  
+
 // Række 2
             $output = $output . "<div class=\"row second activity-line\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
@@ -120,7 +120,7 @@ $output = "";
                     // Dato
                     if($node->field_aktivitetsdato) {
                       if($_GET['d'] == "" or !isset($node->field_aktivitetsdato['und'][$_GET['d']])) {
-                        $datoindex = 0;  
+                        $datoindex = 0;
                       }
                       else {
                         $datoindex = $_GET['d'];
@@ -135,7 +135,7 @@ $output = "";
               $output = $output . "</div>";
               $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
             $output = $output . "</div>";
-  
+
 // Række 3
             $output = $output . "<div class=\"row third\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
@@ -189,19 +189,19 @@ $output = "";
                                $i = $i + 1;
                             }
                           $output = $output . "</p>";
-                        }                      
+                        }
                         // Dato
                         if($node->field_aktivitetsdato) {
                           $output .= "<p><span><strong>Dato:</strong></span> ";
 
                           // Antallet af datoer
                           $datoer = count($node->field_aktivitetsdato['und']);
-                          
+
                           foreach ($node->field_aktivitetsdato['und'] as $dato) {
-                            
+
                             // Hvis slutdatoen er større/eller lig end aktuelle dato
                             if($dato['value2'] >= strtotime("now")) {
-                              
+
                               // Hvis der er angivet flere datoer, så lav et linieskift
                               if($datoer > 1) {
                                 $output .= "<br />";
@@ -217,13 +217,13 @@ $output = "";
                               if(($dato['value2']) and (format_date($dato['value'], 'klokkeslaet') != format_date($dato['value2'], 'klokkeslaet'))) {
                                 $output .= " - " . format_date($dato['value2'], 'klokkeslaet');
                               }
-                            
+
                             }
-                            
+
                           }
 
-                          
-                          
+
+
 //                          $output .= "<br />" . format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret');
 //                          // Hvis der er en slutdato og den samtidig er forskellig fra startdatoen
 //                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'senest_redigeret') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'senest_redigeret'))) {
@@ -235,7 +235,7 @@ $output = "";
 //                          if(($node->field_aktivitetsdato['und'][0]['value2']) and (format_date($node->field_aktivitetsdato['und'][0]['value'], 'klokkeslaet') != format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet'))) {
 //                            $output .= " - " . format_date($node->field_aktivitetsdato['und'][0]['value2'], 'klokkeslaet');
 //                          }
-                          
+
                           $output .= "</p>";
                         }
 //                        // Dato
@@ -276,7 +276,7 @@ $output = "";
                         if($node->field_status_billetsalg) {
                           $billetstatus = taxonomy_term_load($node->field_status_billetsalg['und'][0]['tid'])->name;
                           if($billetstatus != "Normal") {
-                            $output .= "<p><span><strong>Status på billetsalg:</strong></span> " . $billetstatus . "</p>";                          
+                            $output .= "<p><span><strong>Status på billetsalg:</strong></span> " . $billetstatus . "</p>";
                           }
                         }
 
@@ -292,31 +292,31 @@ $output = "";
                         }
 
                        $output = $output . "</div>";
-                    
+
                     $output = $output . "</div>";
                   $output = $output . "</div>";
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
 
-                
+
                 // TEKSTINDHOLD
                 $output = $output . "<!-- TEKSTINDHOLD START -->";
                 hide($content['comments']);
                 hide($content['links']);
                 $output = $output . render($content);
                 $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
-                
-                
+
+
                 // DEL PÅ SOCIALE MEDIER
                 include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
 
-                
+
                 // SENEST OPDATERET
 //                $output = $output . "<!-- SENEST OPDATERET START -->";
 //                $output = $output . "<p class=\"last-updated\">Senest opdateret " . format_date($node->changed, 'senest_redigeret') . "</p>";
 //                $output = $output . "<!-- SENEST OPDATERET SLUT -->";
-                
+
 
                 // REDIGÉR-KNAP
                 if($logged_in) {
@@ -333,13 +333,13 @@ $output = "";
                 // Andre aktiviteter samme sted
                 if($node->field_aktivitetssted['und'][0]['tid']) {
                   $arg1 = $node->field_aktivitetssted['und'][0]['tid'];
-                  $arg2 = $node->nid; 
+                  $arg2 = $node->nid;
                   $args = array($arg1, $arg2);
                   $view = views_get_view('aktiviteter');
                   $view->set_display('aktivitet_aktiviteter_samme_sted');
                   $view->set_arguments($args);
                   $view->execute();
-                  
+
                   if(count($view->result) > 0) { // Der returneres en eller flere records
                     $output .= "<nav class=\"menu-underside andre-aktiviteter\">";
                       $output .= "<p class=\"menu-header\">Andre aktiviteter samme sted</p>";
@@ -356,13 +356,13 @@ $output = "";
                 // Andre aktiviteter med samme kategori
                 if($node->field_aktivitetstype['und'][0]['tid']) {
                   $arg1_kat = $node->field_aktivitetstype['und'][0]['tid'];
-                  $arg2_kat = $node->nid; 
+                  $arg2_kat = $node->nid;
                   $args_kat = array($arg1_kat, $arg2_kat);
                   $view_kat = views_get_view('aktiviteter');
                   $view_kat->set_display('aktivitet_aktiviteter_samme_kategori');
                   $view_kat->set_arguments($args_kat);
                   $view_kat->execute();
-                  
+
                   if(count($view_kat->result) > 0) { // Der returneres en eller flere records
                     $output .= "<nav class=\"menu-underside andre-aktiviteter\">";
                       $output .= "<p class=\"menu-header\">Andre aktiviteter i samme kategori</p>";
@@ -376,38 +376,38 @@ $output = "";
                     $output .= "</nav>";
                   }
                 }
-                
+
                 $output .= "<div class=\"more-content\"><h3><a href=\"/kategori/aktiviteter\" title=\"Flere aktiviteter\">Flere aktiviteter</a></h3></div>";
 
                 $output = $output . "</div>";
-              
-              
+
+
             $output = $output . "</div>";
           $output = $output . "</div>";
         $output = $output . "</section>";
         $output = $output . "<!-- ARTIKEL SLUT -->";
 
-       
+
         // DIMMER DEL SIDEN
         $output = $output . "<!-- DIMMER DEL SIDEN START -->";
-        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER, 
-        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER,
+        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
         if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
           $options = array('absolute' => TRUE);
           $nid = $node->nid; // Node ID
           $abs_url = url('node/' . $nid, $options);
 
           $output = $output . "<div class=\"dimmer-delsiden hidden\">";
-          
+
           $output .= "<a class=\"breaking-close\" href=\"#\" title=\"Luk\"></a>";
-            
+
             $output = $output . "<ul>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-facebook\" href=\"https://www.facebook.com/sharer/sharer.php?u=" . $abs_url . "\" title=\"Del siden på Facebook\"><span><span class=\"screen-reader\">Del siden på Facebook</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . " title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "&body=" . $abs_url . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";
             $output = $output . "</ul>";
             $output = $output . "<div class=\"link-url\">";
               $output = $output . "<textarea>" . $abs_url . "</textarea>";
@@ -422,10 +422,7 @@ $output = "";
 
         print $output;
         print render($content['links']);
-        print render($content['comments']); 
+        print render($content['comments']);
 
 
 ?>
-
-       
-

@@ -382,8 +382,9 @@ $bterm = taxonomy_term_load($buftid);
                   $output .= "<script src=\"https://hr-skyen.dk/hr/frame-api/customers/ishoj.js\" type=\"text/javascript\"></script>";
                   // Emply Hire (Ofir.dk)
                   $output .= "<ul style=\"margin-bottom:0;\">";
+                    $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=20\" title=\"Sygeplejerske til Ishøj Hjemmepleje\">Sygeplejerske til Ishøj Hjemmepleje</a></li>";
                     $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/VacancyAd.aspx?vacancyId=18\" title=\"Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje\">Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje</a></li>";
-                    $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=14\" title=\"Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset\">Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset</a></li>";
+                    // $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=14\" title=\"Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset\">Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset</a></li>";
                   $output .= "</ul>";
                   // ISHOJ.DK
                   $output .= "<ul>" . views_embed_view('ledig_stilling','ledige_stillinger_liste') . "</ul>";
@@ -655,7 +656,7 @@ $bterm = taxonomy_term_load($buftid);
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "&body=" . $abs_url . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";
             $output = $output . "</ul>";
             $output = $output . "<div class=\"link-url\">";

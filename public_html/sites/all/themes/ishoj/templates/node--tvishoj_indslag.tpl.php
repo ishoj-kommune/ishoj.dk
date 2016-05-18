@@ -90,15 +90,15 @@ $output = "";
 
 ?>
 
-                     
+
         <!-- ARTIKEL START -->
-<?php       
+<?php
 
           $output = $output . "<section id=\"node-" . $node->nid . "\" class=\"" . $classes . " artikel\">";
 
-         
+
           $output = $output . "<div class=\"container\">";
-// Get menu from kategori term ref by term KLE                     
+// Get menu from kategori term ref by term KLE
     $query = new EntityFieldQuery;
 $result2 = $query
   ->entityCondition('entity_type', 'taxonomy_term')
@@ -106,16 +106,16 @@ $result2 = $query
   ->fieldCondition('field_os2web_base_field_kle_ref', 'tid', $node->field_os2web_base_field_kle_ref['und'][0]['tid'])
   ->execute();
 $bufcount = 0;
-$buftid = 0; 
+$buftid = 0;
 foreach($result2 as $v1) {
 foreach($v1 as $v2) {
-if ($bufcount == 0) {   
+if ($bufcount == 0) {
 $buftid = $v2->tid;
 ++$bufcount;
-}        
-}    
-}                       
-$bterm = taxonomy_term_load($buftid);            
+}
+}
+}
+$bterm = taxonomy_term_load($buftid);
            // Brødkrummesti
             $output = $output . "<div class=\"row\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
@@ -125,20 +125,20 @@ $bterm = taxonomy_term_load($buftid);
               $output = $output . "</div>";
             $output = $output . "</div>";
 
-           
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
-                
-              
+
+
 
                   $output = $output . "<h1>" . $title . "</h1>";
 
 
-                
+
               $output = $output . "</div>";
               $output = $output . "<div class=\"grid-third sociale-medier social-desktop\"></div>";
             $output = $output . "</div>";
-  
+
             $output = $output . "<div class=\"row second\">";
               $output = $output . "<div class=\"grid-two-thirds\">";
                 $output = $output . "<!-- ARTIKEL TOP START -->";
@@ -149,9 +149,9 @@ $bterm = taxonomy_term_load($buftid);
                     if($node->field_youwatch_page_url) {
                       $output = $output . "<div class=\"video-indlejret\">";
                         $output = $output . "<div class=\"embed-container vimeo\">";
-                      
-                          $output .= "<iframe src=\"http://www.youtube.com/embed/" . substr(strrchr($node->field_youwatch_page_url['und'][0]['value'], "="), 1) . "?rel=0\" frameborder=\"0\" allowfullscreen></iframe>";                      
-                        
+
+                          $output .= "<iframe src=\"http://www.youtube.com/embed/" . substr(strrchr($node->field_youwatch_page_url['und'][0]['value'], "="), 1) . "?rel=0\" frameborder=\"0\" allowfullscreen></iframe>";
+
                         $output = $output . "</div>";
                       $output = $output . "</div>";
                       if ($node->field_videotekst) {
@@ -159,36 +159,36 @@ $bterm = taxonomy_term_load($buftid);
                       }
                     }
                     $output = $output . "<!-- VIDEO SLUT -->";
-                 
+
 
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
-                
+
                 // UNDEROVERSKRIFT
                 $output = $output . "<!-- UNDEROVERSKRIFT START -->";
                 if($node->body) {
                   $output = $output . "<h2>" . $node->body['und'][0]['value'] . "</h2>";
                 }
                 $output = $output . "<!-- UNDEROVERSKRIFT SLUT -->";
-               
 
-                
-                
+
+
+
                 // TEKSTINDHOLD
                 $output = $output . "<!-- TEKSTINDHOLD START -->";
                 hide($content['comments']);
                 hide($content['links']);
 //                $output = $output . render($content);
                 $output = $output . "<!-- TEKSTINDHOLD SLUT -->";
-                
-                
 
 
 
 
-                
-                
+
+
+
+
                 // KONTAKT
                 $output = $output . "<!-- KONTAKT START -->";
                 if($node->field_os2web_base_field_kle_ref) {
@@ -206,17 +206,17 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 // DEL PÅ SOCIALE MEDIER
-                // Hvis noden er en indholdsside, borger.dk-artikel eller en aktivitet 
+                // Hvis noden er en indholdsside, borger.dk-artikel eller en aktivitet
                 if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
                   include_once drupal_get_path('theme', 'ishoj') . '/includes/del-paa-sociale-medier.php';
                 }
 
-                
+
                 // SENEST OPDATERET
                 $output = $output . "<!-- SENEST OPDATERET START -->";
                 $output = $output . "<p class=\"last-updated\">Senest opdateret " . format_date($node->changed, 'senest_redigeret') . "</p>";
                 $output = $output . "<!-- SENEST OPDATERET SLUT -->";
-                
+
 
                 // REDIGÉR-KNAP
                 if($logged_in) {
@@ -225,47 +225,47 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 $output = $output . "</div>";
-              
-              
-              // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
-              if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
-                
-                $output = $output . "<div class=\"grid-third aside\">";
-                
-                
 
-                
+
+              // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
+              if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
+
+                $output = $output . "<div class=\"grid-third aside\">";
+
+
+
+
 
                 $output = $output . "</div>";
-              
+
               }
-              
+
             $output = $output . "</div>";
           $output = $output . "</div>";
         $output = $output . "</section>";
         $output = $output . "<!-- ARTIKEL SLUT -->";
 
-       
+
         // DIMMER DEL SIDEN
         $output = $output . "<!-- DIMMER DEL SIDEN START -->";
-        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER, 
-        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET 
+        // OPRET DEL-PÅ-SOCIALE-MEDIER-KNAPPER,
+        // HVIS NODEN ER AF TYPEN INDHOLD, BORGER.DK-ARTIKEL ELLER AKTIVITET
         if(($node->type == 'os2web_base_contentpage') or ($node->type == 'os2web_borger_dk_article') or ($node->type == 'aktivitet')) {
           $options = array('absolute' => TRUE);
           $nid = $node->nid; // Node ID
           $abs_url = url('node/' . $nid, $options);
 
           $output = $output . "<div class=\"dimmer-delsiden hidden\">";
-          
+
           $output .= "<a class=\"breaking-close\" href=\"#\" title=\"Luk\"></a>";
-            
+
             $output = $output . "<ul>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-facebook\" href=\"https://www.facebook.com/sharer/sharer.php?u=" . $abs_url . "\" title=\"Del siden på Facebook\"><span><span class=\"screen-reader\">Del siden på Facebook</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-twitter\" href=\"https://twitter.com/home?status=" . $title . " " . $abs_url . "\" title=\"Del siden på Twitter\"><span><span class=\"screen-reader\">Del siden på Twitter</span></span></a></li>";
               $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-googleplus\" href=\"https://plus.google.com/share?url=" . $abs_url . "\" title=\"Del siden på Google+\"><span><span class=\"screen-reader\">Del siden på Google+</span></span></a></li>";
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . " title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
-              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-linkedin\" href=\"https://www.linkedin.com/shareArticle?url=" . $abs_url . "&title=" . $title . "&summary=&source=&mini=true\" title=\"Del siden på LinkedIn\"><span><span class=\"screen-reader\">Del siden på LinkedIn</span></span></a></li>";
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-mail\" href=\"mailto:?subject=" . $title . "&body=" . $abs_url . "\" title=\"Send som e-mail\"><span><span class=\"screen-reader\">Send som e-mail</span></span></a></li>";          
+              $output = $output . "<li class=\"sociale-medier\"><a class=\"sprite sprite-link\" href=\"#\" title=\"Del link\"><span><span class=\"screen-reader\">Del link</span></span></a></li>";
             $output = $output . "</ul>";
             $output = $output . "<div class=\"link-url\">";
               $output = $output . "<textarea>" . $abs_url . "</textarea>";
@@ -280,10 +280,7 @@ $bterm = taxonomy_term_load($buftid);
 
         print $output;
         print render($content['links']);
-        print render($content['comments']); 
+        print render($content['comments']);
 
 
 ?>
-
-       
-
