@@ -68,10 +68,10 @@ function ishoj_elasticsearch_elasticsearch_connector_search_api_query_alter($que
 
 /*
 function ishoj_elasticsearch_get_results_json($query){
-    
+
     //header('Content-Type: text/html; charset=utf-8');
     //$query = htmlspecialchars($_GET["q"]);
-    $query = str_replace(array('¿', '¾', 'Œ', ''), array('oe', 'ae', 'aa', '%20'), $query);
+    $query = str_replace(array('ï¿½', 'ï¿½', 'ï¿½', ''), array('oe', 'ae', 'aa', '%20'), $query);
 
     $data = array(
 	'query' => array(
@@ -85,17 +85,17 @@ function ishoj_elasticsearch_get_results_json($query){
 
     $data_string = json_encode($data);
 
-    $ch = curl_init('localhost:9200/ishoj/_search');                                                                      
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-	'Content-Type: application/json',                                                                                
-	'Content-Length: ' . strlen($data_string))                                                                       
-    );                                                                                                                   
-     
+    $ch = curl_init('localhost:9200/ishoj/_search');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+	'Content-Type: application/json',
+	'Content-Length: ' . strlen($data_string))
+    );
+
     $json = curl_exec($ch);
-    
+
     echo $json;
 }*/
 
@@ -108,7 +108,7 @@ function _ishoj_elasticsearch_get_boosting($query_string = null){
     $untilDateCondition = db_or();
     $untilDateCondition->condition('until_date', $now, ">=");
     $untilDateCondition->condition('until_date', NULL, 'is');
-    
+
     $results = db_select('ishoj_elasticsearch_kle', 'i')
 	->fields('i')
 	->condition('weight', 1, "!=")
@@ -179,13 +179,13 @@ function _ishoj_elasticsearch_get_size($query_string){
 	AND nid IS NOT NULL AND (i.from_date IS NULL or i.from_date <= :now)
 	AND  (i.until_date IS NULL or i.until_date >= :now)',
 	array(':phrase' => $query_string, ':now' => date('Y-m-d H:i:s', time())))->fetchAll();
-    
+
     foreach($results as $result) {
 	if ($result->exclusive) {//if any of the mathcing phrase are set to be exclusive
 	    return 1;
 	}
     }
-    
+
     //non of the matching phrases are set to be exclusive, return defaul size
     return 13;
 }
