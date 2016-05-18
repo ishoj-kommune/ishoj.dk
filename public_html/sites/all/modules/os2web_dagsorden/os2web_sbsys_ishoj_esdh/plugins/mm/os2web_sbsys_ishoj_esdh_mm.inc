@@ -310,7 +310,9 @@ function _os2web_sbsys_ishoj_esdh_mm_import_meeting_agenda_item($meeting, $xml) 
     $xml_item_bullet = (array) $xml_item_bullet;
     foreach ($xml_item_bullet as $title => $body) {
       if ($item['access'] == 'Lukket' && !variable_get('os2web_meetings_import_closed_agenda', false)){
-        if (!in_array(strtolower($title), explode(',', strtolower(variable_get('os2web_meetings_import_specified_closed_agenda', '')))))
+        $specified_agandes = strtolower(variable_get('os2web_meetings_import_specified_closed_agenda', ''));
+
+        if (!in_array(strtolower($title), explode(',', $specified_agandes)))
           continue;
       }
       $item['bullets'][] = array(

@@ -206,9 +206,11 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
     //Adding default meeting category
       
     // add by Jesper jvm@ishoj.dk to get sbsys dagsordentekst
- $node->field_forsidetekst[LANGUAGE_NONE][0]['value'] = $meeting['forsidetekst'];
+    if ($meeting['forsidetekst']) {
+      $node->field_forsidetekst[LANGUAGE_NONE][0]['value'] = $meeting['forsidetekst'];
       $node->field_forsidetekst[LANGUAGE_NONE][0]['format'] ='filtered_html';
-      
+    }
+  
     $node->field_os2web_meetings_category[LANGUAGE_NONE][0]['value']=variable_get('os2dagsorden_default_meeting_cateroty','pol');
     //Adding participants
     if (isset($meeting['participants'])){
@@ -335,6 +337,12 @@ function _os2web_esdh_provider_import_items($items) {
       $node->field_os2web_meetings_bul_closed[LANGUAGE_NONE][]['value'] = 1;
       if (module_exists('os2dagsorden_esdh_provider')){
         $node = os2dagsorden_esdh_provider_process_closed_bullet($node, $item); 
+      }
+      if (isset($item['bullets']) && is_array($item['bullets'])) {
+        $bullet_nids = _os2web_esdh_provider_import_bullets($item['bullets']);
+        foreach ($bullet_nids as $nid) {
+          $node->field_os2web_meetings_attach[LANGUAGE_NONE][]['target_id'] = $nid;
+        }
       }
       node_submit($node);
       node_save($node);
@@ -480,14 +488,14 @@ function _os2web_esdh_provider_import_file($file_meta) {
     return FALSE;
   }
 
-  if (file_uri_scheme($uri) != 'public') {
+  /*if (file_uri_scheme($uri) != 'public') {
     watchdog('acadre MM', 'Invalid scheme for uri %uri, Possibly absolut path ? ' . $uri, array(
       '%uri', $uri), WATCHDOG_ERROR);
     error_log("Var: \$uri = " . print_r($uri, 1));
     error_log("Var: \$uri_in = " . print_r($uri_in, 1));
     error_log("Var: \$uri_out = " . print_r($uri_out, 1));
     error_log("Var: \$uri_pdf = " . print_r($uri_pdf, 1));
-  }
+  }*/
 
   $fid = db_select('file_managed', 'fm')
           ->fields('fm', array('fid'))
