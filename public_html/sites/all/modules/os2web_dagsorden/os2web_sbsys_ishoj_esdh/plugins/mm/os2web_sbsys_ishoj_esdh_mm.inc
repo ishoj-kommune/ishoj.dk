@@ -305,10 +305,16 @@ function _os2web_sbsys_ishoj_esdh_mm_import_meeting_agenda_item($meeting, $xml) 
     $item['access'] = 'Lukket';
   }
   //importing open bullets only, or open and closed if it is permitted
-  if ($item['access'] !== 'Lukket' || variable_get('os2web_meetings_import_closed_agenda', false)){
+  if ($item['access'] !== 'Lukket' || variable_get('os2web_meetings_import_closed_agenda', false) || !empty(variable_get('os2web_meetings_import_specified_closed_agenda', ''))){
     //// Process attachments.
     $xml_item_bullet = (array) $xml_item_bullet;
     foreach ($xml_item_bullet as $title => $body) {
+      if ($item['access'] == 'Lukket' && !variable_get('os2web_meetings_import_closed_agenda', false)){
+        $specified_agandes = strtolower(variable_get('os2web_meetings_import_specified_closed_agenda', ''));
+
+        if (!in_array(strtolower($title), explode(',', $specified_agandes)))
+          continue;
+      }
       $item['bullets'][] = array(
         'title' => (string) $title,
         'body' => (string) $body,
