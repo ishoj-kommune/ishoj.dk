@@ -153,7 +153,7 @@ $output .= $node->field_forsidetekst['und'][0]['safe_value'];
                     $output .= "<div class=\"microArticle\"><h3 class=\"mArticle\" id=\"mArticle" . $key . "\"><span class=\"sprites-sprite sprite-plus mikroartikel\"></span>" . $item['entity']->title . $aabenlukket . "</h3>";
                     $output .= "<div class=\"mArticle" . $key . " mArticle\">";
                     
-                    if($aabenlukket !== "") {
+                    if($aabenlukket !== "" && empty(variable_get('os2web_meetings_import_specified_closed_agenda', ''))) {
                        $output .= "<p>Intet indhold til denne sag.</p>";  
                                             
                     }
