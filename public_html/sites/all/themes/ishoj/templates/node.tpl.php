@@ -381,11 +381,11 @@ $bterm = taxonomy_term_load($buftid);
                   $output .= "<div id=\"hrskyen\"><noscript>This page requires javascript<br /> <a href=\"https://hr-skyen.dk/list-jobs/\">Visit our job page</a></noscript></div>";
                   $output .= "<script src=\"https://hr-skyen.dk/hr/frame-api/customers/ishoj.js\" type=\"text/javascript\"></script>";
                   // Emply Hire (Ofir.dk)
-                  $output .= "<ul style=\"margin-bottom:0;\">";
+                  // $output .= "<ul style=\"margin-bottom:0;\">";
                     // $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=20\" title=\"Sygeplejerske til Ishøj Hjemmepleje\">Sygeplejerske til Ishøj Hjemmepleje</a></li>";
-                    $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/VacancyAd.aspx?vacancyId=18\" title=\"Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje\">Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje</a></li>";
+                    // $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/VacancyAd.aspx?vacancyId=18\" title=\"Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje\">Timelønnede/sommerferieafløsere til Ishøj Hjemmepleje</a></li>";
                     // $output .= "<li><a href=\"https://ishoj.emply.net/recruitment/vacancyAd.aspx?vacancyId=14\" title=\"Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset\">Konsulent for tosprogede børn i skoler og dagtilbud med ledelse af Sprogkorpset</a></li>";
-                  $output .= "</ul>";
+                  // $output .= "</ul>";
                   // ISHOJ.DK
                   $output .= "<ul>" . views_embed_view('ledig_stilling','ledige_stillinger_liste') . "</ul>";
 
