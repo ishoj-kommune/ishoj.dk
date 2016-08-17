@@ -326,7 +326,7 @@ function _os2web_sbsys_ishoj_esdh_mm_import_meeting_agenda_item($meeting, $xml) 
     foreach ($xml_item_document->Bilag as $enclosure) {
       $item['enclosures'][] = array(
         'uri' => $meeting['folder'] . (string) $enclosure->attributes()->BilagUrl,
-        'title' => pathinfo((string) $enclosure->attributes()->BilagUrl, PATHINFO_FILENAME), //(string) $enclosure->attributes()->Navn,
+        'title' => pathinfo((string) $enclosure->attributes()->BilagUrl, PATHINFO_FILENAME) . "_BilagID_" . (string) $enclosure->attributes()->BilagID, //(string) $enclosure->attributes()->Navn,
         'access' => strcmp((string)$enclosure->attributes()->MaaPubliceres,'true') ? TRUE : FALSE,
         'sysid' => (string) $enclosure->attributes()->BilagID,
         'type' => 'Bilag',
