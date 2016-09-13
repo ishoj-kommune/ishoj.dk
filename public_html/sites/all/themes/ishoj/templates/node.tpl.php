@@ -465,23 +465,27 @@ $bterm = taxonomy_term_load($buftid);
 
 
                 // KONTAKT
-                $output .= "<!-- KONTAKT START -->";
-                if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
-                  $output .= "<hr>";
+                // Hvis noden ikke er en 'ledig stilling'
+                if(!taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Ledig stilling") {
+                  $output .= "<!-- KONTAKT START -->";
+                  if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
+                    $output .= "<hr>";
+                  }
+                  $output .= "<h2>Kontakt</h2>";
+                  $args = array($node->field_os2web_base_field_kle_ref['und'][0][tid], $node->field_os2web_base_field_kle_ref['und'][0][tid]);
+                  $view = views_get_view('kontakt_kle');
+                  $view->set_display('default');
+                  $view->set_arguments($args);
+                  $view->execute();
+                  if(count($view->result) > 0) {
+                   $output .= $view->render();
+                  }
+                  else {
+                    $output .= views_embed_view('kontakt_kle','default', 1968);
+                  }
+                  $output .= "<!-- KONTAKT SLUT -->";
                 }
-                $output .= "<h2>Kontakt</h2>";
-                $args = array($node->field_os2web_base_field_kle_ref['und'][0][tid], $node->field_os2web_base_field_kle_ref['und'][0][tid]);
-                $view = views_get_view('kontakt_kle');
-                $view->set_display('default');
-                $view->set_arguments($args);
-                $view->execute();
-                if(count($view->result) > 0) {
-                 $output .= $view->render();
-                }
-                else {
-                  $output .= views_embed_view('kontakt_kle','default', 1968);
-                }
-                $output .= "<!-- KONTAKT SLUT -->";
+
 
 
                 // DEL PÅ SOCIALE MEDIER
