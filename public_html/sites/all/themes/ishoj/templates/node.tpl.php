@@ -466,7 +466,7 @@ $bterm = taxonomy_term_load($buftid);
 
                 // KONTAKT
                 // Hvis noden ikke er en 'ledig stilling'
-                if(!taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name == "Ledig stilling") {
+                if(taxonomy_term_load($node->field_indholdstype['und'][0]['tid'])->name != "Ledig stilling") {
                   $output .= "<!-- KONTAKT START -->";
                   if(($node->field_url) or ($node->field_url_2) or ($node->field_diverse_boks)) {
                     $output .= "<hr>";
