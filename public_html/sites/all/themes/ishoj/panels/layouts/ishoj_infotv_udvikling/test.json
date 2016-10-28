@@ -1,0 +1,117 @@
+{
+    "bookings": [{
+        "beskrivelse": "Gymnastiksal",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
+        "omkladning": "",
+        "slut": 1477641600,
+        "start": 1477634400
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
+        "omkladning": "",
+        "slut": 1477641600,
+        "start": 1477634400
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "NEXT kbh",
+        "omkladning": "",
+        "slut": 1477641600,
+        "start": 1477634400
+    }, {
+        "beskrivelse": "Hal I",
+        "navnFirma": "NEXT kbh",
+        "omkladning": "",
+        "slut": 1477663200,
+        "start": 1477634400
+    }, {
+        "beskrivelse": "Gymnastiksal",
+        "navnFirma": "Femkanten - Komm. inst.",
+        "omkladning": "",
+        "slut": 1477647000,
+        "start": 1477641600
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "Troldebo - Komm. inst.",
+        "omkladning": "",
+        "slut": 1477647000,
+        "start": 1477641600
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Ådalens Privatskole",
+        "omkladning": "",
+        "slut": 1477648800,
+        "start": 1477641600
+    }, {
+        "beskrivelse": "Gymnastiksal",
+        "navnFirma": "SFO - Vejlebroskolen",
+        "omkladning": "",
+        "slut": 1477648800,
+        "start": 1477647000
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
+        "omkladning": "",
+        "slut": 1477656000,
+        "start": 1477648800
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "Ådalens Privatskole",
+        "omkladning": "",
+        "slut": 1477656000,
+        "start": 1477648800
+    }, {
+        "beskrivelse": "Gymnastiksal",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
+        "omkladning": "",
+        "slut": 1477663200,
+        "start": 1477648800
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Ådalens Privatskole",
+        "omkladning": "",
+        "slut": 1477663200,
+        "start": 1477656000
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "Socialpsykiatrien i Ishøj",
+        "omkladning": "",
+        "slut": 1477663200,
+        "start": 1477656000
+    }, {
+        "beskrivelse": "Hal I",
+        "navnFirma": "Ishøj Volley og Beachvolleyklub",
+        "omkladning": "",
+        "slut": 1477670400,
+        "start": 1477663200
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "SB 50 Ishøj Badminton - Ungdom",
+        "omkladning": "",
+        "slut": 1477670400,
+        "start": 1477663200
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "SB 50 Ishøj Badminton - Ungdom",
+        "omkladning": "",
+        "slut": 1477670400,
+        "start": 1477663200
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "Ishøj Volley og Beachvolleyklub",
+        "omkladning": "",
+        "slut": 1477681200,
+        "start": 1477670400
+    }, {
+        "beskrivelse": "Hal I",
+        "navnFirma": "Ishøj Hockey Klub",
+        "omkladning": "",
+        "slut": 1477684800,
+        "start": 1477670400
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Ishøj Boldklub BK",
+        "omkladning": "",
+        "slut": 1477684800,
+        "start": 1477670400
+    }]
+}
