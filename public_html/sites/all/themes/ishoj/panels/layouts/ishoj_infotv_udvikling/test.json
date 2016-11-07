@@ -3,115 +3,103 @@
         "beskrivelse": "Gymnastiksal",
         "navnFirma": "Vejlebroskolen - Komm. skoler",
         "omkladning": "",
-        "slut": 1477641600,
-        "start": 1477634400
+        "slut": 1478077200,
+        "start": 1478070000
     }, {
         "beskrivelse": "Hal II",
         "navnFirma": "Vejlebroskolen - Komm. skoler",
         "omkladning": "",
-        "slut": 1477641600,
-        "start": 1477634400
+        "slut": 1478077200,
+        "start": 1478070000
     }, {
         "beskrivelse": "Hal III",
-        "navnFirma": "NEXT kbh",
+        "navnFirma": "SB 50 Ishøj Badminton - Ældre",
         "omkladning": "",
-        "slut": 1477641600,
-        "start": 1477634400
+        "slut": 1478095200,
+        "start": 1478070000
     }, {
         "beskrivelse": "Hal I",
         "navnFirma": "NEXT kbh",
         "omkladning": "",
-        "slut": 1477663200,
-        "start": 1477634400
+        "slut": 1478098800,
+        "start": 1478070000
     }, {
         "beskrivelse": "Gymnastiksal",
-        "navnFirma": "Femkanten - Komm. inst.",
+        "navnFirma": "Regnbuen, BH og VS - Komm. inst.",
         "omkladning": "",
-        "slut": 1477647000,
-        "start": 1477641600
-    }, {
-        "beskrivelse": "Hal III",
-        "navnFirma": "Troldebo - Komm. inst.",
-        "omkladning": "",
-        "slut": 1477647000,
-        "start": 1477641600
+        "slut": 1478084400,
+        "start": 1478077200
     }, {
         "beskrivelse": "Hal II",
         "navnFirma": "Ådalens Privatskole",
         "omkladning": "",
-        "slut": 1477648800,
-        "start": 1477641600
-    }, {
-        "beskrivelse": "Gymnastiksal",
-        "navnFirma": "SFO - Vejlebroskolen",
-        "omkladning": "",
-        "slut": 1477648800,
-        "start": 1477647000
-    }, {
-        "beskrivelse": "Hal II",
-        "navnFirma": "Vejlebroskolen - Komm. skoler",
-        "omkladning": "",
-        "slut": 1477656000,
-        "start": 1477648800
-    }, {
-        "beskrivelse": "Hal III",
-        "navnFirma": "Ådalens Privatskole",
-        "omkladning": "",
-        "slut": 1477656000,
-        "start": 1477648800
+        "slut": 1478084400,
+        "start": 1478077200
     }, {
         "beskrivelse": "Gymnastiksal",
         "navnFirma": "Vejlebroskolen - Komm. skoler",
         "omkladning": "",
-        "slut": 1477663200,
-        "start": 1477648800
+        "slut": 1478098800,
+        "start": 1478084400
     }, {
         "beskrivelse": "Hal II",
-        "navnFirma": "Ådalens Privatskole",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
         "omkladning": "",
-        "slut": 1477663200,
-        "start": 1477656000
+        "slut": 1478098800,
+        "start": 1478084400
     }, {
         "beskrivelse": "Hal III",
-        "navnFirma": "Socialpsykiatrien i Ishøj",
+        "navnFirma": "Vejlebroskolen - Komm. skoler",
         "omkladning": "",
-        "slut": 1477663200,
-        "start": 1477656000
-    }, {
-        "beskrivelse": "Hal I",
-        "navnFirma": "Ishøj Volley og Beachvolleyklub",
-        "omkladning": "",
-        "slut": 1477670400,
-        "start": 1477663200
+        "slut": 1478098800,
+        "start": 1478095200
     }, {
         "beskrivelse": "Hal II",
         "navnFirma": "SB 50 Ishøj Badminton - Ungdom",
         "omkladning": "",
-        "slut": 1477670400,
-        "start": 1477663200
+        "slut": 1478102400,
+        "start": 1478098800
     }, {
         "beskrivelse": "Hal III",
         "navnFirma": "SB 50 Ishøj Badminton - Ungdom",
         "omkladning": "",
-        "slut": 1477670400,
-        "start": 1477663200
-    }, {
-        "beskrivelse": "Hal III",
-        "navnFirma": "Ishøj Volley og Beachvolleyklub",
-        "omkladning": "",
-        "slut": 1477681200,
-        "start": 1477670400
-    }, {
-        "beskrivelse": "Hal I",
-        "navnFirma": "Ishøj Hockey Klub",
-        "omkladning": "",
-        "slut": 1477684800,
-        "start": 1477670400
+        "slut": 1478106000,
+        "start": 1478098800
     }, {
         "beskrivelse": "Hal II",
-        "navnFirma": "Ishøj Boldklub BK",
+        "navnFirma": "Trampolinklubben Viben Ishøj",
         "omkladning": "",
-        "slut": 1477684800,
-        "start": 1477670400
+        "slut": 1478113200,
+        "start": 1478102400
+    }, {
+        "beskrivelse": "Hal I",
+        "navnFirma": "Ishøj Håndbold Forening",
+        "omkladning": "",
+        "slut": 1478116800,
+        "start": 1478102400
+    }, {
+        "beskrivelse": "Gymnastiksal",
+        "navnFirma": "Ishøj Gymnastikforening - 131 - Jump4Fun",
+        "omkladning": "",
+        "slut": 1478106900,
+        "start": 1478103300
+    }, {
+        "beskrivelse": "Hal III",
+        "navnFirma": "SB 50 Ishøj Badminton - Ungdom/Senior",
+        "omkladning": "",
+        "slut": 1478120400,
+        "start": 1478106000
+    }, {
+        "beskrivelse": "Hal II",
+        "navnFirma": "Ishøj Ungdomsskole - Basket",
+        "omkladning": "",
+        "slut": 1478120400,
+        "start": 1478113200
+    }, {
+        "beskrivelse": "Hal I",
+        "navnFirma": "Center for Ældre og Rehabilitering",
+        "omkladning": "",
+        "slut": 1478120400,
+        "start": 1478116800
     }]
 }

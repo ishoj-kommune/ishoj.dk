@@ -1,13 +1,13 @@
   (function($) {
-	
-	
+
+
       /*************************/
       /***** INFO-TV MOTOR *****/
       /*************************/
       $(window).load(function(){
 
         var durationArray = [];
-        var durationDefault = 10000; 
+        var durationDefault = 10000;
         var indexCurrentSlide = 0;
         var timerDelay = false;
         var autoAdvancingTimeout = null;
@@ -20,150 +20,79 @@
         var reloadPageMinutes = 0.05; // default = 5
         var slidesHTML = "";
         var slidesHTML_overlay = "";
-//        var slidesHTML_uglen = "";
-//        var visNyhederFraUglen = false;
-//        var s_uglenTemp = "";
         var denneURL = "";
 
-        
+
         function reloadPage(i) {
           if(reloadMe || i) {
-            
-            // HVIS DER I URL'EN ER ANGIVET uglen=1, INDLÆSES NYHEDER (ISHØJ INDEFRA) FRA UGLEN
-//            if(visNyhederFraUglen) {
-//               
-//              console.log("Version 21" + "\n\n");
-//              
-//              // HENT JSON
-//              $.getJSON( "/sites/all/themes/ishoj/templates/hent_uglennyheder_json.php", function( data ) {
-//              })
-//              
-//              // HVIS DER INGEN FEJL ER
-//              .done(function( data ) {
-//                s_uglenTemp = "";
-//                
-//                $.each( data, function( key, val ) {
-//                  s_uglenTemp += '<li class="infotv-skabelon">';
-//                    s_uglenTemp += '<img src="' + val.billede.src + '">';
-//                    s_uglenTemp += '<div class="bgBox animationForward animationBack animationStart"></div>';
-//                    s_uglenTemp += '<div class="bgBoxInvisible animationForward animationBack animationEnd">';
-//                      s_uglenTemp += '<h1>' + val.titel + '</h1>';
-//                      s_uglenTemp += '<p>' + val.resume + '</p>';
-//                      s_uglenTemp += '<h2>Læs mere på Uglen</h2>';
-//                    s_uglenTemp += '</div>';
-//                  s_uglenTemp += '</li>';
-//                });
-//                
-////                slidesHTML_uglen = s_uglenTemp;
-////                console.log(s_uglen);
-//
-//              })              
-//               // HVIS DER ER FEJL
-//              .fail(function() {
-//                console.log("Fejl ved indlæsning af nyheder fra Uglen ");
-//              });
-//              
-//            }
-            
-            
-            
-            // http://api.jquery.com/jquery.get/
-//            if(visNyhederFraUglen) {
-//              denneURL = window.location + '&hash=' + Math.random();
-//            }
-//            else {
-            denneURL = window.location + '?hash=' + Math.random();
-//            }
-            
-            var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
-//            var jqxhr = $.get((window.location + '?hash=' + Math.random()), {timeout:5000, dataType:"json"},  function() {
 
-//              if(jqxhr.responseText.indexOf('<div class="flexslider">') != -1) { // Hvis det returnerede indholder strengen, så reload indhold
-//                location.reload(true);
-//              }
+            denneURL = window.location + '?hash=' + Math.random();
+            var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
 
             })
               // HVIS DER INGEN FEJL ER
               .done(function() {
-                
-                // Henter det nye indhold og stripper unødvendigt output 
+
+                // Henter det nye indhold og stripper unødvendigt output
                 var res = jqxhr.responseText;
-                
+
                 // Info-tv indhold
                 var s = res.substring(res.indexOf('<!-- info-tv start -->'));
                 s = s.substr(0, s.indexOf('<!-- info-tv slut -->')) + '<!-- info-tv slut -->';
-                
+
                 // Overlay indhold
                 var s_overlay = res.substring(res.indexOf('<!-- overlay-bottom start -->'));
                 s_overlay = s_overlay.substr(0, s_overlay.indexOf('<!-- overlay-bottom slut -->')) + '<!-- overlay-bottom slut -->';
-                
-                // KUN FØRSTE GENNEMLØB 
-                if(i) { 
-                  slidesHTML = s;  
-                  slidesHTML_overlay = s_overlay;  
-//                  if(visNyhederFraUglen) {
-//                    slidesHTML_uglen = s_uglenTemp;
-//                  }
-//                  console.log("\n\nslidesHTML = " + slidesHTML);
-//                  console.log("\n\nslidesHTML_overlay = " + slidesHTML_overlay);
+
+                // KUN FØRSTE GENNEMLØB
+                if(i) {
+                  slidesHTML = s;
+                  slidesHTML_overlay = s_overlay;
                 }
-                
-                // HVIS slideHTML OG s IKKE ER ENS 
-                // ELLER HVIS slidesHTML_overlay OG s_overlay IKKE ER ENS, 
+
+                // HVIS slideHTML OG s IKKE ER ENS
+                // ELLER HVIS slidesHTML_overlay OG s_overlay IKKE ER ENS,
                 // ER DER NYT INDHOLD (OGSÅ VED FØRSTE GENNEMLØB)
                 if( (slidesHTML.localeCompare(s) != 0)  || (slidesHTML_overlay.localeCompare(s_overlay) != 0) || i ) {
-//                if( (slidesHTML.localeCompare(s) != 0) || (slidesHTML_overlay.localeCompare(s_overlay) != 0) || (slidesHTML_uglen.localeCompare(s_uglenTemp) != 0)  || i ) {
-//                if((slidesHTML.localeCompare(s) != 0) || i) {
-                  /* stringA.localeCompare(stringB)
-                  Returns:
-                   0:  exact match
-                  -1:  string_a < string_b
-                   1:  string_b > string_b
-                  */
-                  
+
                   if(i) {
                     console.log("\n\nFlexslider starter op");
                     // FJERNER SPINNER
-                    setTimeout(function (){ 
+                    setTimeout(function (){
                       $(".spinner").remove();
-                    }, 300);               
+                    }, 300);
                   }
                   else {
                     console.log("\n\nÆndring af indhold - Flexslider starter forfra");
                   }
-                  
+
                   // HVERT GENNEMLØB (DOG IKKE FØRSTE)
                   if(!i) {
                     // SLET FLEXSLIDER
                     deleteFlexslider();
                   }
-                  
+
                   // START FLEXSLIDER
-                  setTimeout(function (){ 
+                  setTimeout(function (){
 
                     // INITIALISERING AF VARIABLER
                     initVars();
                     // TILFØJ INDHOLDET TIL KLASSEN .slides
-//                    if(visNyhederFraUglen) {
-//                      $(".slides ").html(s_uglenTemp + s);
-//                    }
-//                    else {
-                      $(".slides ").html(s);
-//                    }
+                    $(".slides ").html(s);
 
-                    setTimeout(function (){ 
+                    setTimeout(function (){
                       // INITIALISERING AF SLIDES
                       initSlideArray();
 
-                      setTimeout(function (){ 
+                      setTimeout(function (){
                         // OPRET FLEXSLIDER
                         newFlexslider();
                         showSlider();
-                        slidesHTML = s;  
-                        
+                        slidesHTML = s;
+
                         // TILFØJ OVERLAY-INDHOLDET TIL KLASSEN .overlay_bottom
                         $(".overlay_bottom ").html(s_overlay);
-                        slidesHTML_overlay = s_overlay;  
+                        slidesHTML_overlay = s_overlay;
 
                       }, 200);
 
@@ -173,48 +102,48 @@
 
                 }
                 else {
-                  console.log("\n\nIngen ændring af indhold - Flexslider fortsætter");                
+                  console.log("\n\nIngen ændring af indhold - Flexslider fortsætter");
                 }
-                
+
                 // SKJULER IKONET FOR NETVÆRKSFEJL
                 if($(".error").hasClass("action")) {
                   $(".error").removeClass("action");
                 }
-                
+
               })
               // HVIS DER ER FEJL
               .fail(function() {
-                
+
                 if(jqxhr.status === 0) {
-                  
+
                   // VISER IKONET FOR NETVÆRKSFEJL
                   if(!$(".error").hasClass("action")) {
                     $(".error").addClass("action");
                   }
                 }
-                
-                console.log( "Fejl: " + jqxhr.status + " (ingen netværksforbindelse)"); 
-                // Hvis jqxhr.status = 0, så er det en netværksfejl. 
+
+                console.log( "Fejl: " + jqxhr.status + " (ingen netværksforbindelse)");
+                // Hvis jqxhr.status = 0, så er det en netværksfejl.
                 // Se http://www.unseenrevolution.com/jquery-ajax-error-handling-function/
               })
-            
+
           }
         }
-        
+
         /***** FUNKTION DER VISER SLIDEREN (fjerner .hide-klassen) *****/
         function showSlider() {
           $(".slider").removeClass("hide");
         }
-        
+
 
         function reloadPageTimer() {
           setInterval(function(){
             reloadMe = true;
-          }, (1000 * 60 * reloadPageMinutes)); //1000 milisekunder = 1 sek.   
+          }, (1000 * 60 * reloadPageMinutes)); //1000 milisekunder = 1 sek.
         }
-        
-        
-        /***** FUNKTION TIL AT RETURNERE EN VÆRDI UD FRA EN URL-PARAMETER-STRENG *****/ 
+
+
+        /***** FUNKTION TIL AT RETURNERE EN VÆRDI UD FRA EN URL-PARAMETER-STRENG *****/
         function getURLParameter(sParam) {
           var sPageURL = window.location.search.substring(1);
           var sURLVariables = sPageURL.split('&');
@@ -225,48 +154,33 @@
             }
           }
         }
-        
+
         // tjekker URL'en for om der er angivet en fade=0
         if(getURLParameter('fade') == 0) {
           fadeDuration = 1;
-          //alert(getURLParameter('fade'));
         }
         // tjekker URL'en for om der er angivet en t=0
         if(getURLParameter('t')) {
           reloadPageMinutes = getURLParameter('t');
-          //reloadPageTimer();
-          //alert("t er angivet");
         }
-        // tjekker URL'en for om der er angivet en uglen=1
-        // topnyheder fra Uglen læses ind
-//        if(getURLParameter('uglen') == 1) {
-//          visNyhederFraUglen = true;
-//        }
-//        else {
-//          reloadPageTimer();
-//        }
-        
-        
+
         /*****  SLETTER VARIABLER OG ARRAYS *****/
         function initVars() {
-          // sletning af arrays, se http://stackoverflow.com/questions/1232040/how-to-empty-an-array-in-javascript 
+          // sletning af arrays, se http://stackoverflow.com/questions/1232040/how-to-empty-an-array-in-javascript
           durationArray.length = 0;
           animationStartArray.length = 0;
           animationEndArray.length = 0;
-          
           indexCurrentSlide = 0;
           timerDelay = false;
           autoAdvancingTimeout = null;
           autoAdvancing = false;
           sliderCounts = 0;
           reloadMe = false;
-          
         }
-        
-        
-        /***** OPRETTER ET ARRAY MED VARIGHEDER PÅ SLIDES OG ET ARRAY MED 1/0 PÅ OM DER ER EN ANIMATIONSTART-KLASSE *****/    
+
+        /***** OPRETTER ET ARRAY MED VARIGHEDER PÅ SLIDES OG ET ARRAY MED 1/0 PÅ OM DER ER EN ANIMATIONSTART-KLASSE *****/
         function initSlideArray() {
-          
+
           $(".flexslider .slides > li").each(function(index, element) {
             // Finder varigheder
             durationArray[index] = $(this).data("duration")
@@ -282,24 +196,24 @@
               // Opretter eventhandler for .animationStart for den current slide
               $(".animationStart", this).bind('webkitAnimationEnd', function(e) {
                 pauseSlide();
-              }); 
+              });
             }
             else {
               animationStartArray[index] = 0;
-            }     
+            }
             // Finder animationEnd
             if($(".animationEnd", this).length != 0){
               animationEndArray[index] = 1;
             }
             else {
               animationEndArray[index] = 0;
-            }     
+            }
           });
 
         }
-        
-        
-        
+
+
+
         function pauseSlide() {
           if (typeof(durationArray[indexCurrentSlide]) !== 'undefined') {
             timerDelay = durationArray[indexCurrentSlide];
@@ -307,37 +221,29 @@
             timerDelay = durationArray[0];
             indexCurrentSlide = 0;
           };
-          autoAdvancingTimeout = setTimeout(function(){            
+          autoAdvancingTimeout = setTimeout(function(){
             if(animationEndArray[indexCurrentSlide]) {
               $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").addClass("reverse");
-/*              if(animationStartArray[indexCurrentSlide]) {
-                $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationStart").unbind('webkitAnimationEnd'); 
-                $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").bind('webkitAnimationEnd', function(e) {
-                  swapSlide();
-                }); 
-              }
-              else {*/
-                $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").bind('webkitAnimationEnd', function(e) {
-                  swapSlide();
-                }); 
-//              }
+              $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").bind('webkitAnimationEnd', function(e) {
+                swapSlide();
+              });
             }
             else {
               swapSlide();
-            }            
+            }
           }, timerDelay);
         }
-        
+
         /***** SKIFT TIL NÆSTE SLIDE *****/
         function swapSlide() {
           autoAdvancing = true;
-          jQuery('.flexslider').flexslider('next');            
+          jQuery('.flexslider').flexslider('next');
           autoAdvancing = false;
-          $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").unbind('webkitAnimationEnd'); 
-          
+          $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").unbind('webkitAnimationEnd');
+
           initAddOns(); // Inits fra Add-Ons
-        }        
-        
+        }
+
         /***** FJERNER ALLE CURRENT SLIDE- OG REVERSE-KLASSER *****/
         function removeCurrentSlideAndReverseClasses() {
           $(".flexslider .slides > li").each(function(){
@@ -347,7 +253,7 @@
 
         /***** OPRET FLEXSLIDER *****/
         function newFlexslider() {
-          
+
           $('.flexslider').flexslider({
             slideshowSpeed: 0,
             directionNav: false,
@@ -357,10 +263,9 @@
             animationSpeed: fadeDuration,
 
             start: function(slider) {
-              
-              
+
+
               sliderCounts = slider.count;
-              //$('.total-slides').text(slider.count);            
               $(".flexslider .slides > li:nth-child(" + indexCurrentSlide + 1 + ")").addClass("currentSlide");
               if(!animationStartArray[indexCurrentSlide]) {
                 pauseSlide();
@@ -371,46 +276,34 @@
 
             after: function(slider){ // After bliver kaldt, når slideren har animeret ind
               if(slider.currentSlide == 0) {
-                //alert("before");
               }
 
               // Hvis der er blevet brugt piletaster for at skifte slide
               if (!autoAdvancing) {
-                clearTimeout(autoAdvancingTimeout); 
-                indexCurrentSlide = slider.currentSlide;    
-                $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").unbind('webkitAnimationEnd'); /* HER */              
+                clearTimeout(autoAdvancingTimeout);
+                indexCurrentSlide = slider.currentSlide;
+                $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide + 1) + ")").find(".animationEnd").unbind('webkitAnimationEnd'); /* HER */
                 $(".flexslider .slides > li:nth-child("+ parseInt(indexCurrentSlide) + ")").removeClass("reverse"); /* HER */
-              };            
-              indexCurrentSlide = slider.currentSlide;            
+              };
+              indexCurrentSlide = slider.currentSlide;
               //Hvis der ikke er nogen animationStart-klasse
               if(!animationStartArray[indexCurrentSlide]) {
                 pauseSlide();
               }
-              //$('.current-slide').text(indexCurrentSlide + 1);            
-              removeCurrentSlideAndReverseClasses();            
+              removeCurrentSlideAndReverseClasses();
               $(".flexslider .slides > li:nth-child(" + (indexCurrentSlide + 1) + ")").addClass("currentSlide");
             },
 
             before: function(slider) {
               if(slider.currentSlide == (sliderCounts - 1)) {
                 reloadPage();
-                //console.log("Det er nu!!!");
-                //console.log("slider.currentSlide: " + slider.currentSlide);
               }
             },
 
             end: function(slider) {
 
-              //unbind'er og bind'er igen efter sidste slide
-  /*            $(".flexslider .slides > li").each(function(index, element) {
-                if(animationStartArray[index] == 1) {
-                  $("animationStart", this).unbind('webkitAnimationEnd').bind('webkitAnimationEnd', function(e) {
-                    pauseSlide();
-                  });
-                }
-              });*/
             }
-            /*  
+            /*
             start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
             before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
             after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
@@ -424,43 +317,40 @@
 
         /***** SLET FLEXSLIDER *****/
         function deleteFlexslider() {
-          
+
           if( $('.flexslider').eq(0).data('flexslider') ) {
             $('.flexslider').eq(0).flexslider('destroy');
           }
-          
-        }
-        
-        
-        
-        /***********************/
 
-//        initSlideArray();
-//        newFlexslider(); 
+        }
+
+
+
+        /***********************/
           reloadPage(1);
         /***********************/
 
 
-        
-        
+
+
 		/*****************/
 		/**** ADD-ONS ****/
 		/*****************/
 
-        
+
         /***** INITS TIL ADD-ONS *****/
         function initAddOns() {
           initUglen();    // Nyheder fra uglen
           initDagsplan(); // Dagsplaner på Ungdomsskolen
         }
-        
+
         /***** NYHEDER PÅ UGLEN *****/
-        var uglen = 0; 
+        var uglen = 0;
         function initUglen() {
           uglen = 0;
           $(".uglen-alle-nyheder ul:first-of-type").removeClass("action");
         }
-        if($(".uglen-alle-nyheder").length) { 
+        if($(".uglen-alle-nyheder").length) {
           setInterval(function() {
             if($(".uglen-alle-nyheder").hasClass("currentSlide")) {
               if(!uglen) {
@@ -468,22 +358,22 @@
                     clearInterval(uglenInterval);
                     $(".uglen-alle-nyheder ul:first-of-type").addClass("action");
                 }, 10000);
-                uglen = 1; 
+                uglen = 1;
               }
             }
-          }, 100); 
+          }, 100);
         }
-        
+
         /***** DAGSPLAN PÅ UNGDOMSSKOLEN *****/
-        var dagsplan = 0; 
+        var dagsplan = 0;
         function initDagsplan() {
           dagsplan = 0;
           $(".ungdomsskolen-dagensprogram ul:first-of-type").removeClass("action");
           $(".ungdomsskolen-dagensprogram .pager .page-1").addClass("action");
           $(".ungdomsskolen-dagensprogram .pager .page-2").removeClass("action");
         }
-        if($(".ungdomsskolen-dagensprogram").length) { 
-          // console.log("Her 1"); 
+        if($(".ungdomsskolen-dagensprogram").length) {
+          // console.log("Her 1");
           setInterval(function() {
             if($(".ungdomsskolen-dagensprogram").hasClass("currentSlide")) {
               // console.log("Her 2");
@@ -497,39 +387,39 @@
                       $(".ungdomsskolen-dagensprogram .pager .page-2").addClass("action");
                     }, 1000);
                 }, 10000);
-                uglen = 1; 
+                uglen = 1;
               }
             }
-          }, 100); 
+          }, 100);
         }
-        
-        
-        
+
+
+
 
         /***** YOUTUBE VIDEO *****/  // Se i øvrigt https://developers.google.com/youtube/iframe_api_reference#Overview
         function playYoutubeVideo(currentSlideIndex) {
-          /* Hvis den aktuelle li-child indeholder en youtube-video */          
+          /* Hvis den aktuelle li-child indeholder en youtube-video */
           var currElement = $(".flexslider .slides > li:nth-child("+ currentSlideIndex + ") .youtubeVideo");
           if(currElement.length == 1){
             //$(".textMessage").text("Denne slide indeholder youtube-video");
             $(".youtubeVideo").attr('src', $(".youtubeVideo, parent").attr('src') + '?autoplay=1');
           }
           /*else {
-            $(".textMessage").text(" ");          
+            $(".textMessage").text(" ");
           }*/
-        }        
+        }
 
-        
-        
+
+
       });
-    
-    
 
-    
-    /************ KV 2013 ***********/        
+
+
+
+    /************ KV 2013 ***********/
 
 	$(document).ready(function() {
-    
+
       /****** UR *****/
       // Indsæt <div class="ur"></div>
       if($(".ur").length) {
@@ -537,22 +427,22 @@
           var clockDate = new Date;
           var clockMinutes = clockDate.getMinutes();
           if(clockMinutes < 10)
-             clockMinutes = "0" + clockMinutes; 
+             clockMinutes = "0" + clockMinutes;
           var clockHour = clockDate.getHours();
           if(clockHour < 10)
             clockHour = "0" + clockHour;
-          $(".ur").html(clockHour + "<span>:</span>" + clockMinutes); 
-        }, 1000); 
+          $(".ur").html(clockHour + "<span>:</span>" + clockMinutes);
+        }, 1000);
       }
-   
-    });  
- 
-    
-    
-    
-    
- 
+
+    });
 
 
-    
+
+
+
+
+
+
+
  })(jQuery);

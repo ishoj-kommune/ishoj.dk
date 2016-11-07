@@ -16,7 +16,7 @@
 
 
       // Dummy
-      $output .= "<li data-duration=\"0.1\" class=\"infotv-dummy\"></li>";
+      // $output .= "<li data-duration=\"0.00001\" class=\"infotv-dummy\"></li>";
 
 
       /////////////////////////////////////////
@@ -185,7 +185,7 @@
           // var_dump($data);
           // $data_length = sizeof($data); // antallet af elementer
 
-          // finder antallet af aktuelle aktiviteter (aktiviteter som er i gang og fremtidige aktiviteter på dagen)
+          // Antallet af aktuelle aktiviteter (aktiviteter som er i gang og fremtidige aktiviteter på dagen)
           $current_time = time(); // Unix Epoch
           $current_elements = 0;
           foreach ($data as $response_data) {
@@ -194,29 +194,132 @@
             }
           }
 
-          // $output .= '<li class="infotv-skabelon" data-duration="' . $current_elements . '">';
-          $output .= '<li class="infotv-skabelon">';
-          // $output .= '<img src="/sites/all/themes/ishoj/img/sprites-no/infotv-nyt-paa-uglen2.png">';
-            $output .= '<h1 class="animationForward">Aktiviteter i dag</h1><div>&nbsp;</div>';
+          // Antallet af sider (8 elementer pr. side)
+          $elements_pr_page = 8;
+          $current_pages = intval($current_elements / $elements_pr_page);
+          if(($current_elements % $elements_pr_page) > 0) {
+            $current_pages++;
+          }
 
-            // $output .= '<ul>';
+          for($i = 0; $i < $current_pages; $i++) {
+            $idraetscenter .= '<li class="infotv-skabelon idraetscenter-lokalebooking" data-duration="10">';
 
-            foreach ($data as $response_data) {
-              if($response_data['slut'] >= $current_time) {
-                // $output .= '<li>';
-                $output .= '<div style="width:100%;">';
-                  $output .= '<div>Kl. ' . date("H:i", $response_data['start']) . ' - ' . date("H:i", $response_data['slut']) . '</div>';
-                  $output .= '<div>' . $response_data['beskrivelse'] . '</div>';
-                  $output .= '<div>' . $response_data['navnFirma'] . '</div>';
-                  $output .= '<div>&nbsp;</div>';
-                $output .= '</div>';
-                // $output .= '</li>';
+              $idraetscenter .= '<div class="container">';
+
+              $idraetscenter .= '<div class="header">';
+                $idraetscenter .= '<span class="animationForward">AKTIVITETER I DAG</span>';
+                // $idraetscenter .= '<div class="pagers">';
+                //   $idraetscenter .= '<div class="pager active"></div>';
+                //   $idraetscenter .= '<div class="pager"></div>';
+                //   $idraetscenter .= '<div class="pager"></div>';
+                // $output .= '</div>';
+              $idraetscenter .= '</div>';
+
+              // Rækker med skiftevis lys/mørk baggrund
+              for($j = 0; $j < $elements_pr_page; $j++) {
+                if ($j % 2 == 0) {
+                  // even
+                  $idraetscenter .= '<div class="even">';
+                }
+                else {
+                  // odd
+                  $idraetscenter .= '<div class="odd">';
+                }
+                $idraetscenter .= '</div>';
               }
+
+              // Rækker med tekstindhold
+              $elements_counter = 1;
+              foreach ($data as $response_data) {
+                if($response_data['slut'] >= $current_time) {
+
+                  if(($elements_counter > ($i * $elements_pr_page)) and ($elements_counter <= (($i + 1) * $elements_pr_page))) {
+                    $idraetscenter .= '<div class="row row-' . ($elements_counter % $elements_pr_page) . '">';
+                      $idraetscenter .= '<span class="time">' . date("H:i", $response_data['start']) . ' - ' . date("H:i", $response_data['slut']) . '</span>';
+                      $idraetscenter .= '<span class="room">' . $response_data['beskrivelse'] . '</span>';
+                      $idraetscenter .= '<span class="company">' . $response_data['navnFirma'] . '</span>';
+                    $idraetscenter .= '</div>';
+                  }
+
+                  $elements_counter++;
+                }
+              }
+              $idraetscenter .= '</div>';
+            $idraetscenter .= '</li>';
+          }
+
+          // Hvis $current_pages < 2 (der må ikke være kun én side, da Flexslideren derved går i stå), lav en dublikat af li-elementet
+          if($current_pages < 2) {
+            // Ingen aktiviteter i dag (eller ikke flere i dag)
+            if($current_pages = 0) {
+              $idraetscenter .= '<li class="infotv-skabelon idraetscenter-lokalebooking" data-duration="10">';
+                $idraetscenter .= '<div class="container">';
+                  $idraetscenter .= '<div class="header">';
+                    $idraetscenter .= '<span class="animationForward">INGEN AKTIVITETER I DAG</span>';
+                  $idraetscenter .= '</div>';
+                $idraetscenter .= '</div>';
+              $idraetscenter .= '</li>';
             }
+            $output .= $idraetscenter . $idraetscenter;
+          }
+          else {
+            $output .= $idraetscenter;
+          }
 
-            // $output .= '</ul>';
 
-          $output .= '</li>';
+
+          // <div>
+          //
+          //   <div class="header">
+          //     <span>AKTIVITETER I DAG</span>
+          //     <div class="pagers">
+          //       <div class="pager active"></div>
+          //       <div class="pager"></div>
+          //       <div class="pager"></div>
+          //     </div>
+          //   </div>
+          //
+          //   <div class="odd">
+          //     <span class="time"></span>
+          //     <span class="room"></span>
+          //     <span class="company"></span>
+          //   </div>
+          //
+          //   <div class="even">
+          //     <span class="time"></span>
+          //     <span class="room"></span>
+          //     <span class="company"></span>
+          //   </div>
+          //
+          // </div>
+
+
+
+
+
+          // // $output .= '<li class="infotv-skabelon" data-duration="' . $current_elements . '">';
+          // $output .= '<li class="infotv-skabelon idraetscenter-lokalebooking">';
+          // // $output .= '<img src="/sites/all/themes/ishoj/img/sprites-no/infotv-nyt-paa-uglen2.png">';
+          //   $output .= '<h1 class="animationForward">Aktiviteter i dag</h1><div>&nbsp;</div>';
+          //
+          //   // $output .= '<ul>';
+          //
+          //   foreach ($data as $response_data) {
+          //     if($response_data['slut'] >= $current_time) {
+          //       // $output .= '<li>';
+          //       $output .= '<div style="width:100%;">';
+          //         $output .= '<div>Kl. ' . date("H:i", $response_data['start']) . ' - ' . date("H:i", $response_data['slut']) . '</div>';
+          //         $output .= '<div>' . $response_data['beskrivelse'] . '</div>';
+          //         $output .= '<div>' . $response_data['navnFirma'] . '</div>';
+          //         $output .= '<div>&nbsp;</div>';
+          //       $output .= '</div>';
+          //       // $output .= '</li>';
+          //     }
+          //   }
+          //
+          //   // $output .= '</ul>';
+          //
+          // $output .= '</li>';
 
         }
 

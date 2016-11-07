@@ -6,6 +6,7 @@ sites/default/files
 .htaccess
 settings.php_bellcom
 .DS_Store
+.sass-cache
 
 private
 backup*
