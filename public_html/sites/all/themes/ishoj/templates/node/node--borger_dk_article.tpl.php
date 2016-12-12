@@ -222,6 +222,7 @@
                   }
                 }
 
+                ksort($nodes);
                 foreach ($nodes as $nid1) {
                   if ($node->nid != $nid1->nid) {
                     $output = $output . "<li class=\"collapsed\"><a href=\"" . url('node/' . $nid1->nid) . "\" title=\"" . $nid1->title . "\">" . $nid1->title . "</a><li>";
