@@ -1,159 +1,128 @@
 <?php
-// https://api.drupal.org/api/drupal/modules!node!node.api.php/function/hook_node_insert/7
-// http://fooninja.net/2011/04/13/guide-to-programmatic-node-creation-in-drupal-7/
-// https://www.drupal.org/node/1388922
-// http://www.lightrains.com/blog/programmatically-create-taxonomy-term-drupal#gsc.tab=0
 
+/**
+ * @file
+ * Implementation of hook_node_insert().
+ */
 
-
+/**
+ * Function fires when a new node is inserted.
+ */
 function ishoj_dagsorden_aktivitet_node_insert($node) {
   if ($node->type == 'os2web_meetings_meeting') {
-    // Opret kun en aktivitet, hvis mødet ikke er en tillægsdagsorden, da aktiviteten i såfald allerede er blevet oprettet
-    if (!isset($node->field_os2web_meetings_addendum['und'][0]['nid'])) {
+    // Opret kun en aktivitet, hvis mødet ikke er en tillægsdagsorden, *
+    // da aktiviteten i såfald allerede er blevet oprettet.
+    if (!isset($node->field_os2web_meetings_addendum[LANGUAGE_NONE][0]['nid'])) {
       ishoj_dagsorden_aktivitet_opret_ny_node($node);
     }
   }
 }
 
-
+/**
+ * Function creates a new node of type 'aktivitet'.
+ */
 function ishoj_dagsorden_aktivitet_opret_ny_node($n) {
 
-  global $user;
-  $node = new stdClass;
+  $node = new stdClass();
   $node->type = 'aktivitet';
   $node->title = $n->title;
-  $node->uid = 1; //$user->uid;
+  $node->uid = 1;
   node_object_prepare($node);
 
-  $node->status  = 1; //(1 or 0): published or not
-  $node->promote = 1; //(1 or 0): promoted to front page
-  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write  
-  
-  
-//  Overskrift *
-    $node->title = "Møde i " . taxonomy_term_load($n->field_os2web_meetings_committee['und'][0]['tid'])->name;
+  // (1 or 0): published or not.
+  $node->status = 1;
+  // (1 or 0): promoted to front page.
+  $node->promote = 1;
+  // 0 = comments disabled, 1 = read only, 2 = read/write.
+  $node->comment = 0;
 
-//  Beskrivelse
-    $dagsordenNodePath = "/" . drupal_get_path_alias("node/" . $n->nid);
-    // $dagsordenNodePath viser ikke nodens path alias, formentlig fordi den endnu ikke er blevet oprettet...den viser node/nid
-//    $beskrivelse  = "<p>" . taxonomy_term_load($n->field_os2web_meetings_committee['und'][0]['tid'])->name . " afholder møde " . lcfirst(format_date((strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200), 'ugedag_dato_aar_og_klokkeslaet'));
-    $beskrivelse .= "<p><a href=\"" . $dagsordenNodePath . "\" title=\"Læs mødets dagsorden\">Læs mødets dagsorden</a></p>";
-    if($n->field_os2web_meetings_location) {
-      $beskrivelse .= "<p>" . taxonomy_term_load($n->field_os2web_meetings_location['und'][0]['tid'])->name . "</p>";
-    }
-    $node->body[und][0]['value'] = $beskrivelse; 
+  // Overskrift.
+  $node->title = "Møde i " . taxonomy_term_load($n->field_os2web_meetings_committee[LANGUAGE_NONE][0]['tid'])->name;
 
-  
-  
-//  Aktivitetstype (Termreference) *
-    $node->field_aktivitetstype['und'][0]['tid'] = 2651;  // Møde
-    $node->field_aktivitetstype['und'][1]['tid'] = 3128;  // Politik
-//  $node->field_aktivitetstype['und'][0]['tid'] = ishoj_dagsorden_aktivitet_get_term_from_name('Møde', 'aktivitetstype');     // Møde
-//  $node->field_aktivitetstype['und'][1]['tid'] = ishoj_dagsorden_aktivitet_get_term_from_name('Politik', 'aktivitetstype');  // Politik
+  // Beskrivelse.
+  $dagsordenNodePath = "/" . drupal_get_path_alias("node/" . $n->nid);
+  $beskrivelse = "<p><a href=\"" . $dagsordenNodePath . "\" title=\"Læs mødets dagsorden\">Læs mødets dagsorden</a></p>";
+  if ($n->field_os2web_meetings_location) {
+    $beskrivelse .= "<p>" . taxonomy_term_load($n->field_os2web_meetings_location[LANGUAGE_NONE][0]['tid'])->name . "</p>";
+  }
+  $node->body[und][0]['value'] = $beskrivelse;
 
-  
-  
-  
-  
-  
-//  Dato (Date (Unix timestamp)) *
-//    $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200; //(7200 seconds = 2 hours)
-//    $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200;
-      if (date('I', $n->field_os2web_meetings_date['und'][0]['value'])) {
-        // Sommertid
-        $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200; //(7200 seconds = 2 hours)
-        $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 7200;
-      }
-      else {
-        // Vintertid
-        $node->field_aktivitetsdato['und'][0]['value']  = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 3600; //(7200 seconds = 2 hours)
-        $node->field_aktivitetsdato['und'][0]['value2'] = strtotime($n->field_os2web_meetings_date['und'][0]['value']) + 3600;
-      }
-  
+  // Aktivitetstype (Termreference).
+  $node->field_aktivitetstype[LANGUAGE_NONE][0]['tid'] = 2651;
+  // Politik.
+  $node->field_aktivitetstype[LANGUAGE_NONE][1]['tid'] = 3128;
+  // Dato (Date (Unix timestamp)).
+  if (date('I', $n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value'])) {
+    // Sommertid *
+    // (7200 seconds = 2 hours).
+    $node->field_aktivitetsdato[LANGUAGE_NONE][0]['value']  = strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']) + 7200;
+    $node->field_aktivitetsdato[LANGUAGE_NONE][0]['value2'] = strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']) + 7200;
+  }
+  else {
+    // Vintertid.
+    // (3600 seconds = 1 hour).
+    $node->field_aktivitetsdato[LANGUAGE_NONE][0]['value']  = strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']) + 3600;
+    $node->field_aktivitetsdato[LANGUAGE_NONE][0]['value2'] = strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']) + 3600;
+  }
 
-//  Sted (Termreference) *
-//  Sted er flyttet ind i aktivitetsbeskrivelsen, da det er et fritekstfelt i SBSYS, og der derfor kommer en masse gejl ind, og det duer ikke, at det kommer ind i taksonomien Aktivitetssted
-//    if($n->field_os2web_meetings_location) {
-//      $stedname = taxonomy_term_load($n->field_os2web_meetings_location['und'][0]['tid'])->name;
-//      $stedtid  = ishoj_dagsorden_aktivitet_get_term_from_name($stedname, 'aktivitetssted');
-//      // Hvis der ikke returneres en tid, så opret en ny term og find derefter dens tid
-//      if(!$stedtid) {
-//        $new_term = array(
-//          'vid' => 22,
-//          'name' => $stedname,
-//          // You can optionally also set id of parent term, e.g. 'parent' => 25
-//        );
-//        $new_term = (object) $new_term;
-//        taxonomy_term_save($new_term);
-//        $stedtid = ishoj_dagsorden_aktivitet_get_term_from_name($stedname, 'aktivitetssted');
-//      }
-//      $node->field_aktivitetssted['und'][0]['tid'] = $stedtid;
-//    }
-    // Aktivitetsstedet bliver angivet ved følgende
-    if(taxonomy_term_load($n->field_os2web_meetings_committee['und'][0]['tid'])->name == "Ishøj Byråd") {
-      $node->field_aktivitetssted['und'][0]['tid'] = 3201; // Byrådssalen
-    }
-    else {
-      $node->field_aktivitetssted['und'][0]['tid'] = 3223; // Ikke angivet  
-    }
-  
-//  Betaling for aktivitet (Termreference) *
-    $betalingtid = ishoj_dagsorden_aktivitet_get_term_from_name('Gratis', 'aktivitetsgebyr');
-    if($betalingtid) {
-      $node->field_betaling_for_aktivitet['und'][0]['tid'] = $betalingtid;
-    }
- 
-//  Arrangør (Termreference)
-    $arrangortid = ishoj_dagsorden_aktivitet_get_term_from_name('Ishøj Kommune', 'aktivitetsarrangor');
-    if($arrangortid) {
-      $node->field_arrangor['und'][0]['tid'] = $arrangortid;
-    }
-    
-//  Foto (Billede)
-    $file_path = drupal_realpath('sites/all/themes/ishoj/img/diverse/moede.jpg');
-    $file = (object) array(
-      'uid' => 1,
-      'uri' => $file_path,
-      'filemime' => file_get_mimetype($file_path),
-      'status' => 1,
-    );
-    // You can specify a subdirectory, e.g. public://foo/
-    $file = file_copy($file, 'public://');
-//    $node->field_image[$node->language][0] = (array) $file;
-    $node->field_os2web_base_field_image['und'][0] = (array) $file;
- 
-    
-//  Åbenhed (Termreference) *
-    $aabenhedtid = ishoj_dagsorden_aktivitet_get_term_from_name('Åben for offentligheden', 'aktivitetsaabenhed');
-    if($aabenhedtid) {
-      $node->field_aabenhed['und'][0]['tid'] = $aabenhedtid;
-    }
-  
-//  Organisation (Termreference)
-//    field_organisation
-    
-//  Aktivitetsreference (Tekst) (nid til dagsordenen)
-    $node->field_aktivitetsreference['und'][0]['value'] = $n->nid;
+  // Aktivitetsstedet bliver angivet ved følgende.
+  if (taxonomy_term_load($n->field_os2web_meetings_committee[LANGUAGE_NONE][0]['tid'])->name == "Ishøj Byråd") {
+    // Byrådssalen.
+    $node->field_aktivitetssted[LANGUAGE_NONE][0]['tid'] = 3201;
+  }
+  else {
+    // Ikke angivet.
+    $node->field_aktivitetssted[LANGUAGE_NONE][0]['tid'] = 3223;
+  }
 
-  
-    node_save($node);
+  // Betaling for aktivitet (Termreference).
+  $betalingtid = Ishoj_dagsorden_aktivitet_get_term_from_name('Gratis', 'aktivitetsgebyr');
+  if ($betalingtid) {
+    $node->field_betaling_for_aktivitet[LANGUAGE_NONE][0]['tid'] = $betalingtid;
+  }
 
-//    drupal_set_message( "Noden med node-id " . $n->nid . " oprettet!\n");
-    drupal_set_message( "En node fra indholdstypen aktivitet er blevet oprettet!\n");
+  // Arrangør (Termreference).
+  $arrangortid = Ishoj_dagsorden_aktivitet_get_term_from_name('Ishøj Kommune', 'aktivitetsarrangor');
+  if ($arrangortid) {
+    $node->field_arrangor[LANGUAGE_NONE][0]['tid'] = $arrangortid;
+  }
 
+  // Foto.
+  $file_path = drupal_realpath('sites/all/themes/ishoj/img/diverse/moede.jpg');
+  $file = (object) array(
+    'uid' => 1,
+    'uri' => $file_path,
+    'filemime' => file_get_mimetype($file_path),
+    'status' => 1,
+  );
+  // You can specify a subdirectory, e.g. public://foo/.
+  $file = file_copy($file, 'public://');
+  $node->field_os2web_base_field_image[LANGUAGE_NONE][0] = (array) $file;
 
+  // Åbenhed (Termreference).
+  $aabenhedtid = ishoj_dagsorden_aktivitet_get_term_from_name('Åben for offentligheden', 'aktivitetsaabenhed');
+  if ($aabenhedtid) {
+    $node->field_aabenhed[LANGUAGE_NONE][0]['tid'] = $aabenhedtid;
+  }
 
+  // Aktivitetsreference (Tekst) (nid til dagsordenen).
+  $node->field_aktivitetsreference[LANGUAGE_NONE][0]['value'] = $n->nid;
 
+  node_save($node);
+
+  drupal_set_message(t('En node fra indholdstypen aktivitet er blevet oprettet.\n'));
 }
 
-
 /**
- * Helper function to dynamically get the tid from the term_name
+ * Helper function to dynamically get the tid from the term_name.
  *
- * @param $term_name Term name
- * @param $vocabulary_name Name of the vocabulary to search the term in
+ * @param string $term_name
+ *   Term name.
+ * @param string $vocabulary_name
+ *   Name of the vocabulary to search the term in.
  *
- * @return Term id of the found term or else FALSE
+ * @return bool
+ *   Term id of the found term or else FALSE.
  */
 function ishoj_dagsorden_aktivitet_get_term_from_name($term_name, $vocabulary_name) {
   if ($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) {
