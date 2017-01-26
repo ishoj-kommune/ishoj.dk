@@ -27,7 +27,8 @@
           if(reloadMe || i) {
 
             denneURL = window.location + '?hash=' + Math.random();
-            var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
+            // var jqxhr = $.get((denneURL), {timeout:5000, dataType:"json"},  function() {
+            var jqxhr = $.get((denneURL), {timeout:30000, dataType:"json"},  function() {
 
             })
               // HVIS DER INGEN FEJL ER

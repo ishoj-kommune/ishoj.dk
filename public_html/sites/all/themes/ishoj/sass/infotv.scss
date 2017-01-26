@@ -107,7 +107,19 @@ a {
       ul {
         display: none;
       }
-  }
+    }
+    &.idraetscenter-lokalebooking {
+      .container {
+        .header {
+          span {
+            display: none;
+          }
+        }
+        .row {
+          display: none;
+        }
+      }
+    }
 }
 .currentSlide {
   &.infotv-skabelon {
@@ -403,6 +415,9 @@ a {
             color: #ecf3f4;
             font-size: 3.75em;
             font-weight: 400;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
           }
           .pagers {
             .pager {
@@ -430,29 +445,41 @@ a {
           height: 105px;
           left: 30px;
           z-index: 10;
+          display: block;
+          opacity:0;
+          -webkit-animation: AnimShow 0.5s ease;
+          -webkit-animation-fill-mode:forwards;
+          -webkit-animation-delay: .20s;
           &.row-1 {
             top: 210px;
           }
           &.row-2 {
             top: 315px;
+            -webkit-animation-delay: .30s;
           }
           &.row-3 {
             top: 420px;
+            -webkit-animation-delay: .40s;
           }
           &.row-4 {
             top: 525px;
+            -webkit-animation-delay: .50s;
           }
           &.row-5 {
             top: 630px;
+            -webkit-animation-delay: .60s;
           }
           &.row-6 {
             top: 735px;
+            -webkit-animation-delay: .70s;
           }
           &.row-7 {
             top: 840px;
+            -webkit-animation-delay: .80s;
           }
           &.row-0 {
             top: 945px;
+            -webkit-animation-delay: .90s;
           }
           span {
             padding-left: 60px;
@@ -834,6 +861,27 @@ a {
 .ur span {
   color:/*#333*/#dcddde;
 }
+
+// Ændringer til ure på lokale skærme
+.page-infotv-ishøj-idræts--og-fritidscenter-2 {
+  .ur {
+    background: none;
+    font-family: roboto, sans-serif;
+    right: 60px;
+    top: 30px;
+    line-height: 180px;
+    font-size: 3.75em;
+    font-weight: 400;
+    color: #ecf3f4;
+    display: block;
+    text-transform: uppercase;
+    span {
+      // color: #ecf3f4;
+    }
+
+  }
+}
+
 
 .error {
   position:absolute;
