@@ -48,6 +48,8 @@
       $content['microarticles'][$mkey]['borgerdk_microarticle'][$mkey]['selfservices']['#label_display'] = 'hidden';
       print render($content['microarticles'][$mkey]['borgerdk_microarticle'][$mkey]['selfservices']);
     }
+    $content['selfservices']['#label_display'] = 'hidden';
+    print render($content['selfservices']);
     ?>
 
     <h2>
