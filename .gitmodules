@@ -1,0 +1,3 @@
+[submodule "public_html/sites/all/modules/bellcom_borgerdk"]
+	path = public_html/sites/all/modules/bellcom_borgerdk
+	url = https://github.com/bellcom/bellcom_borgerdk
