@@ -20,7 +20,7 @@ function ishoj_billetlugen_aktivitet_node_presave($node) {
 //      $new_time = strtotime('-2 hours', $node->field_aktivitetsdato['und'][0]['value']); // $now + 3 hours
 //      $new_time = strtotime('-1 hours', $node->field_aktivitetsdato['und'][0]['value']); // $now + 3 hours
       
-      if (date('I', $node->field_aktivitetsdato['und'][0]['value'])) {
+      if (date('I', strtotime($node->field_aktivitetsdato['und'][0]['value']))) {
         // Sommertid
         $new_time = strtotime('-2 hours', $node->field_aktivitetsdato['und'][0]['value']);
       }

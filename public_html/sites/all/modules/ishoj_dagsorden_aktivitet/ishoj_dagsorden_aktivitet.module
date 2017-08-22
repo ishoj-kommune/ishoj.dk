@@ -52,7 +52,7 @@ function ishoj_dagsorden_aktivitet_opret_ny_node($n) {
   // Politik.
   $node->field_aktivitetstype[LANGUAGE_NONE][1]['tid'] = 3128;
   // Dato (Date (Unix timestamp)).
-  if (date('I', $n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value'])) {
+  if (date('I', strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']))) {
     // Sommertid *
     // (7200 seconds = 2 hours).
     $node->field_aktivitetsdato[LANGUAGE_NONE][0]['value']  = strtotime($n->field_os2web_meetings_date[LANGUAGE_NONE][0]['value']) + 7200;
