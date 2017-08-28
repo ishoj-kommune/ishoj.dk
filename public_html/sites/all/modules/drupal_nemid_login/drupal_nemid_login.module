@@ -8,35 +8,35 @@
  * @author Henrik Farre <hf@bellcom.dk>
  */
 
-require dirname(__FILE__).'/lib/Nemid.php';
+require dirname(__FILE__) . '/lib/Nemid.php';
 
 /**
  * Implements hook_menu().
  */
 function drupal_nemid_login_menu() {
   $items['nemid'] = array(
-    'title'            => t('NemID login page'),
-    'page callback'    => '_drupal_nemid_login_page',
-    'page arguments'   => array(),
+    'title' => t('NemID login page'),
+    'page callback' => '_drupal_nemid_login_page',
+    'page arguments' => array(),
     'access arguments' => array('View published content'),
-    'type'             => MENU_CALLBACK,
+    'type' => MENU_CALLBACK,
   );
 
   $items['nemid/verify'] = array(
-    'title'            => t('NemID login verify'),
-    'page callback'    => '_drupal_nemid_login_verify',
-    'page arguments'   => array(),
+    'title' => t('NemID login verify'),
+    'page callback' => '_drupal_nemid_login_verify',
+    'page arguments' => array(),
     'access arguments' => array('access content'),
-    'type'             => MENU_CALLBACK,
+    'type' => MENU_CALLBACK,
   );
 
   $items['admin/config/system/nemid'] = array(
-    'title'            => t('Configure NemID'),
-    'description'      => t('Configure NemID settings'),
-    'page callback'    => 'drupal_get_form',
-    'page arguments'   => array('_drupal_nemid_login_admin'),
+    'title' => t('Configure NemID'),
+    'description' => t('Configure NemID settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('_drupal_nemid_login_admin'),
     'access arguments' => array('access administration pages'),
-    'type'             => MENU_NORMAL_ITEM,
+    'type' => MENU_NORMAL_ITEM,
   );
 
   return $items;
@@ -70,7 +70,7 @@ function drupal_nemid_login_block_view($delta = '') {
         'settings' => _drupal_nemid_login_get_settings(),
         'help' => variable_get('nemid_login_form_help', "")
       ));
-    break;
+      break;
   }
 
   return $block;
@@ -80,7 +80,7 @@ function _drupal_nemid_login_page() {
   return theme('nemid_login_block', array(
     'params' => _drupal_nemid_login_get_params(),
     'settings' => _drupal_nemid_login_get_settings(),
-    'help' => (variable_get('nemid_login_form_help'))? variable_get('nemid_login_form_help')['value'] : null,
+    'help' => (variable_get('nemid_login_form_help')) ? variable_get('nemid_login_form_help')['value'] : NULL,
   ));
 }
 
@@ -90,8 +90,8 @@ function _drupal_nemid_login_page() {
 function drupal_nemid_login_theme(&$existing, $type, $theme, $path) {
   return array(
     'nemid_login_block' => array(
-      'path'      => drupal_get_path('module', 'drupal_nemid_login') . '/templates',
-      'template'  => 'block',
+      'path' => drupal_get_path('module', 'drupal_nemid_login') . '/templates',
+      'template' => 'block',
       'variables' => array('params' => NULL, 'settings' => NULL, 'help' => NULL),
     ),
     'webform_view' => array(
@@ -118,13 +118,13 @@ function _drupal_nemid_login_get_params() {
   $config = _drupal_nemid_login_get_config_object();
   $oldParams = $nemidlogin->prepareparamsfornemid($config);
 
-  $millisec = strval(intval(microtime(true))*1000);
+  $millisec = strval(intval(microtime(TRUE)) * 1000);
 
   $params = [
-    "SP_CERT"          => stripCertificate($oldParams['paramcert']),
-    "CLIENTFLOW"       => "OCESLOGIN2",
-    "SIGN_PROPERTIES"  => "challenge=". $millisec,
-    "TIMESTAMP"        => $millisec,
+    "SP_CERT" => stripCertificate($oldParams['paramcert']),
+    "CLIENTFLOW" => "OCESLOGIN2",
+    "SIGN_PROPERTIES" => "challenge=" . $millisec,
+    "TIMESTAMP" => $millisec,
   ];
 
   uksort($params, "strnatcasecmp");
@@ -135,7 +135,7 @@ function _drupal_nemid_login_get_params() {
   }
 
   $utfparams = mb_convert_encoding($normalized, "UTF-8", "auto");
-  $paramsdigest = hash('sha256', $utfparams, true);
+  $paramsdigest = hash('sha256', $utfparams, TRUE);
   $params['PARAMS_DIGEST'] = base64_encode($paramsdigest);
 
   $key = openssl_pkey_get_private($config->privatekey, $config->privatekeypass);
@@ -151,13 +151,13 @@ function _drupal_nemid_login_get_params() {
 function _drupal_nemid_login_get_settings() {
   $millisec = round(microtime(TRUE) * 1000);
   $variablePrefix = 'nemid_login_';
-  $mode = variable_get($variablePrefix.'mode', 'test');
+  $mode = variable_get($variablePrefix . 'mode', 'test');
 
-  $baseUrl = variable_get($variablePrefix.'base_url_'.$mode);
-  $ui_mode = variable_get($variablePrefix.'ui_mode_'.$mode, 'std');
+  $baseUrl = variable_get($variablePrefix . 'base_url_' . $mode);
+  $ui_mode = variable_get($variablePrefix . 'ui_mode_' . $mode, 'std');
 
   $settings = array(
-    'iframe_url'    => $baseUrl.'/launcher/'.$ui_mode.'/'.$millisec,
+    'iframe_url' => $baseUrl . '/launcher/' . $ui_mode . '/' . $millisec,
     'danid_baseurl' => $baseUrl,
   );
 
@@ -168,8 +168,8 @@ function _drupal_nemid_login_verify() {
   $DISABLE_OCSP_CHECK = TRUE;
   $message = '';
 
-  if ( isset($_POST['response']) ) {
-    require dirname(__FILE__).'/lib/nemid-error-codes.php';
+  if (isset($_POST['response'])) {
+    require dirname(__FILE__) . '/lib/nemid-error-codes.php';
     $response = base64_decode($_POST['response']);
 
     if (isset($errorcodes[$response])) {
@@ -189,11 +189,11 @@ function _drupal_nemid_login_verify() {
       );
 
       $nemid = new WAYF\NemidCertificateCheck();
-      try
-      {
+      try {
 
         $certificate = $nemid->checkAndReturnCertificate($_POST['response'], FALSE, $trustedrootdigests, $DISABLE_OCSP_CHECK);
         $subject = end($certificate['tbsCertificate']['subject']);
+
         $pid = $subject['serialNumber'];
         $cn = $subject['commonName'];
         $config = _drupal_nemid_login_get_config_object();
@@ -208,8 +208,7 @@ function _drupal_nemid_login_verify() {
           drupal_goto('<front>');
         }
 
-      }
-      catch (Exception $e) {
+      } catch (Exception $e) {
         echo $e->getMessage();
       }
     }
@@ -225,19 +224,23 @@ function _drupal_nemid_login_admin() {
   $current_mode = variable_get('nemid_login_mode');
 
   $sharedFields = array(
-    'certificate'           => array('type' => 'textarea', 'title' => t('Certificate')),
-    'private_key'           => array('type' => 'textarea', 'title' => t('Private key')),
-    'private_key_password'  => array('type' => 'password', 'title' => t('Private key password')),
-    'base_url'              => array('type' => 'textfield', 'title' => t('Base url')),
-    'ui_mode'               => array('type' => 'radios', 'title' => t('UI mode'), 'options' => array('std' => t('Standard'), 'lmt' => t('Limited'))),
-    'serviceid'             => array('type' => 'textfield', 'title' => t('Service ID')),
-    'certificateandkey'     => array('type' => 'textfield', 'title' => t('Path to PEM with certificate and key')),
+    'certificate' => array('type' => 'textarea', 'title' => t('Certificate')),
+    'private_key' => array('type' => 'textarea', 'title' => t('Private key')),
+    'private_key_password' => array('type' => 'password', 'title' => t('Private key password')),
+    'base_url' => array('type' => 'textfield', 'title' => t('Base url')),
+    'ui_mode' => array(
+      'type' => 'radios',
+      'title' => t('UI mode'),
+      'options' => array('std' => t('Standard'), 'lmt' => t('Limited'))
+    ),
+    'serviceid' => array('type' => 'textfield', 'title' => t('Service ID')),
+    'certificateandkey' => array('type' => 'textfield', 'title' => t('Path to PEM with certificate and key')),
   );
 
-  $form[$variablePrefix.'mode'] = array(
+  $form[$variablePrefix . 'mode'] = array(
     '#type' => 'radios',
     '#title' => t('NemID mode'),
-    '#default_value' => variable_get($variablePrefix.'mode', 'test'),
+    '#default_value' => variable_get($variablePrefix . 'mode', 'test'),
     '#options' => array(
       'live' => t('Live'),
       'test' => t('Test'),
@@ -245,26 +248,26 @@ function _drupal_nemid_login_admin() {
   );
 
   foreach ($modes as $mode) {
-    $form[$variablePrefix.$mode] = array(
-      '#title' => t('Settings for '. $mode.' mode'),
+    $form[$variablePrefix . $mode] = array(
+      '#title' => t('Settings for ' . $mode . ' mode'),
       '#type' => 'fieldset',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
     foreach ($sharedFields as $fieldKey => $field) {
-      $form[$variablePrefix.$mode][$variablePrefix.$fieldKey.'_'.$mode] = array(
+      $form[$variablePrefix . $mode][$variablePrefix . $fieldKey . '_' . $mode] = array(
         '#type' => $field['type'],
         '#title' => $field['title'],
-        '#default_value' => variable_get($variablePrefix.$fieldKey.'_'.$mode, NULL),
+        '#default_value' => variable_get($variablePrefix . $fieldKey . '_' . $mode, NULL),
         '#required' => TRUE,
       );
 
       if ($field['type'] == 'radios') {
-        $form[$variablePrefix.$mode][$variablePrefix.$fieldKey.'_'.$mode]['#options'] = $field['options'];
+        $form[$variablePrefix . $mode][$variablePrefix . $fieldKey . '_' . $mode]['#options'] = $field['options'];
       }
 
       if ($field['type'] == 'password') {
-        $form[$variablePrefix.$mode][$variablePrefix.$fieldKey.'_'.$mode]['#attributes'] = array('value' => variable_get($variablePrefix.$fieldKey.'_'.$mode, NULL));
+        $form[$variablePrefix . $mode][$variablePrefix . $fieldKey . '_' . $mode]['#attributes'] = array('value' => variable_get($variablePrefix . $fieldKey . '_' . $mode, NULL));
       }
     }
   }
@@ -280,7 +283,7 @@ function _drupal_nemid_login_admin() {
     );
     $form['serviceplatformen']['vcv_serviceplatformen_help_text'] = array(
       '#type' => 'item',
-      '#markup' => '<a href="/admin/valghalla/validator/vcv_serviceplatformen">' .t('Indstillinger') . '</a>',
+      '#markup' => '<a href="/admin/valghalla/validator/vcv_serviceplatformen">' . t('Indstillinger') . '</a>',
     );
   }
   else {
@@ -290,10 +293,10 @@ function _drupal_nemid_login_admin() {
     );
   }
   $form['nemid_login_form_help'] = array(
-      '#type' => 'text_format',
-      '#title' => t('Nemid Login form help text'),
-      '#format' => 'filtered_html',
-      '#default_value' => (variable_get('nemid_login_form_help'))? variable_get('nemid_login_form_help')['value'] : '',
+    '#type' => 'text_format',
+    '#title' => t('Nemid Login form help text'),
+    '#format' => 'filtered_html',
+    '#default_value' => (variable_get('nemid_login_form_help')) ? variable_get('nemid_login_form_help')['value'] : '',
   );
 
   return system_settings_form($form);
@@ -301,26 +304,27 @@ function _drupal_nemid_login_admin() {
 
 function _drupal_nemid_login_get_config_object() {
   $variablePrefix = 'nemid_login_';
-  $mode = variable_get($variablePrefix.'mode', 'test');
-  $search  = array("\r\n", "-----BEGIN CERTIFICATE-----\n", "\n-----END CERTIFICATE-----\n");
+  $mode = variable_get($variablePrefix . 'mode', 'test');
+  $search = array("\r\n", "-----BEGIN CERTIFICATE-----\n", "\n-----END CERTIFICATE-----\n");
   $replace = array("\n", "", "");
 
   if ($mode == 'live') {
     $server = 'https://pidws.certifikat.dk/pid_serviceprovider_server/pidxml/';
-  } else {
+  }
+  else {
     $server = 'https://pidws.pp.certifikat.dk/pid_serviceprovider_server/pidxml/';
   }
 
   $config = new StdClass();
-  $config->server          = $server;
-  $config->privatekey      = str_replace($search, $replace, variable_get($variablePrefix.'private_key_'.$mode));
-  $config->privatekeypass  = variable_get($variablePrefix.'private_key_password_'.$mode);
-  $config->certificate     = str_replace($search, $replace, variable_get($variablePrefix.'certificate_'.$mode));
-  $config->serverurlprefix = variable_get($variablePrefix.'base_url_'.$mode);
-  $config->serviceid       = variable_get($variablePrefix.'serviceid_'.$mode);
-  $config->certificateandkey = variable_get($variablePrefix.'certificateandkey_'.$mode);
-  $config->nonceprefix       = 'nemid-test-';
- // $config->certificateandkey_str = variable_get($variablePrefix.'certificate_'.$mode) . variable_get($variablePrefix.'private_key_'.$mode);
+  $config->server = $server;
+  $config->privatekey = str_replace($search, $replace, variable_get($variablePrefix . 'private_key_' . $mode));
+  $config->privatekeypass = variable_get($variablePrefix . 'private_key_password_' . $mode);
+  $config->certificate = str_replace($search, $replace, variable_get($variablePrefix . 'certificate_' . $mode));
+  $config->serverurlprefix = variable_get($variablePrefix . 'base_url_' . $mode);
+  $config->serviceid = variable_get($variablePrefix . 'serviceid_' . $mode);
+  $config->certificateandkey = variable_get($variablePrefix . 'certificateandkey_' . $mode);
+  $config->nonceprefix = 'nemid-test-';
+  // $config->certificateandkey_str = variable_get($variablePrefix.'certificate_'.$mode) . variable_get($variablePrefix.'private_key_'.$mode);
   return $config;
 }
 
@@ -470,6 +474,7 @@ function drupal_nemid_login_form_alter(&$form, &$form_state, $form_id) {
       break;
   }
 }
+
 /**
  * Save webform configuration
  */
@@ -496,7 +501,15 @@ function drupal_nemid_login_webform_view($variables) {
     $block = drupal_render($output);
   }
   elseif (isset($_POST['response'])) {
-    _drupal_nemid_login_set_address_to_fields($variables);
+    // Get address from serverplatformen by CPR request.
+    $message = _drupal_nemid_login_verify();
+
+    if ($message['status']) {
+      _drupal_nemid_login_set_address_to_fields($variables, $message);
+      _drupal_nemid_login_set_fields_resursive($variables['webform']['#form']['submitted'], $message);
+    } else {
+      watchdog("Drupal Nemid Login", t('Message status is empty'), array(), WATCHDOG_DEBUG);
+    }
   }
   if ($variables['webform']['#enabled']) {
     return $block . drupal_render($variables['webform']['#form']);
@@ -506,59 +519,115 @@ function drupal_nemid_login_webform_view($variables) {
 /**
  * Set address to webform fields.
  */
-function _drupal_nemid_login_set_address_to_fields(&$variables) {
-  // Get address from serverplatformen by CPR request.
-  $message = _drupal_nemid_login_verify();
+function _drupal_nemid_login_set_address_to_fields(&$variables, $message) {
+  $webform = $variables['webform']['#form']['submitted'];
+  foreach ($webform as $key => $item) {
+    if (isset($item['#webform_component'])) {
+      switch ($item['#webform_component']['type']) {
+        case 'nemid_cpr':
+          $webform[$key]['#value'] = $message['cpr'];
+          $webform[$key]['#default_value'] = $message['cpr'];
+          if ($message['cpr'] != '') {
+            $webform[$key]['#attributes']['readonly'] = 'readonly';
+          }
+          break;
 
-  if ($message['status']) {
+        case 'nemid_address':
+          $address_text = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
+          $webform[$key]['#value'] = $address_text;
+          $webform[$key]['#default_value'] = $address_text;
+          if ($message['road'] != '') {
+            $webform[$key]['#attributes']['readonly'] = 'readonly';
+          }
+          break;
 
-    $webform = $variables['webform']['#form']['submitted'];
-    foreach ($webform as $key => $item) {
-      if (isset($item['#webform_component'])) {
-        switch($item['#webform_component']['type']) {
-          case 'nemid_cpr':
-            $webform[$key]['#value'] = $message['cpr'];
-            $webform[$key]['#default_value'] = $message['cpr'];
-            if ($message['cpr'] != '') {
-              $webform[$key]['#attributes']['readonly'] = 'readonly';
-            }
-            break;
+        case 'nemid_coaddress':
+          $webform[$key]['#value'] = $message['coname'];
+          $webform[$key]['#default_value'] = $message['coname'];
+          if ($message['coname'] != '') {
+            $webform[$key]['#attributes']['readonly'] = 'readonly';
+          }
+          break;
 
-          case 'nemid_address':
-            $address_text = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
-            $webform[$key]['#value'] = $address_text;
-            $webform[$key]['#default_value'] = $address_text;
-            if ($message['road'] != '') {
-              $webform[$key]['#attributes']['readonly'] = 'readonly';
-            }
-            break;
+        case 'nemid_name':
+          $webform[$key]['#value'] = $message['name'];
+          $webform[$key]['#default_value'] = $message['name'];
+          if ($message['name'] != '') {
+            $webform[$key]['#attributes']['readonly'] = 'readonly';
+          }
+          break;
 
-          case 'nemid_coaddress':
-            $webform[$key]['#value'] = $message['coname'];
-            $webform[$key]['#default_value'] = $message['coname'];
-            if ($message['coname'] != '') {
-              $webform[$key]['#attributes']['readonly'] = 'readonly';
-            }
-            break;
+        case 'nemid_city':
+          $webform[$key]['#value'] = $message['zipcode'] . ' ' . $message['city'];
+          if ($message['zipcode'] != '') {
+            $webform[$key]['#attributes']['readonly'] = 'readonly';
+          }
+          break;
+      }
+    }
+  }
 
-          case 'nemid_name':
-            $webform[$key]['#value'] = $message['name'] ;
-            $webform[$key]['#default_value'] = $message['name'] ;
-            if ($message['name'] != '') {
-              $webform[$key]['#attributes']['readonly'] = 'readonly';
-            }
-            break;
+  $variables['webform']['#form']['submitted'] = $webform;
+}
 
-          case 'nemid_city':
-            $webform[$key]['#value'] = $message['zipcode'] . ' ' . $message['city'] ;
-            if ($message['zipcode'] != '') {
-              $webform[$key]['#attributes']['readonly'] = 'readonly';
-            }
-            break;
+/**
+ * Updating fields with the values from nemlogin request, works also with the nested structure
+ *
+ * @param $tree
+ * @param $message
+ */
+function _drupal_nemid_login_set_fields_resursive(&$tree, $message) {
+  if (isset($tree['#webform_component']) && empty($tree['#webform_component']['children'])) {
+    switch ($tree['#webform_component']['type']) {
+      case 'nemid_cpr':
+        $tree['#value'] = $message['cpr'];
+        $tree['#default_value'] = $message['cpr'];
+        if ($message['cpr'] != '') {
+          $tree['#attributes']['readonly'] = 'readonly';
+        }
+        break;
+
+      case 'nemid_address':
+        $address_text = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
+        $tree['#value'] = $address_text;
+        $tree['#default_value'] = $address_text;
+        if ($message['road'] != '') {
+          $tree['#attributes']['readonly'] = 'readonly';
+        }
+        break;
+
+      case 'nemid_coaddress':
+        $tree['#value'] = $message['coname'];
+        $tree['#default_value'] = $message['coname'];
+        if ($message['coname'] != '') {
+          $tree['#attributes']['readonly'] = 'readonly';
+        }
+        break;
+
+      case 'nemid_name':
+        $tree['#value'] = $message['name'];
+        $tree['#default_value'] = $message['name'];
+        if ($message['name'] != '') {
+          $tree['#attributes']['readonly'] = 'readonly';
+        }
+        break;
+
+      case 'nemid_city':
+        $tree['#value'] = $message['zipcode'] . ' ' . $message['city'];
+        if ($message['zipcode'] != '') {
+          $tree['#attributes']['readonly'] = 'readonly';
+        }
+        break;
+    }
+  }
+
+  foreach ($tree as $item_key => $item) {
+    if (isset($tree[$item_key]['#webform_component'])) {
+      if (!empty($tree[$item_key]['#webform_component']['children'])) {
+        foreach ($tree[$item_key]['#webform_component']['children'] as $child) {
+          _drupal_nemid_login_set_fields_resursive($tree[$item_key][$child['form_key']], $message);
         }
       }
     }
-
-    $variables['webform']['#form']['submitted'] = $webform;
   }
 }

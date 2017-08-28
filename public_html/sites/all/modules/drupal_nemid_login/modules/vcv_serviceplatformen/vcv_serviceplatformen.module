@@ -58,6 +58,15 @@ function vcv_serviceplatformen_settings() {
 
       if ($message['status']) {
         $output = '<div style="font-size: 15px; color : green"><b>Succeed</b></div>';
+
+        if (variable_get('mode_selector') == 1) { //test mode
+          //using test_mode_fixed_cpr, if one provided, otherwise leave unchanged
+          $fixed_cpr = trim(variable_get('test_mode_fixed_cpr', $cpr));
+          if (!empty($fixed_cpr)) {
+            $cpr = $fixed_cpr;
+          }
+        }
+
         $output .= '<div> Test CPR nr. ' . $cpr . '<br />';
         foreach ($message as $key => $item) {
           if ($key != 'status') {
@@ -74,6 +83,29 @@ function vcv_serviceplatformen_settings() {
 
 
   }
+  $form['mode_fieldset'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Mode'),
+  );
+  $form['mode_fieldset']['mode_selector'] = array(
+    '#type' => 'radios',
+    '#title' => t('Mode selector'),
+    '#default_value' => variable_get('mode_selector', 0),
+    '#options' => array(0 => 'Live', 1 => 'Test'),
+  );
+  $form['mode_fieldset']['test_mode_fixed_cpr'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Fixed test CPR (only if test mode is on)'),
+    '#default_value' => variable_get('test_mode_fixed_cpr'),
+    '#description' => t('Is set, fixed CPR will be used for all requests to the serviceplatformen instead of the provided CPR. Useful when testing is needed with NemID login block'),
+    '#states' => array(
+      'invisible' => array(
+        ':input[name="mode_selector"]' => array('value' => 0),
+      ),
+    ),
+
+  );
+
   $form['test_cpr_fieldset'] = array(
     '#type' => 'fieldset',
     '#title' => t('Test CPR'),
@@ -114,8 +146,15 @@ function vcv_serviceplatformen_settings() {
 
   $form['stam']['vcv_serviceplatformen_location'] = array(
     '#type' => 'textfield',
-    '#title' => 'Service location',
+    '#title' => 'Service location (live)',
     '#default_value' => variable_get('vcv_serviceplatformen_location', ''),
+    '#description' => t('ex. https://exttest.serviceplatformen.dk/service/CPRBasicInformation/CPRBasicInformation/1'),
+  );
+
+  $form['stam']['vcv_serviceplatformen_location_test'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Service location (test)',
+    '#default_value' => variable_get('vcv_serviceplatformen_location_test', ''),
     '#description' => t('ex. https://exttest.serviceplatformen.dk/service/CPRBasicInformation/CPRBasicInformation/1'),
   );
 
@@ -169,8 +208,14 @@ function vcv_serviceplatformen_settings() {
 
   $form['vcv_serviceplatformen_certfile'] = array(
     '#type' => 'textfield',
-    '#title' => 'Certfile',
+    '#title' => 'Certfile (live)',
     '#default_value' => variable_get('vcv_serviceplatformen_certfile', ''),
+  );
+
+  $form['vcv_serviceplatformen_certfile_test'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Certfile (test)',
+    '#default_value' => variable_get('vcv_serviceplatformen_certfile_test', ''),
   );
 
   $form = system_settings_form($form);
@@ -209,10 +254,22 @@ function vcv_serviceplatformen_query($cpr) {
   ini_set('soap.wsdl_cache_ttl', 0);
 
   try {
+    $mode = variable_get('mode_selector');
     $wsdl_address = variable_get('vcv_serviceplatformen_wsdl');
     $service_location = variable_get('vcv_serviceplatformen_location');
     $certfile_passphrase = variable_get('vcv_serviceplatformen_certfile_passphrase');
     $certfile = variable_get('vcv_serviceplatformen_certfile');
+
+    if ($mode == 1) { //test mode
+      $service_location = variable_get('vcv_serviceplatformen_location_test');
+      $certfile = variable_get('vcv_serviceplatformen_certfile_test');
+
+      //using test_mode_fixed_cpr, if one provided, otherwise leave unchanged
+      $fixed_cpr = trim(variable_get('test_mode_fixed_cpr', $cpr));
+      if (!empty($fixed_cpr)) {
+        $cpr = $fixed_cpr;
+      }
+    }
 
     $client = new SoapClient($wsdl_address, array(
       'location' => $service_location,
@@ -281,6 +338,7 @@ function vcv_serviceplatformen_get_address($cpr) {
   // If all goes well we return de address as valghalla wants it.
   if ($message['status']) {
     return array(
+      'mode' => variable_get('mode_selector')? 'TEST mode' : 'LIVE mode',
       'status' => TRUE,
       'name' => isset($message['adresseringsnavn']) ? $message['adresseringsnavn'] : '',
       'road' => isset($message['vejadresseringsnavn']) ? $message['vejadresseringsnavn'] : '',
