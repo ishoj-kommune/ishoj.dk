@@ -1,0 +1,188 @@
+<?php
+
+/**
+ * @file
+ * Code for the Egbolig webform feature.
+ */
+include_once 'egbolig_webform.features.inc';
+
+module_load_include('inc', 'egbolig_webform', 'includes/egbolig_webform.webservice');
+
+/**
+ * Implements hook_menu().
+ */
+function egbolig_webform_menu() {
+  $items['admin/config/system/egbolig'] = array(
+    'title' => t('Configure EGbolig'),
+    'description' => t('Configure EGbolig settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('egbolig_webform_settings'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function egbolig_webform_settings() {
+  $form = array();
+
+  $form['soap_webservice'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Webservice URL',
+    '#required' => TRUE,
+    '#default_value' => variable_get('soap_webservice', NULL),
+    '#description' => 'http://egboligws.ballerup.dk/services/service10632.svc?wsdl',
+  );
+
+  return system_settings_form($form);
+}
+
+function egbolig_webform_get_previous_submission_message($form, $form_state) {
+  global $base_root;
+  $cpr = $form_state['values']['submitted']['row1']['col1']['basic_data']['cpr'];
+
+  $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+
+  $message = '';
+  if ($member) {
+    $edit_url = url($base_root . $form['#action'], array('query' => array('cpr' => $cpr)));
+    $message = "
+    <script>
+        window.location = '$edit_url';
+    </script>";
+
+    drupal_set_message(t('Du har i forvejen en sag. Din sag er blevet hentet ind og du kan rette i den'));
+  }
+  $command = ajax_command_html('#js-previous-submission-message', $message);
+
+  return array('#type' => 'ajax', '#commands' => [$command]);
+}
+
+function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL) {
+  //cannot fully use $form_id as it's dependent on node ID
+  $v = $form_state['values']['submitted'];
+  $tree = $form_state['webform']['component_tree']['children'];
+  if (strpos($form_id, 'webform_client_form') > -1) {
+    if ($form['#node']->type == 'webform' && $form['#node']->title == 'Boligansøgningsformular') {
+      $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
+      $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
+      $cpr = $_GET['cpr'];
+
+      if ($cpr) {
+        //TODO: add security check that this user can access this CPR submitted data
+        $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+        if ($member) {
+          //saving for integrity
+          $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
+          $form_state['hashcode'] = md5($cpr);
+          $form['submitted']['row1']['col1']['basic_data']['cpr']['#default_value'] = $cpr;
+          $form['submitted']['row1']['col1']['basic_data']['cpr']['#attributes']['readonly'] = 'readonly';
+          $form['submitted']['row1']['col1']['basic_data']['name']['#default_value'] = $member->Name;
+          $form['submitted']['row1']['col2']['phone_nr']['#default_value'] = $member->HomePhone;
+          $form['submitted']['row1']['col1']['basic_data']['addresse']['#default_value'] = $member->Address;
+          $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
+          $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
+          $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
+          $form['submitted']['row1']['col1']['basic_data']['email']['#default_value'] = $member->Email;
+          $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
+          if ($member->Criteria2) {
+            $form['submitted']['row4']['col41']['nuvaerende_situation']['row41']['col43']['arsog']['#default_value'] = (int) $member->Criteria2;
+          }
+          if ($member->Children > 0) {
+            $form['submitted']['row2']['col21']['more_info']['has_children'][1]['#default_value'] = true;
+            for ($i = 0; $i < count($childrenList); $i++) {
+              $field_index = (string) ($i + 1);
+              $form['submitted']['row2']['col21']['children_fieldset']['row21']['col22']['children']['child_cpr_nr_' . $field_index]['#default_value'] = $childrenList[$i]['Cpr6'] . $childrenList[$i]['Cpr4'];
+            }
+          }
+          if ($member->Cpr62) {
+            $form['submitted']['row1']['col2']['partner']['has_partner'][1]['#default_value'] = 1;
+            $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62 . $member->Cpr42;
+          }
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationStart));
+          $form['submitted']['row3']['col31']['under_education']['row31']['col34']['education_end_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationEnd));
+
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col63']['husleje_max']['#default_value'] = $member->MaximumRent;
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col63']['husdyr']['#default_value'] = $member->Pet;
+
+          $form['submitted']['row7']['col71']['agrements']['is_confirmed'][1]['#default_value'] = true;
+          $form['submitted']['row9']['col81']['tro_og_love_erklaering']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = true;
+         }
+      } else {
+        $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
+        $form['submitted']['row0']['col0']['previous_submission_message']['#suffix'] = '</div>';
+
+        //adding ajax listener to CPR field
+        $form['submitted']['row1']['col1']['basic_data']['cpr']['#ajax'] = array(
+          'event' => 'blur',
+          'callback' => 'egbolig_webform_get_previous_submission_message',
+          'effect' => 'fade',
+          'progress' => array('type' => 'none')
+        );
+      }
+
+      $form['#submit'][] = 'egbolig_webform_synch_submission';
+    }
+  }
+}
+
+function egbolig_webform_synch_submission($form, &$form_state) {
+  $cpr = $form_state['values']['submitted'][_egbolig_webform_get_webform_cid($form_state['webform']['component_tree']['children'], 'cpr')];
+  //updating submission
+  if (isset($form_state['hashcode'])) {
+    if ($form_state['hashcode'] === md5($cpr)) {
+      try {
+        $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+        $member = egbolig_webform_populate_member($member, $form_state);
+        egbolig_webform_ws_update_member($member);
+
+        _egbolig_webform_ws_update_partner($member, $form_state);
+        egbolig_webform_ws_add_children($member, $form_state);
+        egbolig_webform_ws_add_wishes($member, $form_state);
+        drupal_set_message('Submission synched');
+      } catch (Exception $e) {
+        watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
+        drupal_set_message('Could not synch the submission, see log', 'warning');
+      }
+    } else {
+      //TODO: abort submission
+      drupal_set_message(t('Integrity of the form is broken'), 'error');
+    }
+  }
+  // new submission
+  else {
+    try {
+      $member = egbolig_webform_populate_member(NULL, $form_state);
+      egbolig_webform_ws_create_member($member);
+
+      //getting the member and updating if with the
+      $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+      $member = egbolig_webform_populate_member($member, $form_state);
+      egbolig_webform_ws_update_member($member);
+      _egbolig_webform_ws_update_partner($member, $form_state);
+      egbolig_webform_ws_add_children($member, $form_state);
+      egbolig_webform_ws_add_wishes($member, $form_state);
+
+      drupal_set_message('Submission created');
+    } catch (Exception $e) {
+      watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
+      drupal_set_message('Could not create the submission, see log', 'warning');
+    }
+  }
+}
+
+function egbolig_webform_monolog_channel_info() {
+  $channels = array();
+
+$my_module_name = basename(__FILE__, '.module');
+  $channels[$my_module_name] = array(
+      'label' => t($my_module_name),
+      'description' => t('The default channel that os2logging messages are routed through.'),
+      'default profile' => '$my_module_name',
+  );
+
+  return $channels;
+}

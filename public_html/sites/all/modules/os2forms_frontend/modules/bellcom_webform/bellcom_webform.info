@@ -1,0 +1,6 @@
+name = Bellcom Webform
+description = Extending functionality of webform
+core = 7.x
+package = Bellcom
+dependencies[] = webform
+dependencies[] = vcv_serviceplatformen

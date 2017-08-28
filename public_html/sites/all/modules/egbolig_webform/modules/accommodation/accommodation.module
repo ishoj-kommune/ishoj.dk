@@ -1,0 +1,19 @@
+<?php
+/**
+ * Implements hook_webform_select_options_info().
+ */
+function accommodation_webform_select_options_info() {
+  $items = array();
+  $items['accommodation_types'] = array(
+    'title' => t('Accommodation Type'),
+    'options callback' => 'webform_options_accommodation_types',
+  );
+  return $items;
+}
+
+/**
+ * Webform options info callback.
+ */
+function webform_options_accommodation_types() {
+  return accommodation_types();
+}

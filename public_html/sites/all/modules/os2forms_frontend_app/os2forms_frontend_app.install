@@ -1,0 +1,18 @@
+<?php
+
+
+function os2forms_frontend_app_enable() {
+$feature = features_get_features('os2forms_frontend_app');
+$components = array_keys($feature->info['features']);
+features_revert(array('os2forms_frontend_app' => $components));
+}
+
+function os2forms_frontend_app_disable() {  
+  $query = db_select('node', 'n')
+    ->fields('n', array('nid'))
+    ->condition('n.title', 'tro og love erklaering', '=')
+    ->condition('n.type', 'webform', '=');
+  $nid = $query->execute()->fetchField();
+  if ($nid)
+   node_delete($nid);
+}

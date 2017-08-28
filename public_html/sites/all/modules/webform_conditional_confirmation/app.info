@@ -1,0 +1,5 @@
+; Information created by apps module.
+
+version = 7.x-2.x-dev
+source_app = os2forms_frontend
+download_time = 1503917644

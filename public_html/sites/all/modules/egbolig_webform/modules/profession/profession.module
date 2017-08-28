@@ -1,0 +1,20 @@
+<?php
+/**
+ * Implements hook_webform_select_options_info().
+ */
+function profession_webform_select_options_info() {
+  $items = array();
+  $items['profession'] = array(
+    'title' => t('Profession'),
+    'options callback' => 'profession_webform_options',
+  );
+
+  return $items;
+}
+
+/**
+ * Webform options info callback.
+ */
+function profession_webform_options() {
+  return profession_get_list();
+}

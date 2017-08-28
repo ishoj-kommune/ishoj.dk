@@ -1,0 +1,28 @@
+<?php
+/**
+ * Implements hook_webform_select_options_info().
+ */
+function education_webform_select_options_info() {
+  $items = array();
+  $items['education'] = array(
+    'title' => t('Education'),
+    'options callback' => 'education_webform_options',
+  );
+  $items['education_place'] = array(
+    'title' => t('Education Place'),
+    'options callback' => 'education_place_webform_options',
+  );
+
+  return $items;
+}
+
+/**
+ * Webform options info callback.
+ */
+function education_webform_options() {
+  return education_get_list();
+}
+
+function education_place_webform_options() {
+  return education_places();
+}

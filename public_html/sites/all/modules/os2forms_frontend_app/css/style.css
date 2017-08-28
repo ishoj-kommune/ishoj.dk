@@ -1,0 +1,35 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05.11.2015, 22:23:01
+    Author     : Juulia
+*/
+
+.webform-client-form .webform-container-inline.webform-datepicker input.webform-calendar {
+  padding: 6px 12px;
+  display: block;
+}
+.webform-client-form .inline-field {
+  display: inline-block;
+  height: 65px;
+}
+.webform-client-form .inline-field.date {
+  //vertical-align: bottom;
+}
+.webform-client-form .inline-field.date input[type=image]{
+  display: inline-block;
+}
+
+a.print_data {
+    float:right;
+    display: inline-block;
+}
+
+@media print {
+    a.print_data {
+        display: none;
+    }
+}   

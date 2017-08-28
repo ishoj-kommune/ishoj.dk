@@ -1,0 +1,5 @@
+name = Accommodation Application
+description = accommodation application module.
+core = 7.x
+files[] = accommodation.module
+dependencies[] = egbolig_webform

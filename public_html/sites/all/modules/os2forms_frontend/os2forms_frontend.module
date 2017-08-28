@@ -1,0 +1,62 @@
+<?php
+/**
+ * @file
+ * Code for the os2forms_frontend feature.
+ */
+
+include_once 'os2forms_frontend.features.inc';
+
+/**
+ * Commented leftover from tro og love erklaering webform
+ */
+//function os2forms_frontend_preprocess_page($vars) {
+//  drupal_add_css(drupal_get_path('module', 'os2forms_frontend') . "/css/style.css", "module");
+//
+//}
+//
+//function os2forms_frontend_menu() {
+//  $items = array();
+//
+//
+//  $items['webform/%/submission/%/done'] = array(
+//    'title' => 'tro og love erklaering',
+//    'page callback' => 'os2forms_frontend_submission_confirm',
+//    'type' => MENU_CALLBACK,
+//    'access arguments' => array('access content'),
+//    'page arguments' => array(1, 3),
+//  );
+//
+//  return $items;
+//}
+//
+//function os2forms_frontend_submission_confirm($nid, $sid) {
+//  module_load_include('inc', 'webform', 'includes/webform.submissions');
+//  $node = node_load($nid);
+//  $submission = webform_get_submission($nid, $sid);
+//  foreach ($submission->data as $key => $value) {
+//    $submission_data[$node->webform['components'][$key]['form_key']] = $value[0];
+//  }
+//  $output = '<a class = "print_data" href = "/print/webform/' . $nid . '/submission/' . $sid . '/done" target="_blank">Print</a>';
+//  $output .= '<p>' . $submission_data['navn'] . '<br/>'
+//    . $submission_data['address'] . '<br/>'
+//    . $submission_data['postnr'] . '&nbsp;' . $submission_data['city'] . '<br/>'
+//    . 'CPR: ' . $submission_data['cpr_number'] . '</p>';
+//  if ($submission_data["not_single_parent"] == 1) {
+//    $output .= '<p>Tak for din besvarelse. Vi har registreret at du fortsat er enlig forsørger </p>
+//                 <p>Du kan printe denne kvittering ved at klikke på print-knappen (der skal være en print-knap)</p>
+//                 <p>Du bedes lukke denne side når du har printet den ud (kommentar: der skal desuden være auto "clearing af personlige oplysninger" altså reload af siden efter 10 min uberørt tastatur/mus - hvis det er muligt)<p>';
+//  }
+//  else {
+//    $output .= '<p>Tak for din besvarelse. Vi har registreret at du ikke længere er enlig forsørger. Du vil høre fra os når vi har behandlet dit svar</p>
+//                     <p>Du kan printe denne kvittering ved at klikke på print-knappen</p>
+//                     <p>Du bedes lukke denne side når du har printet den ud</p>';
+//  }
+//
+//  $output .= '<p>Med venlig hilsen<br/>
+//              Kontrolgruppen<br/>
+//              Ballerup Kommune<br/>
+//              Hold-An Vej 7<br/>
+//              2650 Ballerup<br/>';
+//  return $output;
+//
+//}

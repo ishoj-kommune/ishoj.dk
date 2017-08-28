@@ -1,0 +1,5 @@
+name = Profession
+description = profession application module.
+core = 7.x
+files[] = profession.module
+dependencies[] = egbolig_webform

@@ -1,0 +1,11 @@
+name = Drupal NemID Login
+description = Provides a login box for NemID
+package = Bellcom
+version = 7.x-1.0-alpha2
+core = 7.x
+php = 5.2
+
+dependencies[] = securepages
+dependencies[] = webform (>=7.x-4.12)
+dependencies[] = webform_ssl
+dependencies[] = webform_encrypt

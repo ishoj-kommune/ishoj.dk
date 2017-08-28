@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OS2Forms settings feature.
+ */
+
+include_once 'os2forms_settings.features.inc';

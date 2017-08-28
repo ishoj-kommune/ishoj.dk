@@ -1,0 +1,43 @@
+name = "OS2Forms frontend server App"
+description = "App for advanced webforms in Danish Municipalities."
+core = "7.x"
+
+apps[server] = "Bellcom"
+apps[manifests][] = "app/manifest.app"
+
+dependencies[] = block
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = field_ui
+dependencies[] = i18n
+dependencies[] = i18n_string
+dependencies[] = l10n_update
+dependencies[] = node_export_features
+dependencies[] = pathauto
+dependencies[] = rest_server
+dependencies[] = services
+dependencies[] = services_basic_auth
+dependencies[] = token
+dependencies[] = print
+dependencies[] = uuid
+dependencies[] = variable
+dependencies[] = views
+dependencies[] = webform
+dependencies[] = webform_service
+dependencies[] = webform_submission_uuid
+dependencies[] = xmlrpc_server
+features[ctools][] = services:services:3
+features[features_api][] = api:1
+features[filter][] = full_html
+features[filter][] = plain_text
+features[node][] = webform
+features[node_export_features][] = 52b05276-ab35-446d-9da4-6e530a67ca86
+features[services_endpoint][] = rest
+stylesheets[all][]  = css/style.css
+
+; Information added by Drupal.org packaging script on 2014-07-28
+version = "1.1"
+core = "7.x"
+project = "OS2Forms"
+datestamp = "1406515128"

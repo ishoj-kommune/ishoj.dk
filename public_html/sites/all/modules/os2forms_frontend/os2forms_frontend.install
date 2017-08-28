@@ -1,0 +1,11 @@
+<?php
+
+
+function os2forms_frontend_enable() {
+  $feature = features_get_features('os2forms_frontend');
+  $components = array_keys($feature->info['features']);
+  features_revert(array('os2forms_frontend' => $components));
+
+  //making the webforms update work, without this line update fails
+  variable_set('services_webform_submit_button_resource_create', t('Save'));
+}

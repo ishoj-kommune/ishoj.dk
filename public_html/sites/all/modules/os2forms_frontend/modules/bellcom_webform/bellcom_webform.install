@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function bellcom_webform_schema() {
+  $schema['bellcom_webform'] = array(
+    'description' => 'Database containing the settings of bellcom_webform.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The node identifier of a bellcom_webform.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'enabled' => array(
+        'description' => 'Show if a pdf will be generated: 0: OFF, 1: ON.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+
+      'data' => array(
+        'type' => 'blob',
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'Serialized data containing the bellcom_webform properties.',
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+  return $schema;
+}
