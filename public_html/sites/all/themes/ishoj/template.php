@@ -199,7 +199,7 @@ function ishoj_preprocess_node(&$variables) {
     $field_items = field_get_items('node', $node, 'field_kort');
     if(isset($field_items[0])) {
       // drupal_add_js('http://webkort.ishoj.dk/clientapi/minimap2/2.4.x/minimap.js', array(
-      drupal_add_js('http://webkort.ishoj.dk/clientapi/minimap2/2.5.x/minimap.js', array(
+      drupal_add_js('http://webkort.ishoj.dk/clientapi/minimap2/2.6.x/minimap.js', array(
         // 'group' => JS_THEME,
         // 'preprocess' => TRUE,
         'scope' => 'footer',
