@@ -361,6 +361,7 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
         {
             "name": "symfony/css-selector",
             "version": "2.8.x-dev",
