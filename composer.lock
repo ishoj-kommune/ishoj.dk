@@ -64,6 +64,56 @@
             "time": "2014-03-31 18:32:47"
         },
         {
+            "name": "ffwagency/borgerdk-php",
+            "version": "dev-os2borger-15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bellcom/borgerdk-php.git",
+                "reference": "c1a3ca617bc9579f48cb7863f50c50b7759a81ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bellcom/borgerdk-php/zipball/c1a3ca617bc9579f48cb7863f50c50b7759a81ae",
+                "reference": "c1a3ca617bc9579f48cb7863f50c50b7759a81ae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "symfony/css-selector": "~2.8",
+                "symfony/dom-crawler": "~2.8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BorgerDk\\ArticleService\\": "src/BorgerDk/ArticleService"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Beltofte",
+                    "email": "jens.beltofte@ffwagency.com"
+                }
+            ],
+            "description": "Borger.dk Article Export Service PHP SDK (unofficially)",
+            "homepage": "https://github.com/ffwagency/borgerdk-php",
+            "keywords": [
+                "borger.dk",
+                "borgerdk",
+                "ffwagency",
+                "php"
+            ],
+            "support": {
+                "source": "https://github.com/bellcom/borgerdk-php/tree/develop"
+            },
+            "time": "2017-06-27 09:15:06"
+        },
+        {
             "name": "guzzle/guzzle",
             "version": "v3.9.2",
             "source": {
@@ -373,8 +423,10 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "ffwagency/borgerdk-php": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

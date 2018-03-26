@@ -1,10 +1,18 @@
 {
     "require": {
+        "ffwagency/borgerdk-php": "dev-os2borger-15",
         "php": ">=5.3.0",
         "elasticsearch/elasticsearch": "~1.0.2"
     },
     "config": {
         "autoloader-suffix": "ComposerManager",
         "vendor-dir": "public_html/../vendor"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:bellcom/borgerdk-php.git"
+        }
+    ],
+    "minimum-stability": "dev"
 }
