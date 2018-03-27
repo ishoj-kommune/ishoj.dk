@@ -46,6 +46,10 @@
 function sortByTitle($a, $b){
   return strcmp($a->title, $b->title);
 }
+
+function sortByDateCreated($a, $b){
+  return (int) $a->created > (int) $b->created ? 1 : (int) $a->created == (int) $b->created ? 0 : -1;
+}
   $output = "";
 
   // ----------------------------  //
@@ -108,7 +112,7 @@ function sortByTitle($a, $b){
               }
             }
 
-  usort($nodes, 'sortByTitle');
+  usort($nodes, 'sortByDateCreated');
    foreach($nodes as $nid1) {
      
        if ($nid1->field_indholdstype['und'][0]['tid'] != '2928') {
