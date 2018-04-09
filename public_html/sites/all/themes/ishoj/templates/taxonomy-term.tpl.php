@@ -47,10 +47,19 @@ function sortByTitle($a, $b){
   return strcmp($a->title, $b->title);
 }
 
-function sortByDateCreated($a, $b){
-  return (int) $a->created > (int) $b->created ? 1 : (int) $a->created == (int) $b->created ? 0 : -1;
+function sortByDateCreated($a, $b) {
+  $result = NULL;
+  if ((int) $a->created > (int) $b->created) {
+    $result = -1;
+  } elseif ((int) $a->created < (int) $b->created) {
+    $result = 1;
+  } else {
+    $result = 0;
+  }
+  return $result;
 }
-  $output = "";
+
+$output = "";
 
   // ----------------------------  //
   //  K A T E G O R I   S I D E R  //
