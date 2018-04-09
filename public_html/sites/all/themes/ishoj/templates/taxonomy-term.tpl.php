@@ -120,8 +120,12 @@ $output = "";
             $nodes[] = node_load($nid);
               }
             }
+    if ($term_name == "Nyheder") {
+      usort($nodes, 'sortByDateCreated');
+    } else {
+      usort($nodes, 'sortByTitle');
+    }
 
-  usort($nodes, 'sortByDateCreated');
    foreach($nodes as $nid1) {
      
        if ($nid1->field_indholdstype['und'][0]['tid'] != '2928') {
