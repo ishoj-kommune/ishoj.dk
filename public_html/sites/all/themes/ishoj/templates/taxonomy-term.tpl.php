@@ -46,7 +46,20 @@
 function sortByTitle($a, $b){
   return strcmp($a->title, $b->title);
 }
-  $output = "";
+
+function sortByDateCreated($a, $b) {
+  $result = NULL;
+  if ((int) $a->created > (int) $b->created) {
+    $result = -1;
+  } elseif ((int) $a->created < (int) $b->created) {
+    $result = 1;
+  } else {
+    $result = 0;
+  }
+  return $result;
+}
+
+$output = "";
 
   // ----------------------------  //
   //  K A T E G O R I   S I D E R  //
@@ -108,7 +121,7 @@ function sortByTitle($a, $b){
               }
             }
 
-  usort($nodes, 'sortByTitle');
+  usort($nodes, 'sortByDateCreated');
    foreach($nodes as $nid1) {
      
        if ($nid1->field_indholdstype['und'][0]['tid'] != '2928') {
