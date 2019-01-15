@@ -27,7 +27,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * @var string
      */
-    protected $transportSchema = 'http';
+    protected $transportSchema = 'http';    // TODO depreciate this default
 
     /**
      * @var string
@@ -47,7 +47,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * @var array
      */
-    protected $connectionParams;
+    protected $connectionParams = array();
 
     /** @var bool  */
     protected $isAlive = false;
@@ -75,6 +75,9 @@ abstract class AbstractConnection implements ConnectionInterface
     /** @return string */
     abstract public function getTransportSchema();
 
+    /** @return array */
+    abstract public function getLastRequestInfo();
+
 
     /**
      * Constructor
@@ -86,6 +89,22 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function __construct($hostDetails, $connectionParams, LoggerInterface $log, LoggerInterface $trace)
     {
+        if (isset($hostDetails['scheme'])) {
+            $this->transportSchema = $hostDetails['scheme'];
+        }
+
+        if (isset($hostDetails['user']) && isset($hostDetails['pass'])) {
+            if (isset($connectionParams['auth'][0]) !== true) {
+                $connectionParams['auth'][0] = $hostDetails['user'];
+            }
+            if (isset($connectionParams['auth'][1]) !== true) {
+                $connectionParams['auth'][1] = $hostDetails['pass'];
+            }
+            if (isset($connectionParams['auth'][2]) !== true) {
+                $connectionParams['auth'][2] = 'Basic';
+            }
+        }
+
         $host = $this->transportSchema.'://'.$hostDetails['host'].':'.$hostDetails['port'];
         if (isset($hostDetails['path']) === true) {
             $host .= $hostDetails['path'];
@@ -93,7 +112,10 @@ abstract class AbstractConnection implements ConnectionInterface
         $this->host             = $host;
         $this->log              = $log;
         $this->trace            = $trace;
-        $this->connectionParams = $connectionParams;
+        if (isset($connectionParams) === true) {
+            $this->connectionParams = $connectionParams;
+        }
+
 
     }
 
@@ -168,8 +190,8 @@ abstract class AbstractConnection implements ConnectionInterface
         $exception = null
     ) {
         $this->log->debug('Request Body', array($body));
-        $this->log->info(
-            'Request Success:',
+        $this->log->warning(
+            'Request Failure:',
             array(
                 'method'    => $method,
                 'uri'       => $fullURI,
@@ -179,7 +201,7 @@ abstract class AbstractConnection implements ConnectionInterface
                 'error'     => $exception,
             )
         );
-        $this->log->debug('Response', array($response));
+        $this->log->warning('Response', array($response));
 
         // Build the curl command for Trace.
         $curlCommand = $this->buildCurlCommand($method, $fullURI, $body);

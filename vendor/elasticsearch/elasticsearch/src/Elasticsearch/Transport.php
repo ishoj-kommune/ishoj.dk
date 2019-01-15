@@ -27,7 +27,7 @@ use Psr\Log\LoggerInterface;
 class Transport
 {
     /**
-     * @var \Pimple
+     * @var \Pimple\Container
      */
     private $params;
 
@@ -54,13 +54,16 @@ class Transport
     /** @var  int */
     private $retryAttempts;
 
+    /** @var  AbstractConnection */
+    private $lastConnection;
+
 
     /**
      * Transport class is responsible for dispatching requests to the
      * underlying cluster connections
      *
      * @param array                    $hosts  Array of hosts in cluster
-     * @param \Pimple                  $params DIC containing dependencies
+     * @param \Pimple\Container        $params DIC containing dependencies
      * @param \Psr\Log\LoggerInterface $log    Monolog logger object
      *
      * @throws Common\Exceptions\InvalidArgumentException
@@ -146,8 +149,9 @@ class Transport
             throw $exception;
         }
 
-        $response        = array();
-        $caughtException = null;
+        $response             = array();
+        $caughtException      = null;
+        $this->lastConnection = $connection;
 
         try {
             if (isset($body) === true) {
@@ -217,6 +221,18 @@ class Transport
         }
 
         return false;
+    }
+
+
+    /**
+     * Returns the last used connection so that it may be inspected.  Mainly
+     * for debugging/testing purposes.
+     *
+     * @return AbstractConnection
+     */
+    public function getLastConnection()
+    {
+        return $this->lastConnection;
     }
 
 
