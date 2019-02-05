@@ -150,8 +150,6 @@ function _os2web_esdh_provider_import_meeting($meeting_id, $force = FALSE, &$con
 
       $node = node_load($nid);
       $republish = FALSE;
-dpm($meeting['path']);
-dpm($node->changed);
       // Republish by Force.
       if ($force) {
         $republish = TRUE;

@@ -67,8 +67,6 @@ function os2web_esdh_provider_index_meeting($nid, $manifest, $agenda){
 function os2web_esdh_provider_index_meeting_is_manifest_outdated($meeting_xmlid, $currentXmlChanged){
   if (!os2web_esdh_provider_index_meeting_is_meeting_indexed($meeting_xmlid))//manifest is not indexed
     return TRUE;
-dpm($currentXmlChanged);
-dpm($meeting_xmlid);
   $rowCount = db_select('os2web_esdh_provider_import', 'o')
     ->fields('o')
     ->condition('meeting_xmlid', $meeting_xmlid, '=')
