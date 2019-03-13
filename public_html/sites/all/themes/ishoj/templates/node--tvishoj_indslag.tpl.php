@@ -150,7 +150,7 @@ $bterm = taxonomy_term_load($buftid);
                       $output = $output . "<div class=\"video-indlejret\">";
                         $output = $output . "<div class=\"embed-container vimeo\">";
 
-                          $output .= "<iframe src=\"http://www.youtube.com/embed/" . substr(strrchr($node->field_youwatch_page_url['und'][0]['value'], "="), 1) . "?rel=0\" frameborder=\"0\" allowfullscreen></iframe>";
+                          $output .= "<iframe src=\"https://www.youtube.com/embed/" . substr(strrchr($node->field_youwatch_page_url['und'][0]['value'], "="), 1) . "?rel=0\" frameborder=\"0\" allowfullscreen></iframe>";
 
                         $output = $output . "</div>";
                       $output = $output . "</div>";
