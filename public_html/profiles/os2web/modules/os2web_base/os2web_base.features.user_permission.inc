@@ -14,6 +14,7 @@ function os2web_base_user_default_permissions() {
   $permissions['access site-wide contact form'] = array(
     'name' => 'access site-wide contact form',
     'roles' => array(
+      'Administrator' => 'Administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
@@ -84,9 +85,12 @@ function os2web_base_user_default_permissions() {
     'name' => 'use text format filtered_html',
     'roles' => array(
       'Administrator' => 'Administrator',
-      'Editor' => 'Editor',
+      'Aktivitet-redaktør' => 'Aktivitet-redaktør',
+      'Infoskærm-redaktør' => 'Infoskærm-redaktør',
       'Kommunikation' => 'Kommunikation',
+      'Kriseinformation' => 'Kriseinformation',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
     ),
     'module' => 'filter',
   );
@@ -96,9 +100,12 @@ function os2web_base_user_default_permissions() {
     'name' => 'use text format full_html',
     'roles' => array(
       'Administrator' => 'Administrator',
-      'Editor' => 'Editor',
+      'Aktivitet-redaktør' => 'Aktivitet-redaktør',
+      'Infoskærm-redaktør' => 'Infoskærm-redaktør',
       'Kommunikation' => 'Kommunikation',
+      'Kriseinformation' => 'Kriseinformation',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
     ),
     'module' => 'filter',
   );

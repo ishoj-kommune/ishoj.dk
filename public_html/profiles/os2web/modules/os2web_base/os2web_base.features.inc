@@ -69,6 +69,7 @@ function os2web_base_image_default_styles() {
         'weight' => 2,
       ),
     ),
+    'label' => 'os2web_base_style_content',
   );
 
   // Exported image style: os2web_base_style_image.
@@ -91,6 +92,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_image',
   );
 
   // Exported image style: os2web_base_style_medium.
@@ -130,6 +132,7 @@ function os2web_base_image_default_styles() {
         'weight' => 2,
       ),
     ),
+    'label' => 'os2web_base_style_medium',
   );
 
   // Exported image style: os2web_base_style_news_big.
@@ -152,6 +155,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_news_big',
   );
 
   // Exported image style: os2web_base_style_news_medium.
@@ -174,6 +178,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_news_medium',
   );
 
   // Exported image style: os2web_base_style_news_small.
@@ -196,6 +201,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_news_small',
   );
 
   // Exported image style: os2web_base_style_rotating.
@@ -218,6 +224,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_rotating',
   );
 
   // Exported image style: os2web_base_style_rotating_small.
@@ -240,6 +247,7 @@ function os2web_base_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'os2web_base_style_rotating_small',
   );
 
   return $styles;
@@ -259,9 +267,9 @@ function os2web_base_node_info() {
       'help' => '',
     ),
     'os2web_base_contentpage' => array(
-      'name' => t('Indholdsside'),
+      'name' => t('Indhold'),
       'base' => 'node_content',
-      'description' => t('Almindelig webside til generel brug på sitet.'),
+      'description' => t('Indhold til indholdside eller nyhed'),
       'has_title' => '1',
       'title_label' => t('Overskrift'),
       'help' => '',

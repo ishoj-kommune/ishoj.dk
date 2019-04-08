@@ -49,15 +49,3 @@ function os2web_base_os2web_help($sections) {
 
   return $sections;
 }
-function os2web_base_form_alter(&$form, &$form_state, $form_id) {
-  if ($form['#node_edit_form']) { 
-      $form['#after_build'][] = 'os2web_base_node_edit_form_after_build';
-      
-  }
-}
-
-function os2web_base_node_edit_form_after_build($form, &$form_state) {
-  $path = drupal_get_path('module', 'os2web_base');
-  drupal_add_js (drupal_get_path('module', 'os2web_base') . '/js/os2web_base.js');
-  return $form;
-}
