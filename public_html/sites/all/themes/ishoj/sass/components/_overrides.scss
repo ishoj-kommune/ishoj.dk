@@ -85,3 +85,9 @@
 .group:after {
 	clear: both;
 }
+
+.ui-widget {
+  font-family: $font-primary;
+	font-size: $font-base;
+	line-height: 1.5;
+}

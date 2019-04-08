@@ -9,6 +9,29 @@
  */
 function os2web_base_taxonomy_default_vocabularies() {
   return array(
+    'indholdstype' => array(
+      'name' => 'Indholdstype',
+      'machine_name' => 'indholdstype',
+      'description' => 'Indholdstyper, fx indholdsside, nyhed, kriseinformation',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+      'rdf_mapping' => array(
+        'rdftype' => array(
+          0 => 'skos:ConceptScheme',
+        ),
+        'name' => array(
+          'predicates' => array(
+            0 => 'dc:title',
+          ),
+        ),
+        'description' => array(
+          'predicates' => array(
+            0 => 'rdfs:comment',
+          ),
+        ),
+      ),
+    ),
     'os2web_base_tax_promoteto' => array(
       'name' => 'Forfrem til',
       'machine_name' => 'os2web_base_tax_promoteto',
@@ -36,7 +59,7 @@ function os2web_base_taxonomy_default_vocabularies() {
       'name' => 'Overordnet placering og sitestruktur',
       'machine_name' => 'os2web_base_tax_site_structure',
       'description' => 'Vælg de steder i hjemmesidens overordnede struktur hvor indholdet skal publiceres.',
-      'hierarchy' => 1,
+      'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => -10,
       'rdf_mapping' => array(
