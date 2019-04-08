@@ -798,7 +798,8 @@ function os2web_base_field_group_info() {
     'weight' => '10',
     'children' => array(
       0 => 'field_os2web_base_field_kle_ref',
-      1 => 'field_indholdstype',
+      1 => 'field_os2web_base_field_rotate',
+      2 => 'field_indholdstype',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -833,6 +834,7 @@ function os2web_base_field_group_info() {
       5 => 'group_bokse',
       6 => 'group_bruges_ikke',
       7 => 'group_kort',
+      8 => 'group_os2web_base_group_faq',
     ),
     'format_type' => 'htabs',
     'format_settings' => array(
@@ -934,6 +936,62 @@ function os2web_base_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_os2web_base_group_faq|node|os2web_base_contentpage|form';
+  $field_group->group_name = 'group_os2web_base_group_faq';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'os2web_base_contentpage';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_os2web_base_group_content';
+  $field_group->data = array(
+    'label' => 'FAQ',
+    'weight' => '12',
+    'children' => array(
+      0 => 'field_os2web_base_field_faq',
+      1 => 'field_os2web_base_field_faq_en',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_os2web_base_group_faq|node|os2web_base_contentpage|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_os2web_base_group_faq|node|os2web_base_news|form';
+  $field_group->group_name = 'group_os2web_base_group_faq';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'os2web_base_news';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'FAQ',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_os2web_base_field_faq',
+      1 => 'field_os2web_base_field_faq_en',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_os2web_base_group_faq|node|os2web_base_news|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_os2web_base_group_general|node|os2web_base_contentpage|form';
   $field_group->group_name = 'group_os2web_base_group_general';
   $field_group->entity_type = 'node';
@@ -973,9 +1031,8 @@ function os2web_base_field_group_info() {
     'label' => 'Skjult',
     'weight' => '53',
     'children' => array(
-      0 => 'field_os2web_base_field_rotate',
-      1 => 'field_os2web_base_field_sourceid',
-      2 => 'field_os2web_base_field_struct',
+      0 => 'field_os2web_base_field_sourceid',
+      1 => 'field_os2web_base_field_struct',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -1032,8 +1089,8 @@ function os2web_base_field_group_info() {
     'weight' => '48',
     'children' => array(
       0 => 'field_os2web_base_field_add_info',
-      1 => 'field_os2web_base_field_related',
-      2 => 'field_os2web_base_field_rel_subj',
+      1 => 'field_os2web_base_field_rel_subj',
+      2 => 'field_os2web_base_field_related',
       3 => 'field_os2web_base_field_sourceid',
     ),
     'format_type' => 'fieldset',
@@ -1204,10 +1261,10 @@ function os2web_base_field_group_info() {
     'weight' => '2',
     'children' => array(
       0 => 'field_os2web_base_field_edi_tags',
-      1 => 'field_os2web_base_field_organiz',
-      2 => 'field_os2web_base_field_politics',
-      3 => 'field_os2web_base_field_kle_ref',
-      4 => 'field_os2web_base_field_loca_ref',
+      1 => 'field_os2web_base_field_kle_ref',
+      2 => 'field_os2web_base_field_loca_ref',
+      3 => 'field_os2web_base_field_organiz',
+      4 => 'field_os2web_base_field_politics',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -1237,8 +1294,8 @@ function os2web_base_field_group_info() {
     'children' => array(
       0 => 'body',
       1 => 'field_os2web_base_field_lead_img',
-      2 => 'field_os2web_base_field_summary',
-      3 => 'field_os2web_base_field_struct',
+      2 => 'field_os2web_base_field_struct',
+      3 => 'field_os2web_base_field_summary',
       4 => 'field_os2web_base_field_media',
       5 => 'title',
     ),

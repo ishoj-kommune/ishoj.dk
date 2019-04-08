@@ -3738,6 +3738,86 @@ I tekstfeltet, Indhold, skriver du teksten [kort] der, hvor du ønsker kortet in
     ),
   );
 
+  // Exported field_instance: 'node-os2web_base_contentpage-field_os2web_base_field_faq'
+  $field_instances['node-os2web_base_contentpage-field_os2web_base_field_faq'] = array(
+    'bundle' => 'os2web_base_contentpage',
+    'default_value' => NULL,
+    'default_values' => array(
+      'answer' => '',
+      'question' => '',
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'faqfield',
+        'settings' => array(
+          'active' => 0,
+          'autoHeight' => TRUE,
+          'collapsible' => FALSE,
+          'event' => 'click',
+        ),
+        'type' => 'faqfield_accordion',
+        'weight' => 70,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_os2web_base_field_faq',
+    'label' => 'Faq',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'faqfield',
+      'settings' => array(
+        'answer' => '',
+        'question' => '',
+      ),
+      'type' => 'faqfield_textboxes',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'node-os2web_base_contentpage-field_os2web_base_field_faq_en'
+  $field_instances['node-os2web_base_contentpage-field_os2web_base_field_faq_en'] = array(
+    'bundle' => 'os2web_base_contentpage',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 71,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_os2web_base_field_faq_en',
+    'label' => 'Enable FAQ field',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 15,
+    ),
+  );
+
   // Exported field_instance: 'node-os2web_base_contentpage-field_os2web_base_field_hidlinks'
   $field_instances['node-os2web_base_contentpage-field_os2web_base_field_hidlinks'] = array(
     'bundle' => 'os2web_base_contentpage',
@@ -5947,6 +6027,98 @@ I tekstfeltet, Indhold, skriver du teksten [kort] der, hvor du ønsker kortet in
     ),
   );
 
+  // Exported field_instance: 'node-os2web_base_news-field_os2web_base_field_faq'
+  $field_instances['node-os2web_base_news-field_os2web_base_field_faq'] = array(
+    'bundle' => 'os2web_base_news',
+    'default_value' => NULL,
+    'default_values' => array(
+      'answer' => '',
+      'question' => '',
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'faqfield',
+        'settings' => array(
+          'active' => 0,
+          'autoHeight' => TRUE,
+          'collapsible' => FALSE,
+          'event' => 'click',
+        ),
+        'type' => 'faqfield_accordion',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_os2web_base_field_faq',
+    'label' => 'Faq',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'faqfield',
+      'settings' => array(
+        'answer' => '',
+        'question' => '',
+      ),
+      'type' => 'faqfield_textboxes',
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-os2web_base_news-field_os2web_base_field_faq_en'
+  $field_instances['node-os2web_base_news-field_os2web_base_field_faq_en'] = array(
+    'bundle' => 'os2web_base_news',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_os2web_base_field_faq_en',
+    'label' => 'Enable FAQ field',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'node-os2web_base_news-field_os2web_base_field_kle_ref'
   $field_instances['node-os2web_base_news-field_os2web_base_field_kle_ref'] = array(
     'bundle' => 'os2web_base_news',
@@ -7505,6 +7677,8 @@ I tekstfeltet, Indhold, skriver du teksten [kort] der, hvor du ønsker kortet in
   t('ESDH Sag');
   t('Egenavne / stednavne');
   t('Egennavne/stednavne');
+  t('Enable FAQ field');
+  t('Faq');
   t('Filer');
   t('Forfrem til');
   t('Forældre-menupunkt');

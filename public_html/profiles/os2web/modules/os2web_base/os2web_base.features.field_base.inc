@@ -1567,6 +1567,58 @@ function os2web_base_field_default_field_bases() {
     'type' => 'taxonomy_term_reference',
   );
 
+  // Exported field_base: 'field_os2web_base_field_faq'
+  $field_bases['field_os2web_base_field_faq'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_os2web_base_field_faq',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'faqfield',
+    'settings' => array(
+      'advanced' => array(
+        'answer_rows' => 3,
+        'answer_title' => 'Answer',
+        'question_length' => 255,
+        'question_rows' => 1,
+        'question_title' => 'Spørgsmål',
+      ),
+      'answer_widget' => 'text_format',
+      'format' => 'filtered_html',
+    ),
+    'translatable' => 0,
+    'type' => 'faqfield',
+  );
+
+  // Exported field_base: 'field_os2web_base_field_faq_en'
+  $field_bases['field_os2web_base_field_faq_en'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_os2web_base_field_faq_en',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
+  );
+
   // Exported field_base: 'field_os2web_base_field_grp_id'
   $field_bases['field_os2web_base_field_grp_id'] = array(
     'active' => 1,
