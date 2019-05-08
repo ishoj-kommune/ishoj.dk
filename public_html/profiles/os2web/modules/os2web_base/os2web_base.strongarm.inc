@@ -294,6 +294,15 @@ function os2web_base_strongarm() {
       'os2web_meetings_meeting_detail_view' => array(
         'custom_settings' => FALSE,
       ),
+      'email_plain' => array(
+        'custom_settings' => FALSE,
+      ),
+      'email_html' => array(
+        'custom_settings' => FALSE,
+      ),
+      'email_textalt' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'display' => array(
@@ -306,10 +315,10 @@ function os2web_base_strongarm() {
       ),
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '21',
+          'weight' => '2',
         ),
         'workbench_access' => array(
           'weight' => '0',
@@ -334,6 +343,18 @@ function os2web_base_strongarm() {
         ),
         'fmenu' => array(
           'weight' => '7',
+        ),
+        'metatags' => array(
+          'weight' => '5',
+        ),
+        'redirect' => array(
+          'weight' => '3',
+        ),
+        'xmlsitemap' => array(
+          'weight' => '4',
+        ),
+        'scheduler_settings' => array(
+          'weight' => '0',
         ),
       ),
     ),
@@ -608,9 +629,7 @@ function os2web_base_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_os2web_base_contentpage';
   $strongarm->value = array(
-    0 => 'os2web-menu-contentmenu',
-    1 => 'os2web-main-menu',
-    2 => 'main-menu',
+    0 => 'menu-hovedmenu',
   );
   $export['menu_options_os2web_base_contentpage'] = $strongarm;
 
@@ -673,7 +692,7 @@ function os2web_base_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_parent_os2web_base_contentpage';
-  $strongarm->value = 'os2web-main-menu:0';
+  $strongarm->value = 'menu-hovedmenu:0';
   $export['menu_parent_os2web_base_contentpage'] = $strongarm;
 
   $strongarm = new stdClass();

@@ -121,8 +121,8 @@ function os2web_base_default_page_manager_handlers() {
     $pane = new stdClass();
     $pane->pid = 'new-3';
     $pane->panel = 'h__jre';
-    $pane->type = 'node_form_buttons';
-    $pane->subtype = 'node_form_buttons';
+    $pane->type = 'node_form_path';
+    $pane->subtype = 'node_form_path';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -143,8 +143,8 @@ function os2web_base_default_page_manager_handlers() {
     $pane = new stdClass();
     $pane->pid = 'new-4';
     $pane->panel = 'h__jre';
-    $pane->type = 'node_form_publishing';
-    $pane->subtype = 'node_form_publishing';
+    $pane->type = 'node_form_buttons';
+    $pane->subtype = 'node_form_buttons';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -187,8 +187,32 @@ function os2web_base_default_page_manager_handlers() {
     $pane = new stdClass();
     $pane->pid = 'new-6';
     $pane->panel = 'venstre';
-    $pane->type = 'node_form_path';
-    $pane->subtype = 'node_form_path';
+    $pane->type = 'entity_form_field';
+    $pane->subtype = 'node:field_indholdstype';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => '',
+      'formatter' => '',
+      'context' => 'argument_node_edit_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['venstre'][1] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
+    $pane->panel = 'venstre';
+    $pane->type = 'node_form_publishing';
+    $pane->subtype = 'node_form_publishing';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -202,10 +226,10 @@ function os2web_base_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['venstre'][1] = 'new-6';
+    $display->content['new-7'] = $pane;
+    $display->panels['venstre'][2] = 'new-7';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
