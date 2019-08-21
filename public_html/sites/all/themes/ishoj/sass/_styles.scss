@@ -761,7 +761,7 @@ body {
 @media (min-width: $bp-large) { // 960px
   .soegeresultat {
     padding: 0 !important;
-    &.show {
+    b&.show {
       padding: 0 0 calc-em(60px) 0 !important;
     }
   }
@@ -2819,6 +2819,9 @@ video {
 
     }
   }
+}
+div.faqfield-answer {
+  height: auto !important;
 }
 
 
