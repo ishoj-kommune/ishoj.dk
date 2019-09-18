@@ -121,7 +121,11 @@ $output = "";
               $output = $output . "<div class=\"grid-two-thirds\">";
                 $output = $output . "<!-- ARTIKEL TOP START -->";
                 $output = $output . "<div class=\"artikel-top\">";
+                if (!empty($node->field_os2web_meetings_location)) {
+                  $location = taxonomy_term_load($node->field_os2web_meetings_location['und'][0]['tid']);
+                  $output = $output . "<h3> Lokation: " . $location->name . '</h3>';
 
+                }
 $output .= $node->field_forsidetekst['und'][0]['safe_value']; 
 
                 $output = $output . "</div>";
