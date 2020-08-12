@@ -52,8 +52,14 @@ function os2web_base_os2web_help($sections) {
 
 function os2web_base_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#node_edit_form']) {
-      $form['#after_build'][] = 'os2web_base_node_edit_form_after_build';
-
+    $form['#after_build'][] = 'os2web_base_node_edit_form_after_build';
+    if (isset($form['#fieldgroups']['group_bruges_ikke']) && isset($form['#group_children'])) {
+      $form['#fieldgroups']['group_bruges_ikke']->format_type = 'hidden';
+      // Hide the elements inside the field group.
+      foreach (array_keys($forms['#group_children'],'group_bruges_ikke') as $field_name) {
+         $form[$field_name]['#access'] = FALSE;
+      }
+    }
   }
 }
 
