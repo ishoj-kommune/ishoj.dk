@@ -14,14 +14,14 @@ function os2web_settings_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cache_lifetime';
-  $strongarm->value = '300';
+  $strongarm->value = '0';
   $export['cache_lifetime'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cookiecontrol_fulltext';
-  $strongarm->value = '<p>Nogle cookies på hjemmsiden er vigtige for at sitet fungerer som forventet. De bruges for eksempel når du indsender en formular eller på anden måde får en personlig respons fra hjemmesiden.</p><p>Vi bruger også ikke essentielle cookies til, anonymt, at spore brugen af hjemmesiden. Hvis du ikke er interesseret i at vi bruger disse kan vi undlade at gemme nogen former for cookies. Men vi kan så ikke garantere at sitet fungerer fuldt ud.</p>';
+  $strongarm->value = '<p>Nogle cookies på hjemmesiden er vigtige for at sitet fungerer som forventet. De bruges for eksempel når du indsender en formular eller på anden måde får en personlig respons fra hjemmesiden.</p><p>Vi bruger også ikke essentielle cookies til, anonymt, at spore brugen af hjemmesiden. Hvis du ikke er interesseret i at vi bruger disse kan vi undlade at gemme nogen former for cookies. Men vi kan så ikke garantere at sitet fungerer fuldt ud.</p>';
   $export['cookiecontrol_fulltext'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -49,7 +49,7 @@ function os2web_settings_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cookiecontrol_privacynode';
-  $strongarm->value = '2942';
+  $strongarm->value = '573';
   $export['cookiecontrol_privacynode'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -63,14 +63,14 @@ function os2web_settings_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cookiecontrol_startopen';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['cookiecontrol_startopen'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cookiecontrol_text';
-  $strongarm->value = '<p>Syddjurs gemmer informationer i cookies på din komputer.</p>';
+  $strongarm->value = '<p>ishoj.dk gemmer informationer i cookies på din computer.</p>';
   $export['cookiecontrol_text'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -91,7 +91,7 @@ function os2web_settings_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'date_default_timezone';
-  $strongarm->value = 'Europe/Berlin';
+  $strongarm->value = 'Europe/Copenhagen';
   $export['date_default_timezone'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -105,7 +105,7 @@ function os2web_settings_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'date_format_medium';
-  $strongarm->value = 'D, Y-m-d H:i';
+  $strongarm->value = 'd/m-Y k\\l. H:i';
   $export['date_format_medium'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -212,6 +212,105 @@ function os2web_settings_strongarm() {
   $strongarm->name = 'delta_blocks_site_slogan_hidden';
   $strongarm->value = FALSE;
   $export['delta_blocks_site_slogan_hidden'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'eu_cookie_compliance';
+  $strongarm->value = array(
+    'popup_enabled' => 1,
+    'method' => 'categories',
+    'info_template' => 'new',
+    'cookie_categories' => 'Functional cookies|Funktionelle|Funktionelle cookies er nødvendige for at løsningen kan huske dine valg.
+Statistical cookies|Statistik|Statistiske cookies opsamler anonymiseret statistik, så vi kan måle og optimere løsningen.',
+    'enable_save_preferences_button' => 1,
+    'save_preferences_button_label' => 'Gem valgte',
+    'accept_all_categories_button_label' => 'Accepter alle',
+    'fix_first_cookie_category' => 0,
+    'select_all_categories_by_default' => 0,
+    'disabled_javascripts' => '',
+    'whitelisted_cookies' => '',
+    'consent_storage_method' => 'do_not_store',
+    'popup_clicking_confirmation' => FALSE,
+    'popup_info' => array(
+      'value' => '<p><span style="line-height: 1.6em;">Vi bruger ikke essentielle cookies til, anonymt, at spore brugen af hjemmesiden.</span></p>
+',
+      'format' => 'filtered_html',
+    ),
+    'use_mobile_message' => 0,
+    'mobile_popup_info' => array(
+      'value' => '<h2>We use cookies on this site to enhance your user experience</h2><p>By tapping the Accept button, you agree to us doing so.</p>',
+      'format' => 'plain_text',
+    ),
+    'mobile_breakpoint' => '768',
+    'popup_agree_button_message' => 'OK',
+    'show_disagree_button' => TRUE,
+    'popup_disagree_button_message' => 'Jeg vil gerne vide mere',
+    'disagree_button_label' => 'No, thanks',
+    'withdraw_enabled' => 0,
+    'withdraw_button_on_info_popup' => 0,
+    'withdraw_message' => array(
+      'value' => '<h2>We use cookies on this site to enhance your user experience</h2><p>You have given your consent for us to set cookies.</p>',
+      'format' => 'plain_text',
+    ),
+    'withdraw_tab_button_label' => 'Privacy settings',
+    'withdraw_action_button_label' => 'Withdraw consent',
+    'popup_agreed_enabled' => 0,
+    'popup_hide_agreed' => 0,
+    'popup_agreed' => array(
+      'value' => '<h2>Tak for at acceptere cookies<!-- h2--></h2>
+
+<p>Du kan nu skjule denne meddelelse eller finde ud af mere om cookies</p>
+',
+      'format' => 'filtered_html',
+    ),
+    'popup_find_more_button_message' => 'Mere info',
+    'popup_hide_button_message' => 'Skjul',
+    'popup_link' => 'https://ishoj.dk/cookies-statistik-og-privatlivspolitik',
+    'popup_link_new_window' => 0,
+    'popup_position' => FALSE,
+    'use_bare_css' => 0,
+    'popup_text_hex' => 'ffffff',
+    'popup_bg_hex' => '0779BF',
+    'popup_height' => '',
+    'popup_width' => '100%',
+    'fixed_top_position' => 1,
+    'popup_delay' => '1000',
+    'disagree_do_not_show_popup' => 0,
+    'reload_page' => 0,
+    'popup_scrolling_confirmation' => FALSE,
+    'cookie_name' => '',
+    'domains_option' => '1',
+    'domains_list' => '',
+    'exclude_paths' => 'infotv/*',
+    'exclude_admin_pages' => 0,
+    'exclude_uid_1' => 0,
+    'script_scope' => 'footer',
+    'better_support_for_screen_readers' => 0,
+    'cookie_session' => 0,
+  );
+  $export['eu_cookie_compliance'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'eu_cookie_compliance_cookie_lifetime';
+  $strongarm->value = '100';
+  $export['eu_cookie_compliance_cookie_lifetime'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'eu_cookie_compliance_domain';
+  $strongarm->value = 'ishoj.dk';
+  $export['eu_cookie_compliance_domain'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'eu_cookie_compliance_domain_all_sites';
+  $strongarm->value = 0;
+  $export['eu_cookie_compliance_domain_all_sites'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -590,7 +689,7 @@ example.org';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_block_1_admin_title';
-  $strongarm->value = 'Indhold';
+  $strongarm->value = '_Dette er en test af menu_block';
   $export['menu_block_1_admin_title'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -604,28 +703,28 @@ example.org';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_block_1_expanded';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['menu_block_1_expanded'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_block_1_follow';
-  $strongarm->value = 'active';
+  $strongarm->value = 0;
   $export['menu_block_1_follow'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_block_1_level';
-  $strongarm->value = '2';
+  $strongarm->value = '3';
   $export['menu_block_1_level'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_block_1_parent';
-  $strongarm->value = 'os2web-menu-contentmenu:0';
+  $strongarm->value = 'os2web-main-menu:793';
   $export['menu_block_1_parent'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -709,7 +808,7 @@ example.org';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_transliterate';
-  $strongarm->value = FALSE;
+  $strongarm->value = 1;
   $export['pathauto_transliterate'] = $strongarm;
 
   $strongarm = new stdClass();

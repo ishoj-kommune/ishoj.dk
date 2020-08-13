@@ -14,6 +14,7 @@ function os2web_settings_user_default_permissions() {
   $permissions['access content'] = array(
     'name' => 'access content',
     'roles' => array(
+      'Administrator' => 'Administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
@@ -25,9 +26,11 @@ function os2web_settings_user_default_permissions() {
     'name' => 'access content overview',
     'roles' => array(
       'Administrator' => 'Administrator',
-      'Editor' => 'Editor',
+      'Aktivitet-redaktør' => 'Aktivitet-redaktør',
+      'Infoskærm-redaktør' => 'Infoskærm-redaktør',
       'Kommunikation' => 'Kommunikation',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
     ),
     'module' => 'node',
   );
@@ -36,6 +39,7 @@ function os2web_settings_user_default_permissions() {
   $permissions['access workbench'] = array(
     'name' => 'access workbench',
     'roles' => array(
+      'Administrator' => 'Administrator',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'workbench',
@@ -47,6 +51,7 @@ function os2web_settings_user_default_permissions() {
     'roles' => array(
       'Administrator' => 'Administrator',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
     ),
     'module' => 'media_internet',
   );
@@ -56,7 +61,9 @@ function os2web_settings_user_default_permissions() {
     'name' => 'administer nodes',
     'roles' => array(
       'Administrator' => 'Administrator',
+      'Kommunikation' => 'Kommunikation',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
     ),
     'module' => 'node',
   );
@@ -66,6 +73,7 @@ function os2web_settings_user_default_permissions() {
     'name' => 'administer os2web',
     'roles' => array(
       'Administrator' => 'Administrator',
+      'Dagsorden publicering' => 'Dagsorden publicering',
       'Webmaster' => 'Webmaster',
     ),
     'module' => 'os2web_settings',
@@ -96,7 +104,13 @@ function os2web_settings_user_default_permissions() {
     'name' => 'import media',
     'roles' => array(
       'Administrator' => 'Administrator',
+      'Aktivitet-redaktør' => 'Aktivitet-redaktør',
+      'Infoskærm-redaktør' => 'Infoskærm-redaktør',
+      'Kommunikation' => 'Kommunikation',
+      'Kriseinformation' => 'Kriseinformation',
       'Webmaster' => 'Webmaster',
+      'Webredaktør' => 'Webredaktør',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'media',
   );
@@ -185,7 +199,7 @@ function os2web_settings_user_default_permissions() {
   $permissions['view own unpublished content'] = array(
     'name' => 'view own unpublished content',
     'roles' => array(
-      'anonymous user' => 'anonymous user',
+      'Administrator' => 'Administrator',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
