@@ -157,6 +157,8 @@ $bterm = taxonomy_term_load($buftid);
                 $output = $output . "<div class=\"artikel-top\">";
                 $output = $output . "<!-- VIDEO START -->";
                     if(($node->field_video)) {
+                        hide($content['field_os2web_base_field_image']);
+                        hide($content['field_image_flexslider']);
                       $output = $output . "<div class=\"video-indlejret\">";
                         $output = $output . "<div class=\"embed-container vimeo\">";
                           $output = $output . $node->field_video['und'][0]['value'];
