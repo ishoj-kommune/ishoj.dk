@@ -155,13 +155,24 @@ $bterm = taxonomy_term_load($buftid);
               $output = $output . "<div class=\"grid-two-thirds\">";
                 $output = $output . "<!-- ARTIKEL TOP START -->";
                 $output = $output . "<div class=\"artikel-top\">";
+                $output = $output . "<!-- VIDEO START -->";
+                    if(($node->field_video)) {
+                      $output = $output . "<div class=\"video-indlejret\">";
+                        $output = $output . "<div class=\"embed-container vimeo\">";
+                          $output = $output . $node->field_video['und'][0]['value'];
+                        $output = $output . "</div>";
+                      $output = $output . "</div>";
+                      if ($node->field_videotekst) {
+                        $output = $output . "<p class=\"video-tekst\">" . $node->field_videotekst['und'][0]['value'] . "</p>";
+                      }
+                    }
+                    $output = $output . "<!-- VIDEO SLUT -->";
                     // FOTO
                     $output = $output . "<!-- FOTO START -->";
 
-                    if($node->field_os2web_base_field_image) {
+                    if($node->field_os2web_base_field_image and !$node->field_video) {
                       hide($content['field_image_flexslider']);
-
-                      $output = $output . render($content['field_os2web_base_field_image']);
+                      $output = $output . render($content['field_os2web_base_field_image'][0]);
                       if($node->field_billedtekst) {
                         $output = $output . "<p class=\"foto-tekst\">" . $node->field_billedtekst['und'][0]['value'] . "</p>";
                       }
@@ -170,7 +181,7 @@ $bterm = taxonomy_term_load($buftid);
 
                     // FLEXSLIDER
                     $output = $output . "<!-- FLEXSLIDER START -->";
-                    if(($node->field_image_flexslider) and (!$node->field_os2web_base_field_image)) {
+                    if(($node->field_image_flexslider) and (!$node->field_os2web_base_field_image) and (!$node->field_video)) {
                       $output = $output . "<div class=\"flexslider\">";
                         $output = $output . "<ul class=\"slides\">";
                         $length = sizeof($node->field_image_flexslider['und']);
@@ -183,18 +194,7 @@ $bterm = taxonomy_term_load($buftid);
                     $output = $output . "<!-- FLEXSLIDER SLUT -->";
 
                     // VIDEO
-                    $output = $output . "<!-- VIDEO START -->";
-                    if(($node->field_video) and (!$node->field_os2web_base_field_image) and (!$node->field_image_flexslider)) {
-                      $output = $output . "<div class=\"video-indlejret\">";
-                        $output = $output . "<div class=\"embed-container vimeo\">";
-                          $output = $output . $node->field_video['und'][0]['value'];
-                        $output = $output . "</div>";
-                      $output = $output . "</div>";
-                      if ($node->field_videotekst) {
-                        $output = $output . "<p class=\"video-tekst\">" . $node->field_videotekst['und'][0]['value'] . "</p>";
-                      }
-                    }
-                    $output = $output . "<!-- VIDEO SLUT -->";
+
 
                 $output = $output . "</div>";
                 $output = $output . "<!-- ARTIKEL TOP SLUT -->";
