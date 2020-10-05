@@ -565,6 +565,7 @@ function _os2web_esdh_provider_import_file($file_meta) {
       // Bummed out on copy.
       watchdog('acadre MM', 'File copy failed for %infile -> %outfile. Check folder permissions.', array(
         '%infile' => $uri_old, '%outfile' => $uri_out), WATCHDOG_WARNING);
+      err_debug('File copy failed for ' . $uri_old . ' ' . $uri_out . 'Check folder permissions.');
       return FALSE;
     }
     else {
@@ -576,6 +577,7 @@ function _os2web_esdh_provider_import_file($file_meta) {
   if (FALSE === $uri || empty($uri)) {
     watchdog('acadre MM', 'Processing of %infile failed. If exists, check permissions.', array(
       '%infile', $uri_in), WATCHDOG_WARNING);
+    err_debug('Processing of  ' . $uri_in . ' failed. If exists, check permissions.');
     return FALSE;
   }
 
